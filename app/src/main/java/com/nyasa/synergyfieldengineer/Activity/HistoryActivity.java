@@ -2,22 +2,21 @@ package com.nyasa.synergyfieldengineer.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import com.nyasa.synergyfieldengineer.R;
 
-public class VisitListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HistoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     DrawerLayout drawerLayout;
@@ -27,11 +26,11 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visit_list);
+        setContentView(R.layout.activity_history);
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Home");
+        toolbar.setTitle("History");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -43,7 +42,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView.getMenu().clear(); //clear old inflated items.
         navigationView.inflateMenu(R.menu.menu_drawer);
-        navigationView.setCheckedItem(R.id.menu_go_home);
+        navigationView.setCheckedItem(R.id.menu_go_history);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
@@ -72,7 +71,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
             case R.id.menu_go_home:
                 Log.e("menu","home");
                 //   toolbar.setTitle(getString(R.string.menu_home));
-                startActivity(new Intent(getApplicationContext(), VisitListActivity.class));
+                startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
                 return true;
 
             case R.id.menu_go_history:
@@ -107,7 +106,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
     private void logout() {
 
-        new AlertDialog.Builder(VisitListActivity.this)
+        new AlertDialog.Builder(HistoryActivity.this)
                 .setTitle(getString(R.string.menu_logout))
                 .setMessage(getString(R.string.logout_msg))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -131,8 +130,9 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
                 //  .setIcon(R.drawable.ic_logout)
                 .show();
     }
+
     private void exitApp() {
-        new AlertDialog.Builder(VisitListActivity.this)
+        new AlertDialog.Builder(HistoryActivity.this)
                 .setTitle(getString(R.string.app_name))
                 .setMessage(getString(R.string.exit_msg))
                 //.setIcon(R.mipmap.ic_launcher_app)

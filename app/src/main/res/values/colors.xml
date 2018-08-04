@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#808080</color>
+    <color name="black">#000000</color>
+    <color name="navigation_default">#6bcdfd</color>
+    <color name="navigation_checked">#303F9F</color>
+    <color name="white">#FFFFFF</color>
 </resources>

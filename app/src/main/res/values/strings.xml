@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">SynergyFieldEngineer</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_visits">Visits</string>
+    <string name="menu_history">History</string>
+    <string name="menu_logout">Logout</string>
+    <string name="default_email">email</string>
+
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+    <string name="logout_msg">Do you really want to logout?</string>
+    <string name="menu_location">Add Location</string>
+    <string name="exit_msg">Do you really want to exit from from app?</string>
 </resources>
