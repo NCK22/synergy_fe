@@ -17,12 +17,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_visit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/toolbar_main"
+      android:orientation="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Home Location :"
+          android:textSize="18sp"
+          android:textStyle="bold"
+          android:textColor="#808080"/>
+
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Office Location :"
+          android:textSize="18sp"
+          android:textStyle="bold"
+          android:textColor="#808080"/>
+  </LinearLayout>
+
 
 
 </RelativeLayout>

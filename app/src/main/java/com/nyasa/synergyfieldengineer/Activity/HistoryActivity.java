@@ -71,7 +71,7 @@ public class HistoryActivity extends AppCompatActivity implements NavigationView
             case R.id.menu_go_home:
                 Log.e("menu","home");
                 //   toolbar.setTitle(getString(R.string.menu_home));
-                startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
+                startActivity(new Intent(getApplicationContext(), VisitListActivity.class));
                 return true;
 
             case R.id.menu_go_history:

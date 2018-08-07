@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:weightSum="2"
-    android:layout_margin="2dp">
+    android:layout_margin="2dp"
+    android:layout_marginBottom="35dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -15,9 +16,9 @@
             android:id="@+id/tv_caseId"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="125"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textColor="#808080"
             android:textStyle="bold"/>
     </LinearLayout>
@@ -27,7 +28,9 @@
         android:layout_weight="1.30"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="2dp">
+        android:padding="2dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp">
 
         <TextView
             android:id="@+id/tv_applicantName"
@@ -78,6 +81,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <Button
+            android:id="@+id/btn_edit"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

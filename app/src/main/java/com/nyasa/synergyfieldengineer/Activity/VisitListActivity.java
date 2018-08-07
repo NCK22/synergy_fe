@@ -1,5 +1,6 @@
 package com.nyasa.synergyfieldengineer.Activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -9,13 +10,28 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
+import com.nyasa.synergyfieldengineer.APIClient;
+import com.nyasa.synergyfieldengineer.Adapter.VisitListAdapter;
+import com.nyasa.synergyfieldengineer.Interface.assignedCaseInterface;
+import com.nyasa.synergyfieldengineer.Interface.getCaseDetailsInterface;
+import com.nyasa.synergyfieldengineer.Pojo.ChildPojoCase;
+import com.nyasa.synergyfieldengineer.Pojo.ParentPojoAssignedCase;
 import com.nyasa.synergyfieldengineer.R;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VisitListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -23,12 +39,19 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
     DrawerLayout drawerLayout;
     private NavigationView navigationView;
     Toolbar toolbar;
+    RecyclerView recyclerView;
+    VisitListAdapter adapter;
+    ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
+    ProgressDialog progressDialog;
+    ArrayList<String> list_assigned_case=new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_list);
 
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
@@ -38,6 +61,32 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+
+        recyclerView = (RecyclerView) findViewById(R.id.rv_visit);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        ChildPojoCase childPojoCase1=new ChildPojoCase();
+        childPojoCase1.setCaseId("44768");
+        childPojoCase1.setClientName("Mrs. Rashmi Shaunwk Pol");
+        childPojoCase1.setProjectName("SyntNygyr");
+        childPojoCase1.setVillageCity("Haveli,Pune");
+        childPojoCase1.setState("Maharashtra");
+        ChildPojoCase childPojoCase2=new ChildPojoCase();
+        childPojoCase2.setCaseId("44893");
+        childPojoCase2.setClientName("Mr. Ajit Shishir Joshi");
+        childPojoCase2.setProjectName("SyntNygyr");
+        childPojoCase2.setVillageCity("Shirwal,Pune");
+        childPojoCase2.setState("Maharashtra");
+        ChildPojoCase childPojoCase3=new ChildPojoCase();
+        childPojoCase3.setCaseId("45211");
+        childPojoCase3.setClientName("Mrs. Nilophar Sayyad");
+        childPojoCase3.setProjectName("SyntNygyr");
+        childPojoCase3.setVillageCity("Hadapsar,Pune");
+        childPojoCase3.setState("Maharashtra");
+        mListItem.add(childPojoCase1);
+        mListItem.add(childPojoCase2);
+        mListItem.add(childPojoCase3);
+        displayData();
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -60,6 +109,23 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
         //  setHeader();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        getAssignecdCase();
+
+
+    }
+
+    private void displayData() {
+        Log.e("displayData","called");
+        Log.e("List size",""+mListItem.size());
+        adapter = new VisitListAdapter(this, mListItem);
+        recyclerView.setAdapter(adapter);
+
+        if (adapter.getItemCount() == 0) {
+
+        } else {
+
+        }
     }
 
     @Override
@@ -102,6 +168,80 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
         }
         return false;
+    }
+
+    public void getAssignecdCase(){
+
+
+            progressDialog.show();
+            assignedCaseInterface getResponse = APIClient.getClient().create(assignedCaseInterface.class);
+            Call<ParentPojoAssignedCase> call = getResponse.doGetListResources("","21");
+            call.enqueue(new Callback<ParentPojoAssignedCase>() {
+                @Override
+                public void onResponse(Call<ParentPojoAssignedCase> call, Response<ParentPojoAssignedCase> response) {
+
+                    Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+                    ParentPojoAssignedCase parentPojoAssignedCase = response.body();
+                    if (parentPojoAssignedCase != null) {
+                        if (parentPojoAssignedCase.getObjCase().size()!=0) {
+                                mListItem.clear();
+                         for(int i=0;i<=parentPojoAssignedCase.getObjCase().size();i++) {
+                             list_assigned_case.add(parentPojoAssignedCase.getObjCase().get(i).get("CaseId"));
+                             getCaseDetails(parentPojoAssignedCase.getObjCase().get(i).get("CaseId"));
+                         }
+
+                        }
+                        Log.e("list_assigned_case size",""+list_assigned_case.size());
+                        /*if(list_assigned_case.size()>0){
+                            getCaseDetails();
+                            }
+                        */
+                        //showToast(parentPojoAssignedCase.g());
+                    }
+
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<ParentPojoAssignedCase> call, Throwable t) {
+
+                    Log.e("Throwabe ", "" + t);
+                    progressDialog.dismiss();
+                }
+            });
+    }
+
+    public void getCaseDetails(String case_id){
+
+
+        progressDialog.show();
+        getCaseDetailsInterface getResponse = APIClient.getClient().create(getCaseDetailsInterface.class);
+        Call<ChildPojoCase> call = getResponse.doGetListResources(case_id);
+        call.enqueue(new Callback<ChildPojoCase>() {
+            @Override
+            public void onResponse(Call<ChildPojoCase> call, Response<ChildPojoCase> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+                ChildPojoCase childPojoCase = response.body();
+                if (childPojoCase != null) {
+
+                    mListItem.add(childPojoCase);
+                }
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ChildPojoCase> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
     }
 
 
@@ -153,5 +293,10 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
     public void onBackPressed() {
         //super.onBackPressed();
         exitApp();
+    }
+
+    public void showToast(String msg)
+    {
+        Toast.makeText(VisitListActivity.this,msg,Toast.LENGTH_SHORT).show();
     }
 }

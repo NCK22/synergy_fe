@@ -1,4 +1,4 @@
-package com.nyasa.synergyfieldengineer.Activity.Pojo;
+package com.nyasa.synergyfieldengineer.Pojo;
 
 import com.google.gson.annotations.SerializedName;
 
