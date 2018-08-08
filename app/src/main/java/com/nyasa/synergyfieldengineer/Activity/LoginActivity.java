@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //login();
-                startActivity(new Intent(LoginActivity.this, VisitListActivity.class));
+                login();
+              //  startActivity(new Intent(LoginActivity.this, VisitListActivity.class));
 
             }
         });
@@ -69,18 +69,19 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("response body",response.body().getMsg());*/
                     ParentPojoLogin parentPojoLogin = response.body();
                     if (parentPojoLogin != null) {
-                        if (parentPojoLogin.getUserdata().size()!=0) {
-                            Log.e("Response", parentPojoLogin.getMessage());
+                        if (parentPojoLogin.getMessage().contains("Success")) {
+                            if (parentPojoLogin.getUserdata().size() != 0) {
+                                Log.e("Response", parentPojoLogin.getMessage());
 
-                            spUserProfile.setIsLogin("true");
-                            spUserProfile.setUser_id(parentPojoLogin.getUserdata().get("UserId"));
+                                spUserProfile.setIsLogin("true");
+                                spUserProfile.setUser_id(parentPojoLogin.getUserdata().get("UserId"));
 
-                            startActivity(new Intent(LoginActivity.this, VisitListActivity.class));
-                            finish();
+                                startActivity(new Intent(LoginActivity.this, VisitListActivity.class));
+                                finish();
+                            }
                         }
-
-                        showToast(parentPojoLogin.getMessage());
-                    }
+                            showToast(parentPojoLogin.getMessage());
+                        }
 
                     progressDialog.dismiss();
                 }

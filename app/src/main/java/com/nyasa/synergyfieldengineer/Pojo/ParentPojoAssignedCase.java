@@ -8,13 +8,13 @@ import java.util.LinkedHashMap;
 public class ParentPojoAssignedCase {
 
     @SerializedName("")
-    ArrayList<LinkedHashMap<String,String>> objCase;
+    ArrayList<ChildPojoAssignedCase> objCase;
 
-    public ArrayList<LinkedHashMap<String, String>> getObjCase() {
+    public ArrayList<ChildPojoAssignedCase> getObjCase() {
         return objCase;
     }
 
-    public void setObjCase(ArrayList<LinkedHashMap<String, String>> objCase) {
+    public void setObjCase(ArrayList<ChildPojoAssignedCase> objCase) {
         this.objCase = objCase;
     }
 }

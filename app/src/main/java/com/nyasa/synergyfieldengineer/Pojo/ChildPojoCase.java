@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class ChildPojoCase {
 
-    @SerializedName("caseId") String caseId;
-    @SerializedName("caseNo") String caseNo;
+    @SerializedName("CaseId") String caseId;
+    @SerializedName("CaseNo") String caseNo;
     @SerializedName("caseStatus") String caseStatus;
     @SerializedName("isActive") String isActive;
     @SerializedName("inwardDate") String inwardDate;
@@ -32,15 +32,15 @@ public class ChildPojoCase {
     private Object talukaOld;
     private Object district;
     private Object districtOld;
-    @SerializedName("pincode") String pincode;
-    @SerializedName("state") String state;
-    @SerializedName("countryId") String countryId;
-    @SerializedName("stateId") String stateId;
-    @SerializedName("districtId") String districtId;
-    @SerializedName("talukaId") String talukaId;
-    @SerializedName("villageCityId") String villageCityId;
-    @SerializedName("ownerNames") String ownerNames;
-    @SerializedName("ownershipType") String ownershipType;
+    @SerializedName("Pincode") String pincode;
+    @SerializedName("State") String state;
+    @SerializedName("CountryId") String countryId;
+    @SerializedName("StateId") String stateId;
+    @SerializedName("DistrictId") String districtId;
+    @SerializedName("TalukaId") String talukaId;
+    @SerializedName("VillageCityId") String villageCityId;
+    @SerializedName("OwnerNames") String ownerNames;
+    @SerializedName("OwnershipType") String ownershipType;
     private Object previousCaseNo;
     private Object previousCaseId;
     private Object nextActiveCaseId;

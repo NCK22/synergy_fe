@@ -23,11 +23,15 @@ import com.nyasa.synergyfieldengineer.APIClient;
 import com.nyasa.synergyfieldengineer.Adapter.VisitListAdapter;
 import com.nyasa.synergyfieldengineer.Interface.assignedCaseInterface;
 import com.nyasa.synergyfieldengineer.Interface.getCaseDetailsInterface;
+import com.nyasa.synergyfieldengineer.Pojo.ChildPojoAssignedCase;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoCase;
 import com.nyasa.synergyfieldengineer.Pojo.ParentPojoAssignedCase;
 import com.nyasa.synergyfieldengineer.R;
+import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +48,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
     ProgressDialog progressDialog;
     ArrayList<String> list_assigned_case=new ArrayList<String>();
+    SPUserProfile spUserProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Please Wait");
+        spUserProfile=new SPUserProfile(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
@@ -172,28 +178,38 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
     public void getAssignecdCase(){
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = mdformat.format(calendar.getTime());
 
             progressDialog.show();
             assignedCaseInterface getResponse = APIClient.getClient().create(assignedCaseInterface.class);
-            Call<ParentPojoAssignedCase> call = getResponse.doGetListResources("","21");
-            call.enqueue(new Callback<ParentPojoAssignedCase>() {
+            Call<ArrayList<ChildPojoAssignedCase>> call = getResponse.doGetListResources(strDate,spUserProfile.getUser_id());
+            call.enqueue(new Callback<ArrayList<ChildPojoAssignedCase>>() {
                 @Override
-                public void onResponse(Call<ParentPojoAssignedCase> call, Response<ParentPojoAssignedCase> response) {
+                public void onResponse(Call<ArrayList<ChildPojoAssignedCase>> call, Response<ArrayList<ChildPojoAssignedCase>> response) {
 
                     Log.e("Inside", "onResponse");
                /* Log.e("response body",response.body().getStatus());
                 Log.e("response body",response.body().getMsg());*/
-                    ParentPojoAssignedCase parentPojoAssignedCase = response.body();
+                  ArrayList<ChildPojoAssignedCase> parentPojoAssignedCase = response.body();
                     if (parentPojoAssignedCase != null) {
-                        if (parentPojoAssignedCase.getObjCase().size()!=0) {
+                        if (parentPojoAssignedCase.size()!=0) {
                                 mListItem.clear();
-                         for(int i=0;i<=parentPojoAssignedCase.getObjCase().size();i++) {
-                             list_assigned_case.add(parentPojoAssignedCase.getObjCase().get(i).get("CaseId"));
-                             getCaseDetails(parentPojoAssignedCase.getObjCase().get(i).get("CaseId"));
-                         }
+
+                        /* for(int i=0;i<=parentPojoAssignedCase.getObjCase().size();i++) {
+                             list_assigned_case.add(parentPojoAssignedCase.getObjCase().get(i).getCaseId());
+                             getCaseDetails(parentPojoAssignedCase.getObjCase().get(i).getCaseId());
+                         }*/
+                            for(int i=0;i<parentPojoAssignedCase.size();i++) {
+                                list_assigned_case.add(parentPojoAssignedCase.get(i).getCaseId());
+                                getCaseDetails(parentPojoAssignedCase.get(i).getCaseId());
+                            }
 
                         }
                         Log.e("list_assigned_case size",""+list_assigned_case.size());
+                        Log.e("List sizevafter for",""+mListItem.size());
+                        displayData();
                         /*if(list_assigned_case.size()>0){
                             getCaseDetails();
                             }
@@ -201,11 +217,12 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
                         //showToast(parentPojoAssignedCase.g());
                     }
 
+
                     progressDialog.dismiss();
                 }
 
                 @Override
-                public void onFailure(Call<ParentPojoAssignedCase> call, Throwable t) {
+                public void onFailure(Call<ArrayList<ChildPojoAssignedCase>> call, Throwable t) {
 
                     Log.e("Throwabe ", "" + t);
                     progressDialog.dismiss();
@@ -218,25 +235,28 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
         progressDialog.show();
         getCaseDetailsInterface getResponse = APIClient.getClient().create(getCaseDetailsInterface.class);
-        Call<ChildPojoCase> call = getResponse.doGetListResources(case_id);
-        call.enqueue(new Callback<ChildPojoCase>() {
+        Call<ArrayList<ChildPojoCase>> call = getResponse.doGetListResources(case_id);
+        call.enqueue(new Callback<ArrayList<ChildPojoCase>>() {
             @Override
-            public void onResponse(Call<ChildPojoCase> call, Response<ChildPojoCase> response) {
+            public void onResponse(Call<ArrayList<ChildPojoCase>> call, Response<ArrayList<ChildPojoCase>> response) {
 
                 Log.e("Inside", "onResponse");
                /* Log.e("response body",response.body().getStatus());
                 Log.e("response body",response.body().getMsg());*/
-                ChildPojoCase childPojoCase = response.body();
+                ArrayList<ChildPojoCase> childPojoCase = response.body();
+              //  Log.e("ChildPojoCase",childPojoCase.get(0).getCaseId());
                 if (childPojoCase != null) {
 
-                    mListItem.add(childPojoCase);
+                    mListItem.add(childPojoCase.get(0));
                 }
 
+                Log.e("List size inside",""+mListItem.size());
+                displayData();
                 progressDialog.dismiss();
             }
 
             @Override
-            public void onFailure(Call<ChildPojoCase> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ChildPojoCase>> call, Throwable t) {
 
                 Log.e("Throwabe ", "" + t);
                 progressDialog.dismiss();
