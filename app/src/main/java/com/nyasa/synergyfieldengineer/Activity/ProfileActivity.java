@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.nyasa.synergyfieldengineer.R;
+import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -22,13 +23,14 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
     DrawerLayout drawerLayout;
     private NavigationView navigationView;
     Toolbar toolbar;
+    SPUserProfile spUserProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-
+        spUserProfile=new SPUserProfile(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Profile");
         setSupportActionBar(toolbar);
@@ -116,6 +118,7 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                         spCustProfile.setProfilePhotoPath("");
                         spCustProfile.setGender("");
                         spCustProfile.clearGalleryPhotoPath();*/
+                        spUserProfile.setIsLogin("false");
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

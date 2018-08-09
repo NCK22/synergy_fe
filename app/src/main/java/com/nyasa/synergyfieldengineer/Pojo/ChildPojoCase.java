@@ -12,7 +12,7 @@ public class ChildPojoCase {
     @SerializedName("caseType") String caseType;
     private Object fileNo;
     private Object consultantRef;
-    @SerializedName("clientName") String clientName;
+    @SerializedName("ClientName") String clientName;
     private Object clientContactNo;
     @SerializedName("instituteId") String instituteId;
     private Object instituteWiseType;
@@ -21,8 +21,8 @@ public class ChildPojoCase {
     private Object subLocatlity;
     @SerializedName("propertyNo") String propertyNo;
     @SerializedName("floorNo") String floorNo;
-    @SerializedName("projectName") String projectName;
-    @SerializedName("buildingWing") String buildingWing;
+    @SerializedName("ProjectName") String projectName;
+    @SerializedName("BuildingWing") String buildingWing;
     private Object societyApartmentName;
     @SerializedName("surveyPlotNo") String surveyPlotNo;
     private Object remainingAddress;

@@ -89,9 +89,9 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
         childPojoCase3.setProjectName("SyntNygyr");
         childPojoCase3.setVillageCity("Hadapsar,Pune");
         childPojoCase3.setState("Maharashtra");
-        mListItem.add(childPojoCase1);
-        mListItem.add(childPojoCase2);
-        mListItem.add(childPojoCase3);
+       // mListItem.add(childPojoCase1);
+        //mListItem.add(childPojoCase2);
+        //mListItem.add(childPojoCase3);
         displayData();
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -184,7 +184,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
             progressDialog.show();
             assignedCaseInterface getResponse = APIClient.getClient().create(assignedCaseInterface.class);
-            Call<ArrayList<ChildPojoAssignedCase>> call = getResponse.doGetListResources(strDate,spUserProfile.getUser_id());
+            Call<ArrayList<ChildPojoAssignedCase>> call = getResponse.doGetListResources("2018-08-08",spUserProfile.getUser_id());
             call.enqueue(new Callback<ArrayList<ChildPojoAssignedCase>>() {
                 @Override
                 public void onResponse(Call<ArrayList<ChildPojoAssignedCase>> call, Response<ArrayList<ChildPojoAssignedCase>> response) {
@@ -277,6 +277,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
                         spCustProfile.setProfilePhotoPath("");
                         spCustProfile.setGender("");
                         spCustProfile.clearGalleryPhotoPath();*/
+                        spUserProfile.setIsLogin("false");
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

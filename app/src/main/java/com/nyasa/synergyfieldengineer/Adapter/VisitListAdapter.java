@@ -64,6 +64,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
         holder.case_id.setText(singleItem.getCaseId());
         holder.applicant_name.setText(singleItem.getClientName());
         holder.project_name.setText(singleItem.getProjectName());
+        if(singleItem.getVillageCity()!=null)
         holder.address1.setText(singleItem.getVillageCity()+" ,");
         holder.address2.setText(singleItem.getState());
 

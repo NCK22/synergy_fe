@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 spUserProfile.setIsLogin("true");
                                 spUserProfile.setUser_id(parentPojoLogin.getUserdata().get("UserId"));
+                                spUserProfile.setEmail(parentPojoLogin.getUserdata().get("Email"));
 
                                 startActivity(new Intent(LoginActivity.this, VisitListActivity.class));
                                 finish();

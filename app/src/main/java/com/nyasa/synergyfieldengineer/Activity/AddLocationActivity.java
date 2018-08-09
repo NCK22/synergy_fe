@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.nyasa.synergyfieldengineer.R;
+import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
 public class AddLocationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -22,13 +23,14 @@ public class AddLocationActivity extends AppCompatActivity implements Navigation
     DrawerLayout drawerLayout;
     private NavigationView navigationView;
     Toolbar toolbar;
+    SPUserProfile spUserProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_list);
 
-
+        spUserProfile=new SPUserProfile(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Add Location");
         setSupportActionBar(toolbar);
@@ -116,6 +118,7 @@ public class AddLocationActivity extends AppCompatActivity implements Navigation
                         spCustProfile.setProfilePhotoPath("");
                         spCustProfile.setGender("");
                         spCustProfile.clearGalleryPhotoPath();*/
+                        spUserProfile.setIsLogin("false");
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
