@@ -13,7 +13,8 @@ public class ChildPojoCase {
     private Object fileNo;
     private Object consultantRef;
     @SerializedName("ClientName") String clientName;
-    private Object clientContactNo;
+    @SerializedName("ClientContactNo") String ClientContactNo;
+
     @SerializedName("instituteId") String instituteId;
     private Object instituteWiseType;
     @SerializedName("propertyType") String propertyType;
@@ -22,7 +23,7 @@ public class ChildPojoCase {
     @SerializedName("propertyNo") String propertyNo;
     @SerializedName("floorNo") String floorNo;
     @SerializedName("ProjectName") String projectName;
-    @SerializedName("BuildingWing") String buildingWing;
+    @SerializedName("buildingWing") String buildingWing;
     private Object societyApartmentName;
     @SerializedName("surveyPlotNo") String surveyPlotNo;
     private Object remainingAddress;
@@ -74,7 +75,7 @@ public class ChildPojoCase {
     private Object reportFloorwiseRate;
     @SerializedName("areaUOMPair") String areaUOMPair;
     private Object showSignatureOnReport;
-    @SerializedName("locationId") String locationId;
+    @SerializedName("LocationId") String locationId;
     private Object preApprovedBy;
 
     public String getCaseId() {
@@ -149,12 +150,12 @@ public class ChildPojoCase {
         this.clientName = clientName;
     }
 
-    public Object getClientContactNo() {
-        return clientContactNo;
+    public String getClientContactNo() {
+        return ClientContactNo;
     }
 
-    public void setClientContactNo(Object clientContactNo) {
-        this.clientContactNo = clientContactNo;
+    public void setClientContactNo(String clientContactNo) {
+        ClientContactNo = clientContactNo;
     }
 
     public String getInstituteId() {

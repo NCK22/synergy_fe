@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="0.30"
+        android:layout_weight="0.40"
         android:layout_height="match_parent">
 
         <TextView
@@ -25,7 +25,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1.30"
+        android:layout_weight="1.20"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="2dp"
@@ -49,6 +49,16 @@
             android:textSize="16sp"
             android:textColor="#808080"
             />
+
+        <TextView
+            android:id="@+id/tv_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact : "
+            android:textSize="16sp"
+            android:textColor="#808080"
+            />
+
 
         <TextView
             android:id="@+id/tv_address1"

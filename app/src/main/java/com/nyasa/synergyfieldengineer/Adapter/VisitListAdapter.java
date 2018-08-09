@@ -61,12 +61,14 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
 
 
         final ChildPojoCase singleItem = dataList.get(position);
-        holder.case_id.setText(singleItem.getCaseId());
+        holder.case_id.setText(singleItem.getCaseNo());
         holder.applicant_name.setText(singleItem.getClientName());
         holder.project_name.setText(singleItem.getProjectName());
-        if(singleItem.getVillageCity()!=null)
-        holder.address1.setText(singleItem.getVillageCity()+" ,");
+       // if(singleItem.getVillageCity()!=null)
+        //holder.address1.setText(singleItem.getVillageCity()+" ,"+singleItem.getPincode());
+        holder.address1.setText("City : N/A"+" ,"+singleItem.getPincode());
         holder.address2.setText(singleItem.getState());
+        holder.contact.append(singleItem.getClientContactNo());
 
 
 
@@ -87,7 +89,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
 
     public class ItemRowHolder extends RecyclerView.ViewHolder {
         public ImageView image;
-        public TextView case_id,applicant_name,project_name,address1,address2;
+        public TextView case_id,applicant_name,project_name,address1,address2,contact;
         public LinearLayout lyt_parent;
         public Button btnEdit;
         ImageButton ibtnInterest;
@@ -100,7 +102,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
             project_name = (TextView) itemView.findViewById(R.id.tv_projectName);
             address1 = (TextView) itemView.findViewById(R.id.tv_address1);
             address2 = (TextView) itemView.findViewById(R.id.tv_address2);
-
+            contact=(TextView)itemView.findViewById(R.id.tv_contact);
             btnEdit = (Button) itemView.findViewById(R.id.btn_edit);
 
         }
