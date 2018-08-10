@@ -110,10 +110,5 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
         public void showToast(String msg) {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
-
-
-
-
-
-}
+    }
 

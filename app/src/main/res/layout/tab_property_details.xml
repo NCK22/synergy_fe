@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginBottom="0dp"
+android:background="#ffffff"
+>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:fillViewport="true"
+        android:layout_marginBottom="0dp"
+        android:background="#00000000">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical">
+
+
+
+            <EditText
+                android:id="@+id/et_before_floor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:singleLine="false"
+                android:maxLines="5"
+                android:hint="Before Floor Details"
+                android:layout_marginBottom="15dp"/>
+
+
+            <EditText
+                android:id="@+id/et_noOfFloors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:singleLine="false"
+                android:maxLines="5"
+                android:hint="No of Floor"
+                android:layout_marginBottom="15dp"/>
+
+
+            <EditText
+                android:id="@+id/et_proposed_noOfFloors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:singleLine="false"
+                android:maxLines="5"
+                android:hint="Proposed No. of Floors"
+                android:layout_marginBottom="15dp"/>
+
+
+            <EditText
+                android:id="@+id/et_landmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:singleLine="false"
+                android:maxLines="5"
+                android:hint="Landmark"
+                android:layout_marginBottom="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_spinner"
+                android:layout_marginBottom="15dp">
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/sp_construction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tooltipText="Construction as per Approved plan"
+                    ></android.support.v7.widget.AppCompatSpinner>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_rooms_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Property Room Details :"
+                android:layout_marginBottom="15dp"/>
+
+            <LinearLayout
+                android:id="@+id/ll_room_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#00000000"
+                android:visibility="visible"
+                >
+
+                <EditText
+                    android:id="@+id/et_total_rooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Total Rooms :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_living_rooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Living Rooms :"
+                    android:layout_marginBottom="15dp"/>
+
+
+                <EditText
+                    android:id="@+id/et_kitchen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Kitchen :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_bedrooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="BedRooms :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_bathrooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Bathrooms :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_wc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="WC"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_common_toilet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Common Toilet :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_attached_toilet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Atached Toilet :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_dry_balcony"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Dry Balcony/Terrace :"
+                    android:layout_marginBottom="15dp"/>
+
+
+                <EditText
+                    android:id="@+id/et_attached_terrace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Attached Terrace :"
+                    android:layout_marginBottom="15dp"/>
+
+
+                <EditText
+                    android:id="@+id/et_parking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Parking :"
+                    android:layout_marginBottom="15dp"/>
+
+
+                <EditText
+                    android:id="@+id/et_garden"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Garden :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_other1_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Other 1 Name :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_other1_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Other 1 No :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_other2_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Other 2 Name :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_other2_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Other 2 No :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_other3_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Other 3 Name :"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_other3_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:hint="Other 3 No :"
+                    android:layout_marginBottom="15dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#808080"
+                android:layout_marginBottom="15dp"/>
+
+            <TextView
+                android:id="@+id/tv_boundaries_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Boundaries of Property:"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:id="@+id/ll_boundaries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/et_boundary_east"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:hint="East"
+                    android:layout_marginBottom="15dp"/>
+
+                <EditText
+                    android:id="@+id/et_boundary_south"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:hint="South"
+                    android:layout_marginBottom="15dp"/>
+                <EditText
+                    android:id="@+id/et_boundary_west"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:hint="West"
+                    android:layout_marginBottom="15dp"/>
+                <EditText
+                    android:id="@+id/et_boundary_north"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:hint="North"
+                    android:layout_marginBottom="15dp"/>
+
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#808080"
+                android:layout_marginBottom="15dp"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_spinner"
+                android:layout_marginBottom="15dp">
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/sp_land_use_actual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tooltipText="Land Use Actual"
+                    ></android.support.v7.widget.AppCompatSpinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_spinner"
+                android:layout_marginBottom="15dp">
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/sp_land_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tooltipText="Land Status"
+                    ></android.support.v7.widget.AppCompatSpinner>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_age_of_propert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:hint="Age of Property :"
+                android:layout_marginBottom="15dp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
