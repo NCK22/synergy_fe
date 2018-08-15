@@ -16,6 +16,9 @@ import com.nyasa.synergyfieldengineer.Pojo.ParentPojoLogin;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,6 +68,14 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(Call<ParentPojoLogin> call, Response<ParentPojoLogin> response) {
 
                     Log.e("Inside", "onResponse");
+                    Log.e("Eror ",response.errorBody().toString());
+                    Log.e("Message", String.valueOf(response.code()));
+                  /*  try {
+                        JSONObject jsonObject=new JSONObject(response.errorBody().toString());
+                        Log.e("errormsg",jsonObject.getString("message"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }*/
                /* Log.e("response body",response.body().getStatus());
                 Log.e("response body",response.body().getMsg());*/
                     ParentPojoLogin parentPojoLogin = response.body();

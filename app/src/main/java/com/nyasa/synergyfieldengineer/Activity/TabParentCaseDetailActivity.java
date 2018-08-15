@@ -1,4 +1,3 @@
-/*
 package com.nyasa.synergyfieldengineer.Activity;
 
 import android.app.ProgressDialog;
@@ -25,6 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nyasa.synergyfieldengineer.R;
+import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
+import com.nyasa.synergyfieldengineer.Fragment.TabBasicDetails;
 import com.squareup.picasso.Picasso;
 
 import cn.gavinliu.android.lib.shapedimageview.ShapedImageView;
@@ -46,9 +48,8 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
 
     TextView testtv;
     TabLayout tabLayout;
-    //SPCustProfile spCustProfile;
+    SPUserProfile spUserProfile;
     ProgressDialog progressDialog;
-
 
     Intent intent;
     Bundle bundle;
@@ -57,12 +58,12 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_view_parent);
+        setContentView(R.layout.activity_tab_parent_case_detail);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
         progressDialog=new ProgressDialog(this);
-        spCustProfile=new SPCustProfile(this);
+        spUserProfile=new SPUserProfile(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,7 +82,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
 
         //   Tabs Activity
 
-        mSectionsPagerAdapter = new TabViewParentActivity.SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new TabParentCaseDetailActivity.SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.vp_parent);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -114,24 +115,6 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        bottmNavView=(BottomNavigationViewEx)findViewById(R.id.bottomNavigationView);
-        bottmNavView.setOnNavigationItemSelectedListener(this);
-        bottmNavView.setSelectedItemId(R.id.bmenu_go_home);
-        bottmNavView.enableAnimation(false);
-        bottmNavView.enableShiftingMode(false);
-        bottmNavView.enableItemShiftingMode(false);
-        bottmNavView.setIconSize(30,30);
-        bottmNavView.setTextSize(0);
-        bottmNavView.setTextVisibility(false);
-        bottmNavView.setFocusableInTouchMode(true);
-        bottmNavView.setPadding(0,0,0,0);
-
-      //  bottmNavView.setItemBackground(0,R.color.colorTheme);
-     //   bottmNavView.setIconSizeAt(bottmNavView.getMenuItemPosition(bottmNavView.getMenu().findItem(bottmNavView.getSelectedItemId())),32,32);
-
-        // if(spCustProfile.getProfilePhotoPath().equalsIgnoreCase(""))
-        getProfile();
-    Log.e("SPProfilephoto",spCustProfile.getProfilePhotoPath());
         setHeader();
 
 
@@ -164,29 +147,28 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
         switch (item.getItemId()) {
             case R.id.menu_go_home:
                 Log.e("menu","home");
-             //   toolbar.setTitle(getString(R.string.menu_home));
-
-                startActivity(new Intent(TabViewParentActivity.this, TabViewParentActivity.class));
+                //   toolbar.setTitle(getString(R.string.menu_home));
+                startActivity(new Intent(getApplicationContext(), VisitListActivity.class));
                 return true;
 
-            case R.id.menu_go_matches:
+            case R.id.menu_go_history:
                 Log.e("menu","matches");
-             //   toolbar.setTitle(getString(R.string.menu_matches));
-                startActivity(new Intent(getApplicationContext(),TabParentMatchesActivity.class).putExtra("tabFlag","matches"));
+                //   toolbar.setTitle(getString(R.string.menu_matches));
+                startActivity(new Intent(getApplicationContext(),HistoryActivity.class).putExtra("tabFlag","matches"));
                 finish();
                 return true;
 
             case R.id.menu_go_profile:
                 Log.e("menu","profile");
 //                toolbar.setTitle(getString(R.string.menu_matches));
-                startActivity(new Intent(getApplicationContext(),TabParentProfileActivity.class).putExtra("tabFlag","profile"));
+                startActivity(new Intent(getApplicationContext(),ProfileActivity.class).putExtra("tabFlag","profile"));
                 finish();
                 return true;
 
-            case R.id.menu_go_setting:
+            case R.id.menu_go_location:
                 Log.e("menu","settings");
 //                toolbar.setTitle(getString(R.string.menu_matches));
-                startActivity(new Intent(getApplicationContext(), TabParentSettingsActivity.class).putExtra("tabFlag", "profile"));
+                startActivity(new Intent(getApplicationContext(), AddLocationActivity.class).putExtra("tabFlag", "profile"));
                 finish();
                 return true;
 
@@ -195,7 +177,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                 return true;
 
         }
-            return false;
+        return false;
     }
 
 
@@ -222,27 +204,23 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
 
                 case 0:
                     Log.e("Tab", "home");
-                    TabHome tabHome = new TabHome();
-                    return tabHome;
+                    TabBasicDetails tabBasicDetails=new TabBasicDetails();
+                    return tabBasicDetails;
 
                 case 1:
 
                         Log.e("Tab", "whoViewed");
-                        TabWhoViewed tabWhoViewed = new TabWhoViewed();
-                        return tabWhoViewed;
+                    TabBasicDetails tabBasicDetails1=new TabBasicDetails();
+                    return tabBasicDetails1;
+
 
                 case 2:
 
                         Log.e("Tab", "whoShortListed");
-                        TabWhoShortlisted tabWhoShortlisted = new TabWhoShortlisted();
-                        return tabWhoShortlisted;
+                    TabBasicDetails tabBasicDetails2=new TabBasicDetails();
+                    return tabBasicDetails2;
 
 
-
-                case 3:
-                        Log.e("Tab", "whoInterested");
-                        TabWhoInterested tabWhoInterested = new TabWhoInterested();
-                        return tabWhoInterested;
 
                 default:
                     return null;
@@ -275,8 +253,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                // startActivity(new Intent(getApplicationContext(),TabViewParentActivity.class).putExtra("tabFlag","home"));
                 break;
 
-            case R.id.menu_go_matches:
-                //startActivity(new Intent(getApplicationContext(),TabParentMatchesActivity.class).putExtra("tabFlag","matches"));
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -285,16 +262,14 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
 
     private void logout() {
 
-        new AlertDialog.Builder(TabViewParentActivity.this)
+        new AlertDialog.Builder(TabParentCaseDetailActivity.this)
                 .setTitle(getString(R.string.menu_logout))
                 .setMessage(getString(R.string.logout_msg))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //MyApp.saveIsLogin(false);
-                        spCustProfile.setIsLogin("false");
-                        spCustProfile.setProfilePhotoPath("");
-                        spCustProfile.setGender("");
-                        spCustProfile.clearGalleryPhotoPath();
+                        spUserProfile.setIsLogin("false");
+
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
@@ -310,7 +285,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                 .show();
     }
 
-    public void getProfile(){
+   /* public void getProfile(){
 
         Log.e("Inside","getProfile");
         progressDialog.show();
@@ -322,9 +297,8 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
             public void onResponse(Call<ParentPojoProfile> call, Response<ParentPojoProfile> response) {
 
                 Log.e("Inside","onResponse");
-               */
-/* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*//*
+ Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
 
                 ParentPojoProfile parentPojoProfile =response.body();
                 if(parentPojoProfile !=null){
@@ -357,8 +331,8 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
         });
 
     }
-
-    private void setHeader() {
+*/
+    private void setHeader() {/*
         Log.e("setHeader","TabViewParent");
         if (spCustProfile.getIsLogin().equalsIgnoreCase("true")) {
             View header = navigationView.getHeaderView(0);
@@ -371,10 +345,9 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
 
             if(spCustProfile.getProfilePhotoPath()!=null) {
                 Log.e("profile_photo","http://applex360.in/Deshpande-family/Matrimony-web/" + spCustProfile.getProfilePhotoPath());
-              */
-/*  Picasso.with(this).load("http://applex360.in/Deshpande-family/Matrimony-web/" + spCustProfile.getProfilePhotoPath())
+  Picasso.with(this).load("http://applex360.in/Deshpande-family/Matrimony-web/" + spCustProfile.getProfilePhotoPath())
                         .placeholder(R.mipmap.userprofile)
-                        .into(imageUser);*//*
+                        .into(imageUser);
 
 
 
@@ -399,24 +372,20 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                 @Override
                 public void onClick(View v) {
 
-                    */
-/*Intent profile = new Intent(TabParentProfileActivity.this, TabParentProfileActivity.class);
-                    profile.putExtra("id", MyApp.getUserId());
-                    if (MyApp.getIsJobProvider())
-                        profile.putExtra("p_type", "jp");
-                    else
-                        profile.putExtra("p_type", "js");
+            Intent profile = new Intent(TabParentCaseDetailActivity.this, ProfileActivity.class);
+                    profile.putExtra("id", spUserProfile.getUser_id());
+
                     profile.putExtra("editFlag", "true");
                     profile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(profile);*//*
+                    startActivity(profile);
 
                 }
             });
-        }
+        }*/
     }
 
     private void exitApp() {
-        new AlertDialog.Builder(TabViewParentActivity.this)
+        new AlertDialog.Builder(TabParentCaseDetailActivity.this)
                 .setTitle(getString(R.string.app_name))
                 .setMessage(getString(R.string.exit_msg))
                 //.setIcon(R.mipmap.ic_launcher_app)
@@ -444,4 +413,3 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
     }
 }
 
-*/
