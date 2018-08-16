@@ -2,6 +2,7 @@ package com.nyasa.synergyfieldengineer.Adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.nyasa.synergyfieldengineer.Activity.TabParentCaseDetailActivity;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoCase;
 import com.squareup.picasso.Picasso;
@@ -76,6 +78,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
             @Override
             public void onClick(View v) {
 
+                mContext.startActivity(new Intent(mContext, TabParentCaseDetailActivity.class));
             }
         });
 

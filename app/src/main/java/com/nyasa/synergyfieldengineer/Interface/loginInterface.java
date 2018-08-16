@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 public interface loginInterface {
 
     @FormUrlEncoded
-    @POST("api/userlogin")
+    @POST("synergyapi/api/userlogin")
     Call<ParentPojoLogin> doGetListResources(@Field("username") String username, @Field("password") String password);
 
 
