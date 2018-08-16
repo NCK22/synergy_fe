@@ -26,6 +26,7 @@
         <activity android:name=".Activity.HistoryActivity"/>
         <activity android:name=".Activity.ProfileActivity"/>
         <activity android:name=".Activity.LoginActivity"/>
+        <activity android:name=".Activity.TabParentCaseDetailActivity"/>
     </application>
 
 </manifest>

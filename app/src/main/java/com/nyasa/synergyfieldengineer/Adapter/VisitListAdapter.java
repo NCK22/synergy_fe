@@ -78,7 +78,9 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
             @Override
             public void onClick(View v) {
 
-                mContext.startActivity(new Intent(mContext, TabParentCaseDetailActivity.class));
+                Intent intent=new Intent(mContext,TabParentCaseDetailActivity.class);
+                intent.putExtra("case_id",singleItem.getCaseId());
+                mContext.startActivity(intent);
             }
         });
 

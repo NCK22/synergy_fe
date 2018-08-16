@@ -10,7 +10,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1A000000"
+        android:background="#00000000"
         >
         <!--
         <android.support.v7.widget.Toolbar
@@ -29,36 +29,33 @@
             android:id="@+id/tl_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="#00000000"
-            app:tabBackground="@drawable/tab_color_selector"
+            app:tabIndicatorColor="#6bcdfd"
+            app:tabBackground="@color/white"
             app:tabIndicatorHeight="3dp"
+            app:tabSelectedTextColor="#6bcdfd"
+            app:tabTextColor="@color/black"
+            app:tabTextAppearance="@style/CustomTabs"
             app:tabMode="scrollable">
 
             <android.support.design.widget.TabItem
-                android:id="@+id/ti_home"
+                android:id="@+id/ti_basic_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                android:text="Basic Details"
+                app:tabTextAppearance="@style/CustomTabs"
                 />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/ti_viewed_me"
+                android:id="@+id/ti_property_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Who Viewed My Profile" />
+                android:text="Property Details" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/ti_shortlist_me"
+                android:id="@+id/ti_work_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Who Shortlisted Me"
-                />
-            <android.support.design.widget.TabItem
-                android:id="@+id/ti_interest_me"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Who Interested in Me"
+                android:text="Work Status"
                 />
 
 

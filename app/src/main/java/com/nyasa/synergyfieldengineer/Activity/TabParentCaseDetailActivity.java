@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nyasa.synergyfieldengineer.Fragment.TabPropertyDetails;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 import com.nyasa.synergyfieldengineer.Fragment.TabBasicDetails;
@@ -72,7 +73,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
 
         tabLayout=(TabLayout)findViewById(R.id.tl_parent);
         tabLayout.addOnTabSelectedListener(this);
-        tabLayout.setTabTextColors(Color.BLACK,Color.WHITE);
+       // tabLayout.setTabTextColors(Color.BLACK,Color.WHITE);
 
         intent=getIntent();
 
@@ -205,19 +206,28 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                 case 0:
                     Log.e("Tab", "home");
                     TabBasicDetails tabBasicDetails=new TabBasicDetails();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("case_id",intent.getStringExtra("case_id"));
+                    tabBasicDetails.setArguments(bundle);
                     return tabBasicDetails;
 
                 case 1:
 
                         Log.e("Tab", "whoViewed");
-                    TabBasicDetails tabBasicDetails1=new TabBasicDetails();
-                    return tabBasicDetails1;
+                    TabPropertyDetails tabPropertyDetails=new TabPropertyDetails();
+                    Bundle bundle1=new Bundle();
+                    bundle1.putString("case_id",intent.getStringExtra("case_id"));
+                    tabPropertyDetails.setArguments(bundle1);
+                    return tabPropertyDetails;
 
 
                 case 2:
 
                         Log.e("Tab", "whoShortListed");
                     TabBasicDetails tabBasicDetails2=new TabBasicDetails();
+                    Bundle bundle2=new Bundle();
+                    bundle2.putString("case_id",intent.getStringExtra("case_id"));
+                    tabBasicDetails2.setArguments(bundle2);
                     return tabBasicDetails2;
 
 
@@ -240,7 +250,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
         public int getCount() {
             // Show 3 total pages.
 
-            return 4;
+            return 3;
 
         }
     }
