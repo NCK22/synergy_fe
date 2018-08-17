@@ -1,5 +1,8 @@
 package com.nyasa.synergyfieldengineer.Pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 public class ChildPojoCase {
@@ -8,31 +11,31 @@ public class ChildPojoCase {
     @SerializedName("CaseNo") String caseNo;
     @SerializedName("caseStatus") String caseStatus;
     @SerializedName("isActive") String isActive;
-    @SerializedName("inwardDate") String inwardDate;
+    @SerializedName("InwardDate") String inwardDate;
     @SerializedName("caseType") String caseType;
-    private Object fileNo;
-    private Object consultantRef;
+    @SerializedName("fileNo") String fileNo;
+    @SerializedName("consultantRef") String consultantRef;
     @SerializedName("ClientName") String clientName;
     @SerializedName("ClientContactNo") String ClientContactNo;
 
-    @SerializedName("instituteId") String instituteId;
-    private Object instituteWiseType;
-    @SerializedName("propertyType") String propertyType;
+    @SerializedName("InstituteId") String instituteId;
+    @SerializedName("instituteWiseType") String instituteWiseType;
+    @SerializedName("PropertyType") String propertyType;
     @SerializedName("locality") String locality;
-    private Object subLocatlity;
-    @SerializedName("propertyNo") String propertyNo;
-    @SerializedName("floorNo") String floorNo;
+    @SerializedName("SubLocatlity") String subLocality;
+    @SerializedName("PropertyNo") String propertyNo;
+    @SerializedName("FloorNo") String floorNo;
     @SerializedName("ProjectName") String projectName;
-    @SerializedName("buildingWing") String buildingWing;
-    private Object societyApartmentName;
-    @SerializedName("surveyPlotNo") String surveyPlotNo;
-    private Object remainingAddress;
-    private Object villageCity;
-    private Object villageCityOld;
-    private Object taluka;
-    private Object talukaOld;
-    private Object district;
-    private Object districtOld;
+    @SerializedName("BuildingWing") String buildingWing;
+    @SerializedName("societyApartmentName") String societyApartmentName;
+    @SerializedName("SurveyPlotNo") String surveyPlotNo;
+    @SerializedName("remainingAddress") String remainingAddress;
+    @SerializedName("villageCity") String villageCity;
+    @SerializedName("villageCityOld") String  villageCityOld;
+    @SerializedName("taluka") String taluka;
+    @SerializedName("talukaOld") String talukaOld;
+    @SerializedName("district") String district;
+    @SerializedName("districtOld") String districtOld;
     @SerializedName("Pincode") String pincode;
     @SerializedName("State") String state;
     @SerializedName("CountryId") String countryId;
@@ -130,7 +133,7 @@ public class ChildPojoCase {
         return fileNo;
     }
 
-    public void setFileNo(Object fileNo) {
+    public void setFileNo(String fileNo) {
         this.fileNo = fileNo;
     }
 
@@ -138,7 +141,7 @@ public class ChildPojoCase {
         return consultantRef;
     }
 
-    public void setConsultantRef(Object consultantRef) {
+    public void setConsultantRef(String consultantRef) {
         this.consultantRef = consultantRef;
     }
 
@@ -170,7 +173,7 @@ public class ChildPojoCase {
         return instituteWiseType;
     }
 
-    public void setInstituteWiseType(Object instituteWiseType) {
+    public void setInstituteWiseType(String instituteWiseType) {
         this.instituteWiseType = instituteWiseType;
     }
 
@@ -190,12 +193,12 @@ public class ChildPojoCase {
         this.locality = locality;
     }
 
-    public Object getSubLocatlity() {
-        return subLocatlity;
+    public String getSubLocality() {
+        return subLocality;
     }
 
-    public void setSubLocatlity(Object subLocatlity) {
-        this.subLocatlity = subLocatlity;
+    public void setSubLocality(String subLocality) {
+        this.subLocality = subLocality;
     }
 
     public String getPropertyNo() {
@@ -234,7 +237,7 @@ public class ChildPojoCase {
         return societyApartmentName;
     }
 
-    public void setSocietyApartmentName(Object societyApartmentName) {
+    public void setSocietyApartmentName(String societyApartmentName) {
         this.societyApartmentName = societyApartmentName;
     }
 
@@ -250,15 +253,15 @@ public class ChildPojoCase {
         return remainingAddress;
     }
 
-    public void setRemainingAddress(Object remainingAddress) {
+    public void setRemainingAddress(String remainingAddress) {
         this.remainingAddress = remainingAddress;
     }
 
-    public Object getVillageCity() {
+    public String getVillageCity() {
         return villageCity;
     }
 
-    public void setVillageCity(Object villageCity) {
+    public void setVillageCity(String villageCity) {
         this.villageCity = villageCity;
     }
 
@@ -266,7 +269,7 @@ public class ChildPojoCase {
         return villageCityOld;
     }
 
-    public void setVillageCityOld(Object villageCityOld) {
+    public void setVillageCityOld(String villageCityOld) {
         this.villageCityOld = villageCityOld;
     }
 
@@ -274,7 +277,7 @@ public class ChildPojoCase {
         return taluka;
     }
 
-    public void setTaluka(Object taluka) {
+    public void setTaluka(String taluka) {
         this.taluka = taluka;
     }
 
@@ -282,15 +285,15 @@ public class ChildPojoCase {
         return talukaOld;
     }
 
-    public void setTalukaOld(Object talukaOld) {
+    public void setTalukaOld(String talukaOld) {
         this.talukaOld = talukaOld;
     }
 
-    public Object getDistrict() {
+    public String getDistrict() {
         return district;
     }
 
-    public void setDistrict(Object district) {
+    public void setDistrict(String district) {
         this.district = district;
     }
 
@@ -298,7 +301,7 @@ public class ChildPojoCase {
         return districtOld;
     }
 
-    public void setDistrictOld(Object districtOld) {
+    public void setDistrictOld(String districtOld) {
         this.districtOld = districtOld;
     }
 
@@ -653,5 +656,6 @@ public class ChildPojoCase {
     public void setPreApprovedBy(Object preApprovedBy) {
         this.preApprovedBy = preApprovedBy;
     }
+
 
 }

@@ -206,19 +206,16 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
                                 getCaseDetails(parentPojoAssignedCase.get(i).getCaseId());
                             }
 
+
                         }
-                        Log.e("list_assigned_case size",""+list_assigned_case.size());
+                      /*  Log.e("list_assigned_case size",""+list_assigned_case.size());
                         Log.e("List sizevafter for",""+mListItem.size());
-                        displayData();
-                        /*if(list_assigned_case.size()>0){
-                            getCaseDetails();
-                            }
-                        */
-                        //showToast(parentPojoAssignedCase.g());
+                        displayData();*/
+
                     }
 
-
                     progressDialog.dismiss();
+
                 }
 
                 @Override

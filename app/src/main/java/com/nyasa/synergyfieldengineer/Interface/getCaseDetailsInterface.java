@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 
 public interface getCaseDetailsInterface {
 
-    @GET("api/cases/{case_id}")
+    @GET("synergyapi/api/cases/{case_id}")
     Call<ArrayList<ChildPojoCase>> doGetListResources(@Path("case_id") String case_id);
 
 }

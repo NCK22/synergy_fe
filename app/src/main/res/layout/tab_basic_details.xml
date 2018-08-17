@@ -57,7 +57,7 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Case No : S1061817000003-01"
+                    android:text="Case No : "
                     android:layout_marginBottom="15dp"/>
 
                     <TextView
@@ -65,7 +65,7 @@ android:background="#ffffff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:text="Date : 08/08/2018"
+                        android:text="Date : "
                         android:layout_marginBottom="15dp"/>
 
          <!--       </LinearLayout>-->
@@ -76,7 +76,7 @@ android:background="#ffffff"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Bank : ICICI Bank"
+                    android:text="Bank : "
                     android:layout_marginBottom="15dp"/>
 
                 <TextView
@@ -126,12 +126,16 @@ android:background="#ffffff"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_spinner"
                     android:layout_marginBottom="15dp">
+
                 <android.support.v7.widget.AppCompatSpinner
                     android:id="@+id/sp_occu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:tooltipText="Occupation"
+                    android:tooltipText="Occupancy Status"
+                    android:prompt="@string/hint_occu"
+                    android:spinnerMode="dropdown"
                  ></android.support.v7.widget.AppCompatSpinner>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -227,31 +231,21 @@ android:background="#ffffff"
                 android:layout_marginBottom="15dp"/>
         </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_village"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner"
-                android:layout_marginBottom="15dp">
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_village"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:tooltipText="Village / City"
-                    ></android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
+                android:textSize="16sp"
+                android:text="Village/City : "
+                android:layout_marginBottom="15dp"/>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner"
-                android:layout_marginBottom="15dp">
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_district"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:tooltipText="District"
-                    ></android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
+                android:textSize="16sp"
+                android:text="District : "
+                android:layout_marginBottom="15dp"/>
 
             <EditText
                 android:id="@+id/et_pincode"
