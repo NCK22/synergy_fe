@@ -22,10 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nyasa.synergyfieldengineer.APIClient;
+import com.nyasa.synergyfieldengineer.Interface.getBankInterface;
 import com.nyasa.synergyfieldengineer.Interface.getCaseDetailsInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupOccupancyInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupRelationWithOccuInterface;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoCase;
+import com.nyasa.synergyfieldengineer.Pojo.ChildPojoInstitute;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoStaticLookup;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
@@ -124,17 +126,20 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                 if (childPojoCase != null) {
 
                    tvCaseNo.append(childPojoCase.getCaseNo());
-                   tvCaseDate.setText(childPojoCase.getInwardDate());
-
+                   tvCaseDate.append(childPojoCase.getInwardDate().substring(0,10));
+                    getBank(childPojoCase.getInstituteId());
                    etApplicantName.setText(childPojoCase.getClientName());
                    etPropertyNo.setText(childPojoCase.getPropertyNo());
                    etFloorNo.setText(childPojoCase.getFloorNo());
                    etBuildingNo.setText(childPojoCase.getBuildingWing());
                    etProjectName.setText(childPojoCase.getProjectName());
                    etSurveyNo.setText(childPojoCase.getSurveyPlotNo());
-                   tvVillage.setText(childPojoCase.getVillageCity());
-                   tvDistrict.setText(childPojoCase.getDistrict());
+                   if(childPojoCase.getVillageCity()!=null) {
+                       tvVillage.append(childPojoCase.getVillageCity());
+                       tvDistrict.append(childPojoCase.getDistrict());
+                   }
                    etPincode.setText(childPojoCase.getPincode());
+
                 }
 
 
@@ -231,6 +236,43 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
             }
         });
     }
+
+    public void getBank(String bank_id){
+
+        Log.e("Inside","getBank");
+        Log.e("bank_id",bank_id);
+        progressDialog.show();
+        getBankInterface getResponse = APIClient.getClient().create(getBankInterface.class);
+        Call<ArrayList<ChildPojoInstitute>> call = getResponse.doGetListResources(bank_id);
+        call.enqueue(new Callback<ArrayList<ChildPojoInstitute>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoInstitute>> call, Response<ArrayList<ChildPojoInstitute>> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+                ArrayList<ChildPojoInstitute> childPojoInstitute = response.body();
+
+                if(childPojoInstitute!=null)
+               tvBank.append(childPojoInstitute.get(0).getInstituteName());
+
+                Log.e("List size inside",""+mListItem.size());
+
+                ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_occu);
+                aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spOccu.setAdapter(aaOccu);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoInstitute>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
 
 
 

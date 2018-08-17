@@ -418,8 +418,8 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
     }
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        exitApp();
+        super.onBackPressed();
+       // exitApp();
     }
 }
 
