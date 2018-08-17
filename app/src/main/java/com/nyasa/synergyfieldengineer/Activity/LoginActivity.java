@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(Call<ParentPojoLogin> call, Response<ParentPojoLogin> response) {
 
                     Log.e("Inside", "onResponse");
-                    Log.e("Eror ",response.errorBody().toString());
+//                    Log.e("Eror ",response.errorBody().toString());
                     Log.e("Message", String.valueOf(response.code()));
                   /*  try {
                         JSONObject jsonObject=new JSONObject(response.errorBody().toString());
