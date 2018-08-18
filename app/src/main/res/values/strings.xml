@@ -13,4 +13,9 @@
     <string name="menu_location">Add Location</string>
     <string name="exit_msg">Do you really want to exit from from app?</string>
     <string name="hint_occu">Occupancy Status</string>
+    <string name="applicant_name">Applicant Name</string>
+    <string name="person_met_name">Name of Person Met At Site</string>
+    <string name="person_met_contact">Contact of person met at Site</string>
+    <string name="property_no">Property No</string>
+    <string name="floor_no">Floor No</string>
 </resources>
