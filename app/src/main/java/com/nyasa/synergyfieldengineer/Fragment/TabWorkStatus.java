@@ -1,22 +1,16 @@
 package com.nyasa.synergyfieldengineer.Fragment;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +18,7 @@ import android.widget.Toast;
 import com.nyasa.synergyfieldengineer.APIClient;
 import com.nyasa.synergyfieldengineer.Interface.getBankInterface;
 import com.nyasa.synergyfieldengineer.Interface.getCaseDetailsInterface;
+import com.nyasa.synergyfieldengineer.Interface.lookupInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupOccupancyInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupRelationWithOccuInterface;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoCase;
@@ -32,11 +27,7 @@ import com.nyasa.synergyfieldengineer.Pojo.ChildPojoStaticLookup;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,12 +39,12 @@ import retrofit2.Response;
  */
 
 
-public class TabBasicDetails extends Fragment implements View.OnClickListener {
+public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
 
 
 
-    EditText etEmail;
+
     Button  btnSave;
     SPUserProfile spUserProfile;
     ProgressDialog progressDialog;
@@ -61,23 +52,23 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
     EditText etApplicantName,etPersonAtSite,etContactPersonAtSite,etPropertyNo,etFloorNo,etBuildingNo,etProjectName,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
     String case_id="";
-    Spinner spOccu,spRelationWithOccu;
+    Spinner spFoundation,spRelationWithOccu;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
-    ArrayList<String> list_occu=new ArrayList<String>();
+    ArrayList<String> list_found=new ArrayList<String>();
     ArrayList<String> list_relation_occu=new ArrayList<String>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView=inflater.inflate(R.layout.tab_basic_details,container,false);
+        View rootView=inflater.inflate(R.layout.tab_work_status,container,false);
 
         Log.e("TabBasicDetails","onCreateView");
         progressDialog=new ProgressDialog(getActivity());
         spUserProfile=new SPUserProfile(getActivity());
 
-        tvCaseNo=(TextView)rootView.findViewById(R.id.tv_case_no);
+        /*tvCaseNo=(TextView)rootView.findViewById(R.id.tv_case_no);
         tvCaseDate=(TextView)rootView.findViewById(R.id.tv_date);
         tvBank=(TextView)rootView.findViewById(R.id.tv_bank);
         tvReportNo=(TextView)rootView.findViewById(R.id.tv_report_no);
@@ -93,21 +84,65 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         etProjectName=(EditText)rootView.findViewById(R.id.et_project_name);
         etSurveyNo=(EditText)rootView.findViewById(R.id.et_survey_no);
         etPincode=(EditText)rootView.findViewById(R.id.et_pincode);
-
-        spOccu=(Spinner)rootView.findViewById(R.id.sp_occu);
-        spRelationWithOccu=(Spinner)rootView.findViewById(R.id.sp_relation_with_occu);
+*/
+        spFoundation=(Spinner)rootView.findViewById(R.id.sp_foundation);
+       // spRelationWithOccu=(Spinner)rootView.findViewById(R.id.sp_relation_with_occu);
 
         Bundle bundle=getArguments();
         case_id=bundle.getString("case_id");
         Log.e("case_id",case_id);
-        getCaseDetails(case_id);
-        getOccupancy();
-        getRelationWithOccu();
+        //getCaseDetails(case_id);
+        getFoundation();
+        //getRelationWithOccu();
 
         return rootView;
 
     }
 
+
+    public void getFoundation(){
+
+
+        progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getFoundation();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                 ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+              if(childPojoStaticLookups!=null){
+                  for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                      list_found.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                  }
+              }
+
+                Log.e("List size inside",""+mListItem.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_found);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spFoundation.setAdapter(aa);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+
+/*
 
     public void getCaseDetails(String case_id){
 
@@ -119,8 +154,10 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
             public void onResponse(Call<ArrayList<ChildPojoCase>> call, Response<ArrayList<ChildPojoCase>> response) {
 
                 Log.e("Inside", "onResponse");
-               /* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*/
+               */
+/* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*//*
+
               //  ArrayList<ChildPojoCase> childPojoCase = response.body();
                 ChildPojoCase childPojoCase=response.body().get(0);
                 if (childPojoCase != null) {
@@ -157,45 +194,6 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         });
     }
 
-    public void getOccupancy(){
-
-
-        progressDialog.show();
-        lookupOccupancyInterface getResponse = APIClient.getClient().create(lookupOccupancyInterface.class);
-        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.doGetListResources();
-        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
-            @Override
-            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
-
-                Log.e("Inside", "onResponse");
-               /* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*/
-                 ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
-
-              if(childPojoStaticLookups!=null){
-                  for(int i=1;i<childPojoStaticLookups.size();i++){
-
-                      list_occu.add(childPojoStaticLookups.get(i).getLookupItemValue());
-                  }
-              }
-
-                Log.e("List size inside",""+mListItem.size());
-                if(mListItem.size()>0) {
-                    ArrayAdapter aaOccu = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_occu);
-                    aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spOccu.setAdapter(aaOccu);
-                }
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
-
-                Log.e("Throwabe ", "" + t);
-                progressDialog.dismiss();
-            }
-        });
-    }
 
     public void getRelationWithOccu(){
 
@@ -210,8 +208,10 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
             public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
 
                 Log.e("Inside", "onResponse");
-               /* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*/
+               */
+/* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*//*
+
                 ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
 
                 if(childPojoStaticLookups!=null){
@@ -250,19 +250,20 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
             public void onResponse(Call<ArrayList<ChildPojoInstitute>> call, Response<ArrayList<ChildPojoInstitute>> response) {
 
                 Log.e("Inside", "onResponse");
-               /* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*/
+               */
+/* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*//*
+
                 ArrayList<ChildPojoInstitute> childPojoInstitute = response.body();
 
                 if(childPojoInstitute!=null)
                tvBank.append(childPojoInstitute.get(0).getInstituteName());
 
                 Log.e("List size inside",""+mListItem.size());
-                if(mListItem.size()>0) {
-                    ArrayAdapter aaOccu = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_occu);
-                    aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spOccu.setAdapter(aaOccu);
-                }
+
+                ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_occu);
+                aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spOccu.setAdapter(aaOccu);
                 progressDialog.dismiss();
             }
 
@@ -274,6 +275,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
             }
         });
     }
+*/
 
 
 
