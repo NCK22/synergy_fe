@@ -65,6 +65,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
 
         Log.e("TabBasicDetails","onCreateView");
         progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setCanceledOnTouchOutside(false);
         spUserProfile=new SPUserProfile(getActivity());
 
         etBeforeFloor=(EditText)rootView.findViewById(R.id.et_before_floor);

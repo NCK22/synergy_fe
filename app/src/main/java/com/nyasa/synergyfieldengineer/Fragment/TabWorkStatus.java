@@ -53,9 +53,10 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
     EditText etApplicantName,etPersonAtSite,etContactPersonAtSite,etPropertyNo,etFloorNo,etBuildingNo,etProjectName,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
     String case_id="";
-    MaterialSpinner spFoundation,spWalls,spDoors,spFlooring,spIntFinish,spExtFinish,spElectric,spPlumbing,spKitchen,spParking;
+    MaterialSpinner spFoundationWork,spFoundation,spWalls,spDoors,spFlooring,spIntFinish,spExtFinish,spElectric,spPlumbing,spKitchen,spParking;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
+    ArrayList<String> list_found_work=new ArrayList<String>();
     ArrayList<String> list_found=new ArrayList<String>();
     ArrayList<String> list_walls=new ArrayList<String>();
     ArrayList<String> list_doors=new ArrayList<String>();
@@ -78,6 +79,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         Log.e("TabBasicDetails","onCreateView");
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setMessage("Please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
         spUserProfile=new SPUserProfile(getActivity());
 
         /*tvCaseNo=(TextView)rootView.findViewById(R.id.tv_case_no);
@@ -97,6 +99,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         etSurveyNo=(EditText)rootView.findViewById(R.id.et_survey_no);
         etPincode=(EditText)rootView.findViewById(R.id.et_pincode);
 */
+        spFoundationWork=(MaterialSpinner) rootView.findViewById(R.id.sp_foundation_work);
         spFoundation=(MaterialSpinner) rootView.findViewById(R.id.sp_foundation);
         spWalls=(MaterialSpinner) rootView.findViewById(R.id.sp_walls);
         spDoors=(MaterialSpinner) rootView.findViewById(R.id.sp_doors);
@@ -113,7 +116,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         case_id=bundle.getString("case_id");
         Log.e("case_id",case_id);
         //getCaseDetails(case_id);
-        getFoundation();
+        getFoundationWork();
 
 
         return rootView;
@@ -121,11 +124,53 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
     }
 
 
-    public void getFoundation(){
+    public void getFoundationWork(){
 
         progressDialog.show();
         lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
         Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getFoundation();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_found_work.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("List size inside",""+list_found_work.size());
+                if(list_found_work!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_found_work);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spFoundationWork.setAdapter(aa);
+                }
+                //   progressDialog.dismiss();
+                getFoundation();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getFoundation(){
+
+       // progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getSpecFoundation();
         call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
             @Override
             public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
