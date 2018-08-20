@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nyasa.synergyfieldengineer.Fragment.TabPropertyDetails;
+import com.nyasa.synergyfieldengineer.Fragment.TabWorkStatus;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 import com.nyasa.synergyfieldengineer.Fragment.TabBasicDetails;
@@ -224,11 +225,11 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                 case 2:
 
                         Log.e("Tab", "whoShortListed");
-                    TabBasicDetails tabBasicDetails2=new TabBasicDetails();
+                    TabWorkStatus tabWorkStatus=new TabWorkStatus();
                     Bundle bundle2=new Bundle();
                     bundle2.putString("case_id",intent.getStringExtra("case_id"));
-                    tabBasicDetails2.setArguments(bundle2);
-                    return tabBasicDetails2;
+                    tabWorkStatus.setArguments(bundle2);
+                    return tabWorkStatus;
 
 
 
