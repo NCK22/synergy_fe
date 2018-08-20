@@ -26,7 +26,10 @@ android:background="#ffffff"
             android:background="#FFFFFF"
             android:orientation="vertical">
 
-
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Before Floor Details">
 
             <EditText
                 android:id="@+id/et_before_floor"
@@ -35,9 +38,13 @@ android:background="#ffffff"
                 android:textSize="16sp"
                 android:singleLine="false"
                 android:maxLines="5"
-                android:hint="Before Floor Details"
-                android:layout_marginBottom="15dp"/>
 
+                android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="No of Floor">
 
             <EditText
                 android:id="@+id/et_noOfFloors"
@@ -46,8 +53,13 @@ android:background="#ffffff"
                 android:textSize="16sp"
                 android:singleLine="false"
                 android:maxLines="5"
-                android:hint="No of Floor"
+
                 android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Proposed No. of Floors">
 
             <EditText
                 android:id="@+id/et_proposed_noOfFloors"
@@ -56,9 +68,13 @@ android:background="#ffffff"
                 android:textSize="16sp"
                 android:singleLine="false"
                 android:maxLines="5"
-                android:hint="Proposed No. of Floors"
-                android:layout_marginBottom="15dp"/>
 
+                android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Landmark">
 
             <EditText
                 android:id="@+id/et_landmark"
@@ -67,21 +83,32 @@ android:background="#ffffff"
                 android:textSize="16sp"
                 android:singleLine="false"
                 android:maxLines="5"
-                android:hint="Landmark"
-                android:layout_marginBottom="15dp"/>
 
-            <LinearLayout
+                android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_construction"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner"
-                android:layout_marginBottom="15dp">
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_construction"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:tooltipText="Construction as per Approved plan"
-                    ></android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Construction"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
 
 
             <TextView
@@ -101,7 +128,10 @@ android:background="#ffffff"
                 android:background="#00000000"
                 android:visibility="visible"
                 >
-
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Total Rooms :">
                 <EditText
                     android:id="@+id/et_total_rooms"
                     android:layout_width="match_parent"
@@ -109,9 +139,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Total Rooms :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Living Rooms :">
                 <EditText
                     android:id="@+id/et_living_rooms"
                     android:layout_width="match_parent"
@@ -119,9 +153,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Living Rooms :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Kitchen :">
 
                 <EditText
                     android:id="@+id/et_kitchen"
@@ -130,9 +168,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Kitchen :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="BedRooms :">
                 <EditText
                     android:id="@+id/et_bedrooms"
                     android:layout_width="match_parent"
@@ -140,8 +182,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="BedRooms :"
+
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Bathrooms :">
 
                 <EditText
                     android:id="@+id/et_bathrooms"
@@ -150,8 +197,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Bathrooms :"
+
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="WC">
 
                 <EditText
                     android:id="@+id/et_wc"
@@ -160,8 +212,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="WC"
+
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Common Toilet :">
 
                 <EditText
                     android:id="@+id/et_common_toilet"
@@ -170,9 +227,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Common Toilet :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Atached Toilet :">
                 <EditText
                     android:id="@+id/et_attached_toilet"
                     android:layout_width="match_parent"
@@ -180,8 +241,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Atached Toilet :"
+
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Dry Balcony/Terrace :">
 
                 <EditText
                     android:id="@+id/et_dry_balcony"
@@ -190,9 +256,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Dry Balcony/Terrace :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Attached Terrace :">
 
                 <EditText
                     android:id="@+id/et_attached_terrace"
@@ -201,9 +271,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Attached Terrace :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Parking :">
 
                 <EditText
                     android:id="@+id/et_parking"
@@ -212,10 +286,14 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Parking :"
+
                     android:layout_marginBottom="15dp"/>
 
-
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Garden :">
                 <EditText
                     android:id="@+id/et_garden"
                     android:layout_width="match_parent"
@@ -223,9 +301,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Garden :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other 1 Name :">
                 <EditText
                     android:id="@+id/et_other1_name"
                     android:layout_width="match_parent"
@@ -233,9 +315,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Other 1 Name :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other 1 No :">
                 <EditText
                     android:id="@+id/et_other1_no"
                     android:layout_width="match_parent"
@@ -243,9 +329,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Other 1 No :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other 2 Name :">
                 <EditText
                     android:id="@+id/et_other2_name"
                     android:layout_width="match_parent"
@@ -253,9 +343,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Other 2 Name :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other 2 No :">
                 <EditText
                     android:id="@+id/et_other2_no"
                     android:layout_width="match_parent"
@@ -263,9 +357,13 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Other 2 No :"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other 3 Name :">
                 <EditText
                     android:id="@+id/et_other3_name"
                     android:layout_width="match_parent"
@@ -273,9 +371,12 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Other 3 Name :"
                     android:layout_marginBottom="15dp"/>
-
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other 3 No :">
                 <EditText
                     android:id="@+id/et_other3_no"
                     android:layout_width="match_parent"
@@ -283,9 +384,8 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:singleLine="false"
                     android:maxLines="5"
-                    android:hint="Other 3 No :"
                     android:layout_marginBottom="15dp"/>
-
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <View
@@ -311,36 +411,51 @@ android:background="#ffffff"
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="East">
                 <EditText
                     android:id="@+id/et_boundary_east"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="East"
-                    android:layout_marginBottom="15dp"/>
 
+                    android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="South">
                 <EditText
                     android:id="@+id/et_boundary_south"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="South"
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="West">
                 <EditText
                     android:id="@+id/et_boundary_west"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="West"
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="North">
                 <EditText
                     android:id="@+id/et_boundary_north"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="North"
                     android:layout_marginBottom="15dp"/>
-
+                </android.support.design.widget.TextInputLayout>
 
 
             </LinearLayout>
@@ -353,40 +468,62 @@ android:background="#ffffff"
                 android:layout_marginBottom="15dp"
                 android:visibility="visible"/>
 
-            <LinearLayout
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_land_use_actual"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Land Use"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_land_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Land Status"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner"
-                android:layout_marginBottom="15dp">
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_land_use_actual"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:tooltipText="Land Use Actual"
-                    ></android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner"
-                android:layout_marginBottom="15dp">
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_land_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:tooltipText="Land Status"
-                    ></android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
-
+                android:hint="Age of Property :">
             <EditText
                 android:id="@+id/et_age_of_propert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:hint="Age of Property :"
                 android:layout_marginBottom="15dp"/>
-
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
     </ScrollView>

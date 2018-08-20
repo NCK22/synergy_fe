@@ -22,22 +22,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nyasa.synergyfieldengineer.APIClient;
+import com.nyasa.synergyfieldengineer.Interface.addBasicDetailsInterface;
+import com.nyasa.synergyfieldengineer.Interface.assignedCaseInterface;
 import com.nyasa.synergyfieldengineer.Interface.getBankInterface;
 import com.nyasa.synergyfieldengineer.Interface.getCaseDetailsInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupOccupancyInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupRelationWithOccuInterface;
+import com.nyasa.synergyfieldengineer.Pojo.ChildPojoAssignedCase;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoCase;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoInstitute;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoStaticLookup;
+import com.nyasa.synergyfieldengineer.Pojo.CommonPojo;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
+import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,14 +60,14 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
 
 
     EditText etEmail;
-    Button  btnSave;
+    Button  btnSubmit;
     SPUserProfile spUserProfile;
     ProgressDialog progressDialog;
     TextView tvCaseNo,tvCaseDate,tvBank,tvReportNo,tvVillage,tvDistrict;
     EditText etApplicantName,etPersonAtSite,etContactPersonAtSite,etPropertyNo,etFloorNo,etBuildingNo,etProjectName,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
-    String case_id="";
-    Spinner spOccu,spRelationWithOccu;
+    String case_id="",insti_id="";
+    MaterialSpinner spOccu,spRelationWithOccu;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
     ArrayList<String> list_occu=new ArrayList<String>();
@@ -75,6 +81,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
 
         Log.e("TabBasicDetails","onCreateView");
         progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please wait");
         spUserProfile=new SPUserProfile(getActivity());
 
         tvCaseNo=(TextView)rootView.findViewById(R.id.tv_case_no);
@@ -94,15 +101,18 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         etSurveyNo=(EditText)rootView.findViewById(R.id.et_survey_no);
         etPincode=(EditText)rootView.findViewById(R.id.et_pincode);
 
-        spOccu=(Spinner)rootView.findViewById(R.id.sp_occu);
-        spRelationWithOccu=(Spinner)rootView.findViewById(R.id.sp_relation_with_occu);
+        spOccu=(MaterialSpinner) rootView.findViewById(R.id.sp_occu);
+        spRelationWithOccu=(MaterialSpinner) rootView.findViewById(R.id.sp_relation_with_occu);
+
+        btnSubmit=(Button)rootView.findViewById(R.id.btn_submit);
+        btnSubmit.setOnClickListener(this);
 
         Bundle bundle=getArguments();
         case_id=bundle.getString("case_id");
         Log.e("case_id",case_id);
         getCaseDetails(case_id);
         getOccupancy();
-        getRelationWithOccu();
+       // getRelationWithOccu();
 
         return rootView;
 
@@ -127,7 +137,8 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
 
                    tvCaseNo.append(childPojoCase.getCaseNo());
                    tvCaseDate.append(childPojoCase.getInwardDate().substring(0,10));
-                    getBank(childPojoCase.getInstituteId());
+                  //  getBank(childPojoCase.getInstituteId());
+                    insti_id=childPojoCase.getInstituteId();
                    etApplicantName.setText(childPojoCase.getClientName());
                    etPropertyNo.setText(childPojoCase.getPropertyNo());
                    etFloorNo.setText(childPojoCase.getFloorNo());
@@ -179,13 +190,14 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                   }
               }
 
-                Log.e("List size inside",""+mListItem.size());
-                if(mListItem.size()>0) {
+                Log.e("occu List size inside",""+list_occu.size());
+                if(list_occu.size()>0) {
                     ArrayAdapter aaOccu = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_occu);
                     aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spOccu.setAdapter(aaOccu);
                 }
                 progressDialog.dismiss();
+                getRelationWithOccu();
             }
 
             @Override
@@ -221,12 +233,13 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                     }
                 }
 
-                Log.e("List size inside",""+mListItem.size());
+                Log.e("relationList size inside",""+mListItem.size());
 
                 ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_relation_occu);
                 aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spRelationWithOccu.setAdapter(aaOccu);
                 progressDialog.dismiss();
+                getBank(insti_id);
             }
 
             @Override
@@ -257,12 +270,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                 if(childPojoInstitute!=null)
                tvBank.append(childPojoInstitute.get(0).getInstituteName());
 
-                Log.e("List size inside",""+mListItem.size());
-                if(mListItem.size()>0) {
-                    ArrayAdapter aaOccu = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_occu);
-                    aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spOccu.setAdapter(aaOccu);
-                }
+
                 progressDialog.dismiss();
             }
 
@@ -275,18 +283,50 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         });
     }
 
+    public void addBasicDetails(String case_id){
 
+   /*     Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = mdformat.format(calendar.getTime());*/
+
+        progressDialog.show();
+        JSONObject jsonObject=new JSONObject();
+        addBasicDetailsInterface getResponse = APIClient.getClient().create(addBasicDetailsInterface.class);
+        Call<CommonPojo> call = getResponse.doGetListResources(etApplicantName.getText().toString(),etPropertyNo.getText().toString()
+                ,etFloorNo.getText().toString(),etProjectName.getText().toString(),etBuildingNo.getText().toString(),
+                etSurveyNo.getText().toString(),etPincode.getText().toString(),case_id);
+        call.enqueue(new Callback<CommonPojo>() {
+            @Override
+            public void onResponse(Call<CommonPojo> call, Response<CommonPojo> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+
+
+                if (response != null) {
+
+                    Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
+
+                    }
+
+                progressDialog.dismiss();
+                }
+
+            @Override
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
 
 
     @Override
     public void onClick(View v) {
 
-       /* if(etEmail.getText().toString().length()==0)
-            showToast("Please enter email");
-        else if(!etEmail.getText().toString().contains("@")||!etEmail.getText().toString().contains("."))
-            showToast("Please enter valid Email");
-        else
-            //editEmail();*/
+     addBasicDetails(case_id);
     }
 
 

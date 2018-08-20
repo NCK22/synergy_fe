@@ -113,15 +113,20 @@ android:background="#ffffff"
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/applicant_name">
+
                 <EditText
                     android:id="@+id/et_applicant_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="Applicant Name"
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout
+               <!-- <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_spinner"
@@ -136,35 +141,89 @@ android:background="#ffffff"
                     android:spinnerMode="dropdown"
                  ></android.support.v7.widget.AppCompatSpinner>
 
-                </LinearLayout>
+                </LinearLayout>-->
 
-                <LinearLayout
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/sp_occu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginEnd="25dp"
+                    app:ms_alignLabels="false"
+                    app:ms_arrowColor="#000000"
+                    app:ms_arrowSize="20dp"
+                    app:ms_baseColor="#808080"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_enableFloatingLabel="false"
+                    app:ms_errorColor="#FFFFFF"
+                    app:ms_hintTextSize="16sp"
+                    app:ms_hint="Occupation"
+                    app:ms_hintColor="#000000"
+                    app:ms_multiline="false"
+                    app:ms_thickness="0.5dp"
+                    android:popupBackground="#e6e6e6"
+                    android:popupElevation="@dimen/floating_label_bottom_spacing"
+                    android:layout_marginBottom="15dp"
+                    />
+
+                <!--   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/border_spinner"
+                       android:layout_marginBottom="15dp">
+                       <android.support.v7.widget.AppCompatSpinner
+                           android:id="@+id/sp_relation_with_occu"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:tooltipText="Relation with Occupant"
+                           ></android.support.v7.widget.AppCompatSpinner>
+                   </LinearLayout>-->
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/sp_relation_with_occu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginEnd="25dp"
+                    app:ms_alignLabels="false"
+                    app:ms_arrowColor="#000000"
+                    app:ms_arrowSize="20dp"
+                    app:ms_baseColor="#808080"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_enableFloatingLabel="false"
+                    app:ms_errorColor="#FFFFFF"
+                    app:ms_hintTextSize="16sp"
+                    app:ms_hint="Relation with Occupant"
+                    app:ms_hintColor="#000000"
+                    app:ms_multiline="false"
+                    app:ms_thickness="0.5dp"
+                    android:popupBackground="#e6e6e6"
+                    android:popupElevation="@dimen/floating_label_bottom_spacing"
+                    android:layout_marginBottom="15dp"
+                    />
+
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_spinner"
-                    android:layout_marginBottom="15dp">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/sp_relation_with_occu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:tooltipText="Relation with Occupant"
-                        ></android.support.v7.widget.AppCompatSpinner>
-                </LinearLayout>
-
+                    android:hint="@string/person_met_name">
                 <EditText
                     android:id="@+id/et_name_person_met"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="Name of Person met at Site"
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/person_met_contact">
                 <EditText
                     android:id="@+id/et_contact_person_met"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:hint="Contact of Person met at Site"
                     android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
 
@@ -190,45 +249,70 @@ android:background="#ffffff"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/property_no">
+
             <EditText
                 android:id="@+id/et_property_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:hint="Property No"
                 android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/floor_no">
 
             <EditText
                 android:id="@+id/et_floor_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:hint="Floor No"
                 android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Building No / Wing">
 
             <EditText
                 android:id="@+id/et_building_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:hint="Building No / Wing"
                 android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Project Name">
 
             <EditText
                 android:id="@+id/et_project_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:hint="Project Name"
+
                 android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Survey Plot N">
+
 
             <EditText
                 android:id="@+id/et_survey_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:hint="Survey Plot N"
                 android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
             <TextView
@@ -247,14 +331,28 @@ android:background="#ffffff"
                 android:text="District : "
                 android:layout_marginBottom="15dp"/>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pincode">
             <EditText
                 android:id="@+id/et_pincode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:hint="Pincode"
                 android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
 
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:background="@color/navigation_default"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

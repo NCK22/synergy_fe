@@ -5,12 +5,15 @@
     android:orientation="horizontal"
     android:weightSum="2"
     android:layout_margin="2dp"
-    android:layout_marginBottom="35dp">
+    android:layout_marginBottom="35dp"
+    android:background="@drawable/border_visit_list">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="0.40"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/border_visit_list_vertical"
+        android:layout_marginBottom="2dp">
 
         <TextView
             android:id="@+id/tv_caseId"

@@ -29,6 +29,7 @@ import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
 import java.util.ArrayList;
 
+import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,11 +53,21 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
     EditText etApplicantName,etPersonAtSite,etContactPersonAtSite,etPropertyNo,etFloorNo,etBuildingNo,etProjectName,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
     String case_id="";
-    Spinner spFoundation,spRelationWithOccu;
+    MaterialSpinner spFoundation,spWalls,spDoors,spFlooring,spIntFinish,spExtFinish,spElectric,spPlumbing,spKitchen,spParking;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
     ArrayList<String> list_found=new ArrayList<String>();
-    ArrayList<String> list_relation_occu=new ArrayList<String>();
+    ArrayList<String> list_walls=new ArrayList<String>();
+    ArrayList<String> list_doors=new ArrayList<String>();
+    ArrayList<String> list_flooring=new ArrayList<String>();
+    ArrayList<String> list_int_finish=new ArrayList<String>();
+    ArrayList<String> list_ext_finish=new ArrayList<String>();
+    ArrayList<String> list_electric=new ArrayList<String>();
+    ArrayList<String> list_plumbing=new ArrayList<String>();
+    ArrayList<String> list_kitchen=new ArrayList<String>();
+    ArrayList<String> list_parking=new ArrayList<String>();
+
+
 
     @Nullable
     @Override
@@ -66,6 +77,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
         Log.e("TabBasicDetails","onCreateView");
         progressDialog=new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please wait");
         spUserProfile=new SPUserProfile(getActivity());
 
         /*tvCaseNo=(TextView)rootView.findViewById(R.id.tv_case_no);
@@ -85,15 +97,24 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         etSurveyNo=(EditText)rootView.findViewById(R.id.et_survey_no);
         etPincode=(EditText)rootView.findViewById(R.id.et_pincode);
 */
-        spFoundation=(Spinner)rootView.findViewById(R.id.sp_foundation);
-       // spRelationWithOccu=(Spinner)rootView.findViewById(R.id.sp_relation_with_occu);
+        spFoundation=(MaterialSpinner) rootView.findViewById(R.id.sp_foundation);
+        spWalls=(MaterialSpinner) rootView.findViewById(R.id.sp_walls);
+        spDoors=(MaterialSpinner) rootView.findViewById(R.id.sp_doors);
+        spFlooring=(MaterialSpinner) rootView.findViewById(R.id.sp_flooring);
+        spIntFinish=(MaterialSpinner) rootView.findViewById(R.id.sp_internal_finish);
+        spExtFinish=(MaterialSpinner) rootView.findViewById(R.id.sp_external_finish);
+        spElectric=(MaterialSpinner) rootView.findViewById(R.id.sp_electric);
+        spPlumbing=(MaterialSpinner) rootView.findViewById(R.id.sp_plumbing);
+        spKitchen=(MaterialSpinner) rootView.findViewById(R.id.sp_kitchen);
+        spParking=(MaterialSpinner) rootView.findViewById(R.id.sp_parking);
+
 
         Bundle bundle=getArguments();
         case_id=bundle.getString("case_id");
         Log.e("case_id",case_id);
         //getCaseDetails(case_id);
         getFoundation();
-        //getRelationWithOccu();
+
 
         return rootView;
 
@@ -101,7 +122,6 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
 
     public void getFoundation(){
-
 
         progressDialog.show();
         lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
@@ -129,7 +149,8 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_found);
                 aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spFoundation.setAdapter(aa);
-                progressDialog.dismiss();
+             //   progressDialog.dismiss();
+                getWalls();
             }
 
             @Override
@@ -141,6 +162,375 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         });
     }
 
+    public void getWalls(){
+
+       // progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getWalls();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_walls.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_walls size",""+list_walls.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_walls);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spWalls.setAdapter(aa);
+          //      progressDialog.dismiss();
+                getDoors();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+    public void getDoors(){
+
+      //  progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getDoors();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_doors.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_doors size",""+list_doors.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_doors);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spDoors.setAdapter(aa);
+            //    progressDialog.dismiss();
+                getFlooring();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getFlooring(){
+
+        progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getFlooring();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_flooring.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_flooring size",""+list_flooring.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_flooring);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spFlooring.setAdapter(aa);
+                progressDialog.dismiss();
+                getIntFinish();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getIntFinish(){
+
+      //  progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getInternalFinish();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_int_finish.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_int_finish size",""+list_int_finish.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_int_finish);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spIntFinish.setAdapter(aa);
+               // progressDialog.dismiss();
+                getExtFinish();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getExtFinish(){
+
+       // progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getExternalFinish();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_ext_finish.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_ext_finish size",""+list_ext_finish.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_ext_finish);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spExtFinish.setAdapter(aa);
+             //   progressDialog.dismiss();
+                getElectric();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+
+    public void getElectric(){
+
+      //  progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getElectric();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_electric.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_electric size",""+list_electric.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_electric);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spElectric.setAdapter(aa);
+             //   progressDialog.dismiss();
+                getPlumbing();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getPlumbing(){
+
+     //   progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getPlumbing();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_plumbing.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_plumbing size",""+list_plumbing.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_plumbing);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spPlumbing.setAdapter(aa);
+              //  progressDialog.dismiss();
+                getKitchen();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getKitchen(){
+
+       // progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getKitchen();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_kitchen.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_kitchen size",""+list_kitchen.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_kitchen);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spKitchen.setAdapter(aa);
+               // progressDialog.dismiss();
+                getParking();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+
+    public void getParking(){
+
+      //  progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getParkingFloor();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_parking.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_parking size",""+list_parking.size());
+
+                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_parking);
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spParking.setAdapter(aa);
+                progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
 
 /*
 
