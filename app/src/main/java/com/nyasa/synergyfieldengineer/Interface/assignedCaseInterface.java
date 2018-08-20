@@ -15,6 +15,7 @@ import retrofit2.http.Query;
 
 public interface assignedCaseInterface {
 
+
     @FormUrlEncoded
     @POST("synergyapi/api/assignedcase/{user_id}")
     Call<ArrayList<ChildPojoAssignedCase>> doGetListResources(@Field("assignedDate") String assignedDate, @Path("user_id") String case_id);

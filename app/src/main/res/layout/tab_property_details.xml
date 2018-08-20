@@ -87,18 +87,28 @@ android:background="#ffffff"
                 android:layout_marginBottom="15dp"/>
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_construction"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner"
-                android:layout_marginBottom="15dp">
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_construction"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:tooltipText="Construction as per Approved plan"
-                    ></android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Construction"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
 
 
             <TextView
@@ -458,32 +468,51 @@ android:background="#ffffff"
                 android:layout_marginBottom="15dp"
                 android:visibility="visible"/>
 
-            <LinearLayout
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_land_use_actual"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner"
-                android:layout_marginBottom="15dp">
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_land_use_actual"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:tooltipText="Land Use Actual"
-                    ></android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Land Use"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
 
-            <LinearLayout
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_land_status"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border_spinner"
-                android:layout_marginBottom="15dp">
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/sp_land_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:tooltipText="Land Status"
-                    ></android.support.v7.widget.AppCompatSpinner>
-            </LinearLayout>
-
+                android:layout_height="match_parent"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Land Status"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

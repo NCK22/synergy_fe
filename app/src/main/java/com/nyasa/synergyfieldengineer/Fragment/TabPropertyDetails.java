@@ -29,6 +29,7 @@ import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
 import java.util.ArrayList;
 
+import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +50,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     etBathRooms,etWc,etCmnToilet,etAttachToilet,etDryBalcony,etAttachTerrace,etParking,etGarden,etOther1Name,etOther1No,
     etOther2Name,etOther2No,etOther3Name,etOther3No,etEast,etWest,etNorth,etSouth,etAgeOfProperty;
     String case_id="";
-    Spinner spConstruction,spLandUseActual,spLandStatus;
+    MaterialSpinner spConstruction,spLandUseActual,spLandStatus;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
     ArrayList<String> list_constru=new ArrayList<String>();
@@ -94,9 +95,9 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         etSouth=(EditText)rootView.findViewById(R.id.et_boundary_south);
         etAgeOfProperty=(EditText)rootView.findViewById(R.id.et_age_of_propert);
 
-        spConstruction=(Spinner)rootView.findViewById(R.id.sp_construction);
-        spLandUseActual=(Spinner)rootView.findViewById(R.id.sp_land_use_actual);
-        spLandStatus=(Spinner)rootView.findViewById(R.id.sp_land_status);
+        spConstruction=(MaterialSpinner) rootView.findViewById(R.id.sp_construction);
+        spLandUseActual=(MaterialSpinner) rootView.findViewById(R.id.sp_land_use_actual);
+        spLandStatus=(MaterialSpinner) rootView.findViewById(R.id.sp_land_status);
 
         Bundle bundle=getArguments();
         case_id=bundle.getString("case_id");
