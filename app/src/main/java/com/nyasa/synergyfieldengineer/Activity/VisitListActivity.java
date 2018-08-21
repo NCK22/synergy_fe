@@ -57,6 +57,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Please Wait");
+        progressDialog.setCanceledOnTouchOutside(false);
         spUserProfile=new SPUserProfile(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

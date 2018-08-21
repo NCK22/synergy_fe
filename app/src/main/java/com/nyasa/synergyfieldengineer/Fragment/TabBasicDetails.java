@@ -23,9 +23,11 @@ import android.widget.Toast;
 
 import com.nyasa.synergyfieldengineer.APIClient;
 import com.nyasa.synergyfieldengineer.Interface.addBasicDetailsInterface;
+import com.nyasa.synergyfieldengineer.Interface.addPropertyOccuInterface;
 import com.nyasa.synergyfieldengineer.Interface.assignedCaseInterface;
 import com.nyasa.synergyfieldengineer.Interface.getBankInterface;
 import com.nyasa.synergyfieldengineer.Interface.getCaseDetailsInterface;
+import com.nyasa.synergyfieldengineer.Interface.getPOccuInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupOccupancyInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupRelationWithOccuInterface;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoAssignedCase;
@@ -40,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
@@ -66,7 +69,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
     TextView tvCaseNo,tvCaseDate,tvBank,tvReportNo,tvVillage,tvDistrict;
     EditText etApplicantName,etPersonAtSite,etContactPersonAtSite,etPropertyNo,etFloorNo,etBuildingNo,etProjectName,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
-    String case_id="",insti_id="";
+    String case_id="",insti_id="",pOccu="",pRel="",occuStatus="1";
     MaterialSpinner spOccu,spRelationWithOccu;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
@@ -82,6 +85,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         Log.e("TabBasicDetails","onCreateView");
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setMessage("Please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
         spUserProfile=new SPUserProfile(getActivity());
 
         tvCaseNo=(TextView)rootView.findViewById(R.id.tv_case_no);
@@ -168,10 +172,48 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         });
     }
 
-    public void getOccupancy(){
+
+
+    public void getPOccupancy(){
 
 
         progressDialog.show();
+        getPOccuInterface getResponse = APIClient.getClient().create(getPOccuInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.doGetListResources(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
+            @Override
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+                ArrayList<HashMap<String,String>> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    occuStatus="0";
+                   pOccu=childPojoStaticLookups.get(0).get("OccupancyStatus");
+                           pRel=childPojoStaticLookups.get(0).get("RelationWithOccupant");
+                }
+
+                Log.e("occu List size inside",""+list_occu.size());
+
+               // progressDialog.dismiss();
+               getOccupancy();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getOccupancy(){
+
+
+       // progressDialog.show();
         lookupOccupancyInterface getResponse = APIClient.getClient().create(lookupOccupancyInterface.class);
         Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.doGetListResources();
         call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
@@ -191,11 +233,13 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
               }
 
                 Log.e("occu List size inside",""+list_occu.size());
-                if(list_occu.size()>0) {
+                if(list_occu!=null) {
                     ArrayAdapter aaOccu = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_occu);
                     aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spOccu.setAdapter(aaOccu);
                 }
+              /*  if(!pOccu.equalsIgnoreCase(""))
+                    spOccu.setSelection(list_occu.indexOf(pOccu));*/
                 progressDialog.dismiss();
                 getRelationWithOccu();
             }
@@ -233,11 +277,13 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                     }
                 }
 
-                Log.e("relationList size inside",""+mListItem.size());
+                Log.e("relationList size",""+mListItem.size());
 
                 ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_relation_occu);
                 aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spRelationWithOccu.setAdapter(aaOccu);
+               /* if(!pRel.equalsIgnoreCase(""))
+                    spRelationWithOccu.setSelection(list_relation_occu.indexOf(pRel));*/
                 progressDialog.dismiss();
                 getBank(insti_id);
             }
@@ -283,7 +329,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         });
     }
 
-    public void addBasicDetails(String case_id){
+    public void addBasicDetails(final String case_id){
 
    /*     Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
@@ -306,12 +352,54 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
 
                 if (response != null) {
 
-                    Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
 
                     }
 
-                progressDialog.dismiss();
+              //  progressDialog.dismiss();
+                addOccupancyDetails(case_id);
                 }
+
+            @Override
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void addOccupancyDetails(String case_id){
+
+   /*     Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = mdformat.format(calendar.getTime());*/
+
+      //  progressDialog.show();
+        JSONObject jsonObject=new JSONObject();
+        addPropertyOccuInterface getResponse = APIClient.getClient().create(addPropertyOccuInterface.class);
+        Call<CommonPojo> call;
+        if(occuStatus.equalsIgnoreCase("0"))
+          call = getResponse.insertOccupancy(spOccu.getSelectedItem().toString(),spRelationWithOccu.getSelectedItem().toString(),case_id);
+        else
+       call = getResponse.insertOccupancy(spOccu.getSelectedItem().toString(),spRelationWithOccu.getSelectedItem().toString(),case_id);
+        call.enqueue(new Callback<CommonPojo>() {
+            @Override
+            public void onResponse(Call<CommonPojo> call, Response<CommonPojo> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+
+
+                if (response != null) {
+
+                    Toast.makeText(getActivity(),"Updated Successfully" , Toast.LENGTH_SHORT).show();
+
+                }
+
+                progressDialog.dismiss();
+            }
 
             @Override
             public void onFailure(Call<CommonPojo> call, Throwable t) {

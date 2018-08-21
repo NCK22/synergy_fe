@@ -18,4 +18,5 @@
     <string name="person_met_contact">Contact of person met at Site</string>
     <string name="property_no">Property No</string>
     <string name="floor_no">Floor No</string>
+    <string name="slabs">No of slabs completed</string>
 </resources>

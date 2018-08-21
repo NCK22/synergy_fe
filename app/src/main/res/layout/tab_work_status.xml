@@ -26,15 +26,65 @@ android:background="#ffffff"
             android:background="#FFFFFF"
             android:orientation="vertical">
 
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_foundation_work"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Foundation Work"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/slabs">
+
+                <EditText
+                    android:id="@+id/et_slabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
 
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#808080"
+                android:layout_marginBottom="15dp"/>
 
-                <fr.ganfra.materialspinner.MaterialSpinner
+            <TextView
+                android:id="@+id/tv_applicant_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Specifications:"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"/>
+
+            <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/sp_foundation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginEnd="25dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginEnd="0dp"
                     app:ms_alignLabels="false"
                     app:ms_arrowColor="#000000"
                     app:ms_arrowSize="20dp"
@@ -57,8 +107,8 @@ android:background="#ffffff"
                     android:id="@+id/sp_walls"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginEnd="25dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginEnd="0dp"
                     app:ms_alignLabels="false"
                     app:ms_arrowColor="#000000"
                     app:ms_arrowSize="20dp"
@@ -82,8 +132,8 @@ android:background="#ffffff"
                     android:id="@+id/sp_doors"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginEnd="25dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginEnd="0dp"
                     app:ms_alignLabels="false"
                     app:ms_arrowColor="#000000"
                     app:ms_arrowSize="20dp"
@@ -105,8 +155,8 @@ android:background="#ffffff"
                 android:id="@+id/sp_flooring"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
                 app:ms_alignLabels="false"
                 app:ms_arrowColor="#000000"
                 app:ms_arrowSize="20dp"
@@ -128,8 +178,8 @@ android:background="#ffffff"
                 android:id="@+id/sp_internal_finish"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
                 app:ms_alignLabels="false"
                 app:ms_arrowColor="#000000"
                 app:ms_arrowSize="20dp"
@@ -151,8 +201,8 @@ android:background="#ffffff"
                 android:id="@+id/sp_external_finish"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
                 app:ms_alignLabels="false"
                 app:ms_arrowColor="#000000"
                 app:ms_arrowSize="20dp"
@@ -174,8 +224,8 @@ android:background="#ffffff"
                 android:id="@+id/sp_electric"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
                 app:ms_alignLabels="false"
                 app:ms_arrowColor="#000000"
                 app:ms_arrowSize="20dp"
@@ -197,8 +247,8 @@ android:background="#ffffff"
                 android:id="@+id/sp_plumbing"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
                 app:ms_alignLabels="false"
                 app:ms_arrowColor="#000000"
                 app:ms_arrowSize="20dp"
@@ -220,8 +270,8 @@ android:background="#ffffff"
                 android:id="@+id/sp_kitchen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
                 app:ms_alignLabels="false"
                 app:ms_arrowColor="#000000"
                 app:ms_arrowSize="20dp"
@@ -243,8 +293,8 @@ android:background="#ffffff"
                 android:id="@+id/sp_parking"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
                 app:ms_alignLabels="false"
                 app:ms_arrowColor="#000000"
                 app:ms_arrowSize="20dp"
@@ -262,6 +312,107 @@ android:background="#ffffff"
                 android:layout_marginBottom="15dp"
                 />
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Any other Aminities">
+
+                <EditText
+                    android:id="@+id/et_aminities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="No of Lifts">
+
+                <EditText
+                    android:id="@+id/et_liftss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date of Commensement">
+
+                <EditText
+                    android:id="@+id/et_dt_coommensment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Proposed Date of Completion">
+
+                <EditText
+                    android:id="@+id/et_dt_coompletion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Lattitude No">
+
+                <EditText
+                    android:id="@+id/et_lat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Longitude No">
+
+                <EditText
+                    android:id="@+id/et_long"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Remarks if any">
+
+                <EditText
+                    android:id="@+id/et_remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Deviation Remark">
+
+                <EditText
+                    android:id="@+id/et_deviation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

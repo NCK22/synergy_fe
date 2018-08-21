@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 
 public class CommonPojo {
 
-    @SerializedName("Message")
+    @SerializedName("Message ")
     String Message;
 
     public String getMessage() {
