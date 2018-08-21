@@ -93,7 +93,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
        // mListItem.add(childPojoCase1);
         //mListItem.add(childPojoCase2);
         //mListItem.add(childPojoCase3);
-        displayData();
+       // displayData();
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -224,6 +224,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
                     Log.e("Throwabe ", "" + t);
                     progressDialog.dismiss();
+                    showToast("Check your internet connection");
                 }
             });
     }
@@ -231,7 +232,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
     public void getCaseDetails(String case_id){
 
 
-        progressDialog.show();
+        //progressDialog.show();
         getCaseDetailsInterface getResponse = APIClient.getClient().create(getCaseDetailsInterface.class);
         Call<ArrayList<ChildPojoCase>> call = getResponse.doGetListResources(case_id);
         call.enqueue(new Callback<ArrayList<ChildPojoCase>>() {
@@ -250,7 +251,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
                 Log.e("List size inside",""+mListItem.size());
                 displayData();
-                progressDialog.dismiss();
+              //  progressDialog.dismiss();
             }
 
             @Override

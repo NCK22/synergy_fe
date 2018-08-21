@@ -69,7 +69,8 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
     TextView tvCaseNo,tvCaseDate,tvBank,tvReportNo,tvVillage,tvDistrict;
     EditText etApplicantName,etPersonAtSite,etContactPersonAtSite,etPropertyNo,etFloorNo,etBuildingNo,etProjectName,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
-    String case_id="",insti_id="",pOccu="",pRel="",occuStatus="1";
+    String case_id="",insti_id="",pOccu="",pRel="";
+    Boolean occuIsExist=false;
     MaterialSpinner spOccu,spRelationWithOccu;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
@@ -115,13 +116,18 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         case_id=bundle.getString("case_id");
         Log.e("case_id",case_id);
         getCaseDetails(case_id);
-        getOccupancy();
+
        // getRelationWithOccu();
 
         return rootView;
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+     //   getPOccupancy();
+    }
 
     public void getCaseDetails(String case_id){
 
@@ -160,7 +166,8 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
 
                 Log.e("List size inside",""+mListItem.size());
 
-                progressDialog.dismiss();
+            //    progressDialog.dismiss();
+                getPOccupancy();
             }
 
             @Override
@@ -177,7 +184,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
     public void getPOccupancy(){
 
 
-        progressDialog.show();
+      //  progressDialog.show();
         getPOccuInterface getResponse = APIClient.getClient().create(getPOccuInterface.class);
         Call<ArrayList<HashMap<String,String>>> call = getResponse.doGetListResources(case_id);
         call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
@@ -190,12 +197,13 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                 ArrayList<HashMap<String,String>> childPojoStaticLookups = response.body();
 
                 if(childPojoStaticLookups!=null){
-                    occuStatus="0";
+                    occuIsExist=true;
                    pOccu=childPojoStaticLookups.get(0).get("OccupancyStatus");
-                           pRel=childPojoStaticLookups.get(0).get("RelationWithOccupant");
+                   pRel=childPojoStaticLookups.get(0).get("RelationWithOccupant");
+                   Log.e("pOccu",pOccu);
+                    Log.e("pRel",pRel);
                 }
 
-                Log.e("occu List size inside",""+list_occu.size());
 
                // progressDialog.dismiss();
                getOccupancy();
@@ -212,6 +220,8 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
 
     public void getOccupancy(){
 
+        if(list_occu!=null)
+            list_occu.clear();
 
        // progressDialog.show();
         lookupOccupancyInterface getResponse = APIClient.getClient().create(lookupOccupancyInterface.class);
@@ -238,9 +248,10 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                     aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spOccu.setAdapter(aaOccu);
                 }
-              /*  if(!pOccu.equalsIgnoreCase(""))
-                    spOccu.setSelection(list_occu.indexOf(pOccu));*/
-                progressDialog.dismiss();
+                if(!pOccu.equalsIgnoreCase(""))
+                    spOccu.setSelection(list_occu.indexOf(pOccu)+1);
+                Log.e("index",""+list_occu.indexOf(pOccu));
+               // progressDialog.dismiss();
                 getRelationWithOccu();
             }
 
@@ -258,7 +269,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         if(list_relation_occu!=null)
             list_relation_occu.clear();
 
-        progressDialog.show();
+    //    progressDialog.show();
         lookupRelationWithOccuInterface getResponse = APIClient.getClient().create(lookupRelationWithOccuInterface.class);
         Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.doGetListResources();
         call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
@@ -282,9 +293,9 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                 ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_relation_occu);
                 aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spRelationWithOccu.setAdapter(aaOccu);
-               /* if(!pRel.equalsIgnoreCase(""))
-                    spRelationWithOccu.setSelection(list_relation_occu.indexOf(pRel));*/
-                progressDialog.dismiss();
+                if(!pRel.equalsIgnoreCase(""))
+                    spRelationWithOccu.setSelection(list_relation_occu.indexOf(pRel)+1);
+               // progressDialog.dismiss();
                 getBank(insti_id);
             }
 
@@ -301,7 +312,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
 
         Log.e("Inside","getBank");
         Log.e("bank_id",bank_id);
-        progressDialog.show();
+      //  progressDialog.show();
         getBankInterface getResponse = APIClient.getClient().create(getBankInterface.class);
         Call<ArrayList<ChildPojoInstitute>> call = getResponse.doGetListResources(bank_id);
         call.enqueue(new Callback<ArrayList<ChildPojoInstitute>>() {
@@ -379,8 +390,8 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         JSONObject jsonObject=new JSONObject();
         addPropertyOccuInterface getResponse = APIClient.getClient().create(addPropertyOccuInterface.class);
         Call<CommonPojo> call;
-        if(occuStatus.equalsIgnoreCase("0"))
-          call = getResponse.insertOccupancy(spOccu.getSelectedItem().toString(),spRelationWithOccu.getSelectedItem().toString(),case_id);
+        if(occuIsExist==true)
+          call = getResponse.updateOccupancy(spOccu.getSelectedItem().toString(),spRelationWithOccu.getSelectedItem().toString(),case_id);
         else
        call = getResponse.insertOccupancy(spOccu.getSelectedItem().toString(),spRelationWithOccu.getSelectedItem().toString(),case_id);
         call.enqueue(new Callback<CommonPojo>() {
