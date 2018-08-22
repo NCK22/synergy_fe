@@ -148,7 +148,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 }
 
                 Log.e("List size inside",""+list_found_work.size());
-                if(list_found_work!=null) {
+                if(getActivity()!=null) {
                     ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_found_work);
                     aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spFoundationWork.setAdapter(aa);
@@ -190,10 +190,11 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
               }
 
                 Log.e("List size inside",""+mListItem.size());
-
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_found);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spFoundation.setAdapter(aa);
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_found);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spFoundation.setAdapter(aa);
+                }
              //   progressDialog.dismiss();
                 getWalls();
             }
@@ -231,10 +232,11 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 }
 
                 Log.e("list_walls size",""+list_walls.size());
-
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_walls);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spWalls.setAdapter(aa);
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_walls);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spWalls.setAdapter(aa);
+                }
           //      progressDialog.dismiss();
                 getDoors();
             }
@@ -271,10 +273,11 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 }
 
                 Log.e("list_doors size",""+list_doors.size());
-
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_doors);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spDoors.setAdapter(aa);
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_doors);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDoors.setAdapter(aa);
+                }
             //    progressDialog.dismiss();
                 getFlooring();
             }
@@ -313,10 +316,12 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
                 Log.e("list_flooring size",""+list_flooring.size());
 
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_flooring);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spFlooring.setAdapter(aa);
-                progressDialog.dismiss();
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_flooring);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spFlooring.setAdapter(aa);
+                }
+               // progressDialog.dismiss();
                 getIntFinish();
             }
 
@@ -353,10 +358,11 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 }
 
                 Log.e("list_int_finish size",""+list_int_finish.size());
-
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_int_finish);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spIntFinish.setAdapter(aa);
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_int_finish);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spIntFinish.setAdapter(aa);
+                }
                // progressDialog.dismiss();
                 getExtFinish();
             }
@@ -394,10 +400,11 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 }
 
                 Log.e("list_ext_finish size",""+list_ext_finish.size());
-
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_ext_finish);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spExtFinish.setAdapter(aa);
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_ext_finish);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spExtFinish.setAdapter(aa);
+                }
              //   progressDialog.dismiss();
                 getElectric();
             }
@@ -436,10 +443,11 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 }
 
                 Log.e("list_electric size",""+list_electric.size());
-
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_electric);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spElectric.setAdapter(aa);
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_electric);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spElectric.setAdapter(aa);
+                }
              //   progressDialog.dismiss();
                 getPlumbing();
             }
@@ -478,9 +486,13 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
                 Log.e("list_plumbing size",""+list_plumbing.size());
 
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_plumbing);
+                 if(getActivity()!=null)
+                 {
+                ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_plumbing);
                 aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spPlumbing.setAdapter(aa);
+                 spPlumbing.setAdapter(aa);
+
+                }
               //  progressDialog.dismiss();
                 getKitchen();
             }
@@ -518,10 +530,11 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 }
 
                 Log.e("list_kitchen size",""+list_kitchen.size());
-
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_kitchen);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spKitchen.setAdapter(aa);
+                    if(getActivity()!=null) {
+                        ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_kitchen);
+                        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spKitchen.setAdapter(aa);
+                    }
                // progressDialog.dismiss();
                 getParking();
             }
@@ -560,11 +573,12 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                 }
 
                 Log.e("list_parking size",""+list_parking.size());
-
-                ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_parking);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spParking.setAdapter(aa);
-                progressDialog.dismiss();
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_parking);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spParking.setAdapter(aa);
+                    progressDialog.dismiss();
+                }
 
             }
 

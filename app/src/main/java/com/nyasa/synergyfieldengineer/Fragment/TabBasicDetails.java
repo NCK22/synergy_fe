@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nyasa.synergyfieldengineer.APIClient;
+import com.nyasa.synergyfieldengineer.Activity.TabParentCaseDetailActivity;
 import com.nyasa.synergyfieldengineer.Interface.addBasicDetailsInterface;
 import com.nyasa.synergyfieldengineer.Interface.addPropertyOccuInterface;
 import com.nyasa.synergyfieldengineer.Interface.assignedCaseInterface;
@@ -380,7 +381,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         });
     }
 
-    public void addOccupancyDetails(String case_id){
+    public void addOccupancyDetails(final String case_id){
 
    /*     Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
@@ -406,7 +407,8 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                 if (response != null) {
 
                     Toast.makeText(getActivity(),"Updated Successfully" , Toast.LENGTH_SHORT).show();
-
+                    getCaseDetails(case_id);
+                    TabParentCaseDetailActivity.bCompleted=true;
                 }
 
                 progressDialog.dismiss();

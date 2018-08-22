@@ -56,7 +56,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
     Intent intent;
     Bundle bundle;
     String tabFlag="home";
-
+    public static boolean bCompleted=false,pCompleted=false,wCompleted=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +75,10 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
         tabLayout=(TabLayout)findViewById(R.id.tl_parent);
         tabLayout.addOnTabSelectedListener(this);
        // tabLayout.setTabTextColors(Color.BLACK,Color.WHITE);
+/*
+        tabLayout.getChildAt(1).setEnabled(false);
+        tabLayout.getChildAt(2).setEnabled(false);
+*/
 
         intent=getIntent();
 
@@ -90,6 +94,8 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_parent);
+
+
 
         mViewPager.setOffscreenPageLimit(0);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -125,7 +131,26 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
+       /* if(tab.getPosition()==1)
+        {
+            if(bCompleted==true){
 
+              //  tabLayout.getChildAt(1).setEnabled(true);
+            }
+            else {
+              *//*  tabLayout.getChildAt(1).setSelected(false);
+                tabLayout.getChildAt(0).setSelected(true);
+                tabLayout.getChildAt(1).setEnabled(false);*//*
+            }
+                        //tab.getCustomView().setEnabled(false);
+        }
+        if(tab.getPosition()==2)
+        {
+            if(pCompleted==true)
+                tab.getCustomView().setEnabled(true);
+            else
+                tab.getCustomView().setEnabled(false);
+        }*/
 
     }
 
@@ -214,12 +239,15 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
 
                 case 1:
 
-                        Log.e("Tab", "whoViewed");
-                    TabPropertyDetails tabPropertyDetails=new TabPropertyDetails();
-                    Bundle bundle1=new Bundle();
-                    bundle1.putString("case_id",intent.getStringExtra("case_id"));
-                    tabPropertyDetails.setArguments(bundle1);
-                    return tabPropertyDetails;
+                            Log.e("Tab", "whoViewed");
+                            TabPropertyDetails tabPropertyDetails = new TabPropertyDetails();
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putString("case_id", intent.getStringExtra("case_id"));
+                            tabPropertyDetails.setArguments(bundle1);
+                            Log.e("bCompleted", "" + bCompleted);
+                            return tabPropertyDetails;
+
+
 
 
                 case 2:

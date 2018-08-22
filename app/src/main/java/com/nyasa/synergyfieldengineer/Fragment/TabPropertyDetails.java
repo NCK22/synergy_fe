@@ -113,7 +113,55 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     }
 
 
+    public void getBuildingDetails(String case_id){
 
+     /*   progressDialog.show();
+        getCaseDetailsInterface getResponse = APIClient.getClient().create(getCaseDetailsInterface.class);
+        Call<ArrayList<ChildPojoCase>> call = getResponse.doGetListResources(case_id);
+        call.enqueue(new Callback<ArrayList<ChildPojoCase>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoCase>> call, Response<ArrayList<ChildPojoCase>> response) {
+
+                Log.e("Inside", "onResponse");
+               *//* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*//*
+                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
+                ChildPojoCase childPojoCase=response.body().get(0);
+                if (childPojoCase != null) {
+
+                    tvCaseNo.append(childPojoCase.getCaseNo());
+                    tvCaseDate.append(childPojoCase.getInwardDate().substring(0,10));
+                    //  getBank(childPojoCase.getInstituteId());
+                    insti_id=childPojoCase.getInstituteId();
+                    etApplicantName.setText(childPojoCase.getClientName());
+                    etPropertyNo.setText(childPojoCase.getPropertyNo());
+                    etFloorNo.setText(childPojoCase.getFloorNo());
+                    etBuildingNo.setText(childPojoCase.getBuildingWing());
+                    etProjectName.setText(childPojoCase.getProjectName());
+                    etSurveyNo.setText(childPojoCase.getSurveyPlotNo());
+                    if(childPojoCase.getVillageCity()!=null) {
+                        tvVillage.append(childPojoCase.getVillageCity());
+                        tvDistrict.append(childPojoCase.getDistrict());
+                    }
+                    etPincode.setText(childPojoCase.getPincode());
+
+                }
+
+
+                Log.e("List size inside",""+mListItem.size());
+
+                //    progressDialog.dismiss();
+                getPOccupancy();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoCase>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });*/
+    }
 
     public void getConstruction(){
 
@@ -239,16 +287,9 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     }
 
 
-
     @Override
     public void onClick(View v) {
 
-       /* if(etEmail.getText().toString().length()==0)
-            showToast("Please enter email");
-        else if(!etEmail.getText().toString().contains("@")||!etEmail.getText().toString().contains("."))
-            showToast("Please enter valid Email");
-        else
-            //editEmail();*/
     }
 
 
