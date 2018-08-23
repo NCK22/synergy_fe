@@ -57,6 +57,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
     Bundle bundle;
     String tabFlag="home";
     public static boolean bCompleted=false,pCompleted=false,wCompleted=false;
+    public static String client_name="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -242,6 +243,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                             Log.e("Tab", "whoViewed");
                             TabPropertyDetails tabPropertyDetails = new TabPropertyDetails();
                             Bundle bundle1 = new Bundle();
+                            bundle1.putString("client_name",intent.getStringExtra("client_name"));
                             bundle1.putString("case_id", intent.getStringExtra("case_id"));
                             tabPropertyDetails.setArguments(bundle1);
                             Log.e("bCompleted", "" + bCompleted);

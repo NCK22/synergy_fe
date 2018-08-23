@@ -365,6 +365,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
                 if (response != null) {
 
                   //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
+                    TabParentCaseDetailActivity.client_name=etApplicantName.getText().toString();
 
                     }
 

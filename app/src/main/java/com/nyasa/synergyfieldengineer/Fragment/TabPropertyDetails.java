@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nyasa.synergyfieldengineer.APIClient;
+import com.nyasa.synergyfieldengineer.Activity.TabParentCaseDetailActivity;
+import com.nyasa.synergyfieldengineer.Interface.PropertyTabAddInterface;
+import com.nyasa.synergyfieldengineer.Interface.PropertyTabGetInterface;
 import com.nyasa.synergyfieldengineer.Interface.getCaseDetailsInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupConstructionInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupLandStatusInterface;
@@ -24,10 +27,14 @@ import com.nyasa.synergyfieldengineer.Interface.lookupOccupancyInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupRelationWithOccuInterface;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoCase;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoStaticLookup;
+import com.nyasa.synergyfieldengineer.Pojo.CommonPojo;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
@@ -47,15 +54,18 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     ProgressDialog progressDialog;
 
     EditText etBeforeFloor,etNoOfFloors,etProposedNoOfFloors,etLandmark,etTotRooms,etLivingRooms,etKitchen,etBedRooms,
-    etBathRooms,etWc,etCmnToilet,etAttachToilet,etDryBalcony,etAttachTerrace,etParking,etGarden,etOther1Name,etOther1No,
+    etBathRooms,etWc,etCmnToilet,etAttachToilet,etAttachBalcony,etDryBalcony,etAttachTerrace,etParking,etGarden,etOther1Name,etOther1No,
     etOther2Name,etOther2No,etOther3Name,etOther3No,etEast,etWest,etNorth,etSouth,etAgeOfProperty;
-    String case_id="";
+    String case_id="",client_name="";
     MaterialSpinner spConstruction,spLandUseActual,spLandStatus;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
     ArrayList<String> list_constru=new ArrayList<String>();
     ArrayList<String> list_land_use=new ArrayList<String>();
     ArrayList<String> list_land_status=new ArrayList<String>();
+    Boolean buildingExist=false,boundaryExist=false,surroundingExist=false,floorExist=false,gpsExist=false;
+
+    Button btnSubmit;
 
     @Nullable
     @Override
@@ -80,6 +90,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         etWc=(EditText)rootView.findViewById(R.id.et_wc);
         etCmnToilet=(EditText)rootView.findViewById(R.id.et_common_toilet);
         etAttachToilet=(EditText)rootView.findViewById(R.id.et_attached_toilet);
+        etAttachBalcony=(EditText)rootView.findViewById(R.id.et_attach_balcony);
         etDryBalcony=(EditText)rootView.findViewById(R.id.et_dry_balcony);
         etAttachTerrace=(EditText)rootView.findViewById(R.id.et_attached_terrace);
         etParking=(EditText)rootView.findViewById(R.id.et_parking);
@@ -100,13 +111,19 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         spLandUseActual=(MaterialSpinner) rootView.findViewById(R.id.sp_land_use_actual);
         spLandStatus=(MaterialSpinner) rootView.findViewById(R.id.sp_land_status);
 
+        btnSubmit=(Button)rootView.findViewById(R.id.btn_submit);
+        btnSubmit.setOnClickListener(this);
+
         Bundle bundle=getArguments();
         case_id=bundle.getString("case_id");
+        client_name=bundle.getString("client_name");
         Log.e("case_id",case_id);
+        Log.e("client_name",client_name);
 
         getConstruction();
         getLandUse();
         getLandStatus();
+
 
         return rootView;
 
@@ -115,52 +132,381 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
 
     public void getBuildingDetails(String case_id){
 
-     /*   progressDialog.show();
-        getCaseDetailsInterface getResponse = APIClient.getClient().create(getCaseDetailsInterface.class);
-        Call<ArrayList<ChildPojoCase>> call = getResponse.doGetListResources(case_id);
-        call.enqueue(new Callback<ArrayList<ChildPojoCase>>() {
+        progressDialog.show();
+        PropertyTabGetInterface getResponse = APIClient.getClient().create(PropertyTabGetInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getBuilding(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
             @Override
-            public void onResponse(Call<ArrayList<ChildPojoCase>> call, Response<ArrayList<ChildPojoCase>> response) {
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
 
                 Log.e("Inside", "onResponse");
-               *//* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*//*
+
                 //  ArrayList<ChildPojoCase> childPojoCase = response.body();
-                ChildPojoCase childPojoCase=response.body().get(0);
-                if (childPojoCase != null) {
+                if(response.body().size()>0) {
+                    buildingExist=true;
+                    HashMap<String, String> childPojoCase = response.body().get(0);
+                    if (childPojoCase != null) {
 
-                    tvCaseNo.append(childPojoCase.getCaseNo());
-                    tvCaseDate.append(childPojoCase.getInwardDate().substring(0,10));
-                    //  getBank(childPojoCase.getInstituteId());
-                    insti_id=childPojoCase.getInstituteId();
-                    etApplicantName.setText(childPojoCase.getClientName());
-                    etPropertyNo.setText(childPojoCase.getPropertyNo());
-                    etFloorNo.setText(childPojoCase.getFloorNo());
-                    etBuildingNo.setText(childPojoCase.getBuildingWing());
-                    etProjectName.setText(childPojoCase.getProjectName());
-                    etSurveyNo.setText(childPojoCase.getSurveyPlotNo());
-                    if(childPojoCase.getVillageCity()!=null) {
-                        tvVillage.append(childPojoCase.getVillageCity());
-                        tvDistrict.append(childPojoCase.getDistrict());
+                        etBeforeFloor.setText(childPojoCase.get("BeforeFloorDetails"));
+                        etNoOfFloors.setText(childPojoCase.get("PresentNoOfFloors"));
+                        etProposedNoOfFloors.setText(childPojoCase.get("ProposedNoOfFloors"));
+
                     }
-                    etPincode.setText(childPojoCase.getPincode());
-
                 }
-
-
-                Log.e("List size inside",""+mListItem.size());
+                else
+                    buildingExist=false;
 
                 //    progressDialog.dismiss();
-                getPOccupancy();
+             getBoundaryDetails();
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ChildPojoCase>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
 
                 Log.e("Throwabe ", "" + t);
                 progressDialog.dismiss();
             }
-        });*/
+        });
+    }
+
+    public void getBoundaryDetails(){
+
+     //   progressDialog.show();
+        PropertyTabGetInterface getResponse = APIClient.getClient().create(PropertyTabGetInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getBoundaries(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
+            @Override
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
+                if(response.body().size()>0) {
+                    boundaryExist=true;
+                    HashMap<String, String> childPojoCase = response.body().get(0);
+                    if (childPojoCase != null) {
+
+                        etEast.setText(childPojoCase.get("EastActual"));
+                        etWest.setText(childPojoCase.get("WestActual"));
+                        etSouth.setText(childPojoCase.get("SouthActual"));
+                        etNorth.setText(childPojoCase.get("NorthActual"));
+                        spLandUseActual.setSelection(list_land_use.indexOf(childPojoCase.get("LandUseActual")));
+                        spLandStatus.setSelection(list_land_status.indexOf(childPojoCase.get("LandStatus")));
+
+                    }
+                }
+                else
+        boundaryExist=false;
+
+                //    progressDialog.dismiss();
+                getSurroundingDetails();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getSurroundingDetails(){
+
+      //  progressDialog.show();
+        PropertyTabGetInterface getResponse = APIClient.getClient().create(PropertyTabGetInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getBoundaries(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
+            @Override
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
+                if(response.body().size()>0) {
+                    surroundingExist=true;
+                    HashMap<String, String> childPojoCase = response.body().get(0);
+                    if (childPojoCase != null) {
+
+                        etAgeOfProperty.setText(childPojoCase.get("AgeOfPropertyYears"));
+                        spConstruction.setSelection(list_constru.indexOf(childPojoCase.get("ConstructionAsPerPlan")));
+
+                    }
+                }
+                else
+                    surroundingExist=false;
+
+                //    progressDialog.dismiss();
+                getGpsDetails();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getGpsDetails(){
+
+        //   progressDialog.show();
+        PropertyTabGetInterface getResponse = APIClient.getClient().create(PropertyTabGetInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getBoundaries(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
+            @Override
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
+                if(response.body().size()>0) {
+                    gpsExist=true;
+                HashMap<String, String> childPojoCase=response.body().get(0);
+                if (childPojoCase != null) {
+
+                    etLandmark.setText(childPojoCase.get("Landmark"));
+
+                }
+                }
+                else
+                    gpsExist=false;
+
+
+            progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void addBuildingDetails(final String case_id){
+
+   /*     Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = mdformat.format(calendar.getTime());*/
+
+        progressDialog.show();
+        JSONObject jsonObject=new JSONObject();
+        PropertyTabAddInterface getResponse = APIClient.getClient().create(PropertyTabAddInterface.class);
+        Call<CommonPojo> call;
+        if(buildingExist==true) {
+            call = getResponse.updateBuilding(client_name, etBeforeFloor.getText().toString()
+                    , etNoOfFloors.getText().toString(), etProposedNoOfFloors.getText().toString(), case_id);
+        }
+        else{
+            call = getResponse.addBuilding(client_name, etBeforeFloor.getText().toString()
+                    , etNoOfFloors.getText().toString(), etProposedNoOfFloors.getText().toString(), case_id);
+        }
+
+        call.enqueue(new Callback<CommonPojo>() {
+            @Override
+            public void onResponse(Call<CommonPojo> call, Response<CommonPojo> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+
+
+                if (response != null) {
+
+                    //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
+
+                }
+
+              //    progressDialog.dismiss();
+                addBoundaryDetails(case_id);
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+    public void addBoundaryDetails(final String case_id){
+
+   //        progressDialog.show();
+        JSONObject jsonObject=new JSONObject();
+        PropertyTabAddInterface getResponse = APIClient.getClient().create(PropertyTabAddInterface.class);
+        Call<CommonPojo> call;
+        if(boundaryExist==true) {
+            call = getResponse.updateBoundary(etEast.getText().toString(), etSouth.getText().toString()
+                    , etWest.getText().toString(), etNorth.getText().toString(), spLandUseActual.getSelectedItem().toString(),
+                    spLandStatus.getSelectedItem().toString(),case_id);
+        }
+        else{
+            call = getResponse.addBoundary(etEast.getText().toString(), etSouth.getText().toString()
+                    , etWest.getText().toString(), etNorth.getText().toString(), spLandUseActual.getSelectedItem().toString(),
+                    spLandStatus.getSelectedItem().toString(),case_id);
+        }
+
+        call.enqueue(new Callback<CommonPojo>() {
+            @Override
+            public void onResponse(Call<CommonPojo> call, Response<CommonPojo> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+
+
+                if (response != null) {
+
+                    //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
+
+                }
+
+              //  progressDialog.dismiss();
+                addSurroundingDetails(case_id);
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void addSurroundingDetails(final String case_id){
+
+        //        progressDialog.show();
+        JSONObject jsonObject=new JSONObject();
+        PropertyTabAddInterface getResponse = APIClient.getClient().create(PropertyTabAddInterface.class);
+        Call<CommonPojo> call;
+        if(surroundingExist==true) {
+            call = getResponse.updateSurrounding(spConstruction.getSelectedItem().toString(),etAgeOfProperty.getText().toString(), case_id);
+        }
+        else{
+            call = getResponse.addSurrounding(spConstruction.getSelectedItem().toString(),etAgeOfProperty.getText().toString(), case_id);
+        }
+
+        call.enqueue(new Callback<CommonPojo>() {
+            @Override
+            public void onResponse(Call<CommonPojo> call, Response<CommonPojo> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+
+
+                if (response != null) {
+
+                    //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
+
+                }
+
+              //  progressDialog.dismiss();
+                //addGpsDetails(case_id);
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void addFloorDetails(final String case_id){
+
+        //        progressDialog.show();
+        JSONObject jsonObject=new JSONObject();
+        PropertyTabAddInterface getResponse = APIClient.getClient().create(PropertyTabAddInterface.class);
+        Call<CommonPojo> call;
+        if(floorExist==true) {
+            call = getResponse.updateFloor("","",etTotRooms.getText().toString(),etLivingRooms.getText().toString(),
+                    etKitchen.getText().toString(),etBedRooms.getText().toString(),etBathRooms.getText().toString(),
+                    etWc.getText().toString(),etCmnToilet.getText().toString(),etAttachToilet.getText().toString(),
+                    etAttachTerrace.getText().toString(),etAttachBalcony.getText().toString(),etDryBalcony.getText().toString(),etParking.getText().toString(),
+                    etGarden.getText().toString(),etOther1Name.getText().toString(),etOther1No.getText().toString(),
+                    etOther2Name.getText().toString(),etOther2No.getText().toString(),etOther3Name.getText().toString(),
+                    etOther3No.getText().toString(),case_id);
+        }
+        else{
+            call = getResponse.addSurrounding(spConstruction.getSelectedItem().toString(),etAgeOfProperty.getText().toString(), case_id);
+        }
+
+        call.enqueue(new Callback<CommonPojo>() {
+            @Override
+            public void onResponse(Call<CommonPojo> call, Response<CommonPojo> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+
+
+                if (response != null) {
+
+                    //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
+
+                }
+
+                progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void addGpsDetails(final String case_id){
+
+        //        progressDialog.show();
+        JSONObject jsonObject=new JSONObject();
+        PropertyTabAddInterface getResponse = APIClient.getClient().create(PropertyTabAddInterface.class);
+        Call<CommonPojo> call;
+        if(gpsExist==true) {
+            call = getResponse.updateGPS(etLandmark.getText().toString(),case_id);
+        }
+        else{
+            call = getResponse.addGPS(etLandmark.getText().toString(),case_id);        }
+
+        call.enqueue(new Callback<CommonPojo>() {
+            @Override
+            public void onResponse(Call<CommonPojo> call, Response<CommonPojo> response) {
+
+                Log.e("Inside", "onResponse");
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
+
+
+                if (response != null) {
+
+                    //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
+
+                }
+
+                progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
     }
 
     public void getConstruction(){
@@ -275,6 +621,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                 aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spLandStatus.setAdapter(aaOccu);
                 progressDialog.dismiss();
+                getBuildingDetails(case_id);
             }
 
             @Override
@@ -290,6 +637,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
+        addBuildingDetails(case_id);
     }
 
 

@@ -244,6 +244,23 @@ android:background="#ffffff"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="No. of Attached Balconies :">
+
+                    <EditText
+                        android:id="@+id/et_attach_balcony"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:singleLine="false"
+                        android:maxLines="5"
+
+                        android:layout_marginBottom="15dp"/>
+                </android.support.design.widget.TextInputLayout>
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -259,6 +276,7 @@ android:background="#ffffff"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -524,6 +542,17 @@ android:background="#ffffff"
                 android:textSize="16sp"
                 android:layout_marginBottom="15dp"/>
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:background="@color/navigation_default"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
     </ScrollView>

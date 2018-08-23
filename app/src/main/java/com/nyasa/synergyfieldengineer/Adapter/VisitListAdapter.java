@@ -80,6 +80,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
 
                 Intent intent=new Intent(mContext,TabParentCaseDetailActivity.class);
                 intent.putExtra("case_id",singleItem.getCaseId());
+                intent.putExtra("client_name",singleItem.getClientName());
                 mContext.startActivity(intent);
             }
         });

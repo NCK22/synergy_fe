@@ -14,7 +14,6 @@ public interface PropertyTabAddInterface {
     @POST("synergyapi/api/addPropertyBuildingDetails")
     Call<CommonPojo> addBuilding(@Field("clientName") String clientName,
                                         @Field("beforeFloorDetails") String beforeFloorDetails,
-                                        @Field("Ground") String Ground,
                                         @Field("presentNoOfFloors") String presentNoOfFloors,
                                         @Field("proposedNoOfFloors") String proposedNoOfFloors,
                                         @Field("case_id") String case_id);
@@ -24,7 +23,6 @@ public interface PropertyTabAddInterface {
     @POST("synergyapi/api/updatePropertyBuildingDetails/{case_id}")
     Call<CommonPojo> updateBuilding(@Field("clientName") String clientName,
                                  @Field("beforeFloorDetails") String beforeFloorDetails,
-                                 @Field("Ground") String Ground,
                                  @Field("presentNoOfFloors") String presentNoOfFloors,
                                  @Field("proposedNoOfFloors") String proposedNoOfFloors,
                                  @Path("case_id") String case_id);
