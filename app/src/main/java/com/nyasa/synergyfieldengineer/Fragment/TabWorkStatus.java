@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nyasa.synergyfieldengineer.APIClient;
+import com.nyasa.synergyfieldengineer.Interface.WorkTabAddInterface;
+import com.nyasa.synergyfieldengineer.Interface.WorkTabGetInterface;
 import com.nyasa.synergyfieldengineer.Interface.getBankInterface;
 import com.nyasa.synergyfieldengineer.Interface.getCaseDetailsInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupInterface;
@@ -27,7 +29,10 @@ import com.nyasa.synergyfieldengineer.Pojo.ChildPojoStaticLookup;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
@@ -53,6 +58,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
     EditText etApplicantName,etPersonAtSite,etContactPersonAtSite,etPropertyNo,etFloorNo,etBuildingNo,etProjectName,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
     String case_id="";
+    Boolean wordExist=false;
     MaterialSpinner spFoundationWork,spFoundation,spWalls,spDoors,spFlooring,spIntFinish,spExtFinish,spElectric,spPlumbing,spKitchen,spParking;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
@@ -117,8 +123,6 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         Log.e("case_id",case_id);
         //getCaseDetails(case_id);
         getFoundationWork();
-
-
         return rootView;
 
     }
@@ -591,95 +595,39 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         });
     }
 
-/*
-
-    public void getCaseDetails(String case_id){
+    public void getWordDetails(String case_id){
 
         progressDialog.show();
-        getCaseDetailsInterface getResponse = APIClient.getClient().create(getCaseDetailsInterface.class);
-        Call<ArrayList<ChildPojoCase>> call = getResponse.doGetListResources(case_id);
-        call.enqueue(new Callback<ArrayList<ChildPojoCase>>() {
+        WorkTabGetInterface getResponse = APIClient.getClient().create(WorkTabGetInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getWord(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
             @Override
-            public void onResponse(Call<ArrayList<ChildPojoCase>> call, Response<ArrayList<ChildPojoCase>> response) {
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
 
                 Log.e("Inside", "onResponse");
-               */
-/* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*//*
 
-              //  ArrayList<ChildPojoCase> childPojoCase = response.body();
-                ChildPojoCase childPojoCase=response.body().get(0);
-                if (childPojoCase != null) {
+                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
+                if(response.body().size()>0) {
+                    wordExist=true;
+                    HashMap<String, String> childPojoCase = response.body().get(0);
+                    if (childPojoCase != null) {
 
-                   tvCaseNo.append(childPojoCase.getCaseNo());
-                   tvCaseDate.append(childPojoCase.getInwardDate().substring(0,10));
-                    getBank(childPojoCase.getInstituteId());
-                   etApplicantName.setText(childPojoCase.getClientName());
-                   etPropertyNo.setText(childPojoCase.getPropertyNo());
-                   etFloorNo.setText(childPojoCase.getFloorNo());
-                   etBuildingNo.setText(childPojoCase.getBuildingWing());
-                   etProjectName.setText(childPojoCase.getProjectName());
-                   etSurveyNo.setText(childPojoCase.getSurveyPlotNo());
-                   if(childPojoCase.getVillageCity()!=null) {
-                       tvVillage.append(childPojoCase.getVillageCity());
-                       tvDistrict.append(childPojoCase.getDistrict());
-                   }
-                   etPincode.setText(childPojoCase.getPincode());
+                       /* etBeforeFloor.setText(childPojoCase.get("BeforeFloorDetails"));
+                        etNoOfFloors.setText(childPojoCase.get("PresentNoOfFloors"));
+                        etProposedNoOfFloors.setText(childPojoCase.get("ProposedNoOfFloors"));
+                        building_id=childPojoCase.get("BuildingId");*/
 
-                }
-
-
-                Log.e("List size inside",""+mListItem.size());
-
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<ChildPojoCase>> call, Throwable t) {
-
-                Log.e("Throwabe ", "" + t);
-                progressDialog.dismiss();
-            }
-        });
-    }
-
-
-    public void getRelationWithOccu(){
-
-        if(list_relation_occu!=null)
-            list_relation_occu.clear();
-
-        progressDialog.show();
-        lookupRelationWithOccuInterface getResponse = APIClient.getClient().create(lookupRelationWithOccuInterface.class);
-        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.doGetListResources();
-        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
-            @Override
-            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
-
-                Log.e("Inside", "onResponse");
-               */
-/* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*//*
-
-                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
-
-                if(childPojoStaticLookups!=null){
-                    for(int i=1;i<childPojoStaticLookups.size();i++){
-
-                        list_relation_occu.add(childPojoStaticLookups.get(i).getLookupItemValue());
                     }
                 }
+                else
+                    wordExist=false;
 
-                Log.e("List size inside",""+mListItem.size());
-
-                ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_relation_occu);
-                aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spRelationWithOccu.setAdapter(aaOccu);
-                progressDialog.dismiss();
+                    progressDialog.dismiss();
+                //getBoundaryDetails();
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
 
                 Log.e("Throwabe ", "" + t);
                 progressDialog.dismiss();
@@ -687,48 +635,53 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         });
     }
 
-    public void getBank(String bank_id){
+    public void addWordDetails(final String case_id){
 
-        Log.e("Inside","getBank");
-        Log.e("bank_id",bank_id);
+
         progressDialog.show();
-        getBankInterface getResponse = APIClient.getClient().create(getBankInterface.class);
-        Call<ArrayList<ChildPojoInstitute>> call = getResponse.doGetListResources(bank_id);
-        call.enqueue(new Callback<ArrayList<ChildPojoInstitute>>() {
+        JSONObject jsonObject=new JSONObject();
+        WorkTabAddInterface getResponse = APIClient.getClient().create(WorkTabAddInterface.class);
+        Call<HashMap<String,String>> call;
+        if(wordExist==true) {
+            call = getResponse.addWord("",spFoundationWork.getSelectedItem().toString(),"","",
+                    "",interclient_name, etBeforeFloor.getText().toString()
+                    , etNoOfFloors.getText().toString(), etProposedNoOfFloors.getText().toString(), case_id);
+        }
+        else{
+            call = getResponse.addBuilding(client_name, etBeforeFloor.getText().toString()
+                    , etNoOfFloors.getText().toString(), etProposedNoOfFloors.getText().toString(), case_id);
+        }
+
+        call.enqueue(new Callback<HashMap<String,String>>() {
             @Override
-            public void onResponse(Call<ArrayList<ChildPojoInstitute>> call, Response<ArrayList<ChildPojoInstitute>> response) {
+            public void onResponse(Call<HashMap<String,String>> call, Response<HashMap<String,String>> response) {
 
                 Log.e("Inside", "onResponse");
-               */
-/* Log.e("response body",response.body().getStatus());
-                Log.e("response body",response.body().getMsg());*//*
+               /* Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());*/
 
-                ArrayList<ChildPojoInstitute> childPojoInstitute = response.body();
 
-                if(childPojoInstitute!=null)
-               tvBank.append(childPojoInstitute.get(0).getInstituteName());
+                if (response != null) {
 
-                Log.e("List size inside",""+mListItem.size());
+                    if(response.body().containsKey("BuildingId"))
+                        building_id=response.body().get("BuildingId");
+                    //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
 
-                ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_occu);
-                aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spOccu.setAdapter(aaOccu);
-                progressDialog.dismiss();
+                }
+
+                //    progressDialog.dismiss();
+                addBoundaryDetails(case_id);
+
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ChildPojoInstitute>> call, Throwable t) {
+            public void onFailure(Call<HashMap<String,String>> call, Throwable t) {
 
                 Log.e("Throwabe ", "" + t);
                 progressDialog.dismiss();
             }
         });
     }
-*/
-
-
-
-
     @Override
     public void onClick(View v) {
 

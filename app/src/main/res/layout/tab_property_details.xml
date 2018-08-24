@@ -26,6 +26,22 @@ android:background="#ffffff"
             android:background="#FFFFFF"
             android:orientation="vertical">
 
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Floor No Name (eg. Parking,ground..)">
+
+                <EditText
+                    android:id="@+id/et_floor_no_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="5"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,9 +67,7 @@ android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:singleLine="false"
-                android:maxLines="5"
-
+                android:singleLine="true"
                 android:layout_marginBottom="15dp"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -66,8 +80,8 @@ android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:singleLine="false"
-                android:maxLines="5"
+                android:singleLine="true"
+                android:maxLines="1"
 
                 android:layout_marginBottom="15dp"/>
             </android.support.design.widget.TextInputLayout>
@@ -81,8 +95,8 @@ android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:singleLine="false"
-                android:maxLines="5"
+                android:singleLine="true"
+                android:maxLines="1"
 
                 android:layout_marginBottom="15dp"/>
             </android.support.design.widget.TextInputLayout>
@@ -137,8 +151,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -151,8 +165,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -166,8 +180,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -180,8 +194,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -195,8 +209,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -210,8 +224,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -225,8 +239,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -239,8 +253,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -255,8 +269,8 @@ android:background="#ffffff"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:singleLine="false"
-                        android:maxLines="5"
+                        android:singleLine="true"
+                        android:maxLines="1"
 
                         android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -271,8 +285,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -287,9 +301,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
-
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -302,9 +315,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
-
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="15dp"/>
 
                 </android.support.design.widget.TextInputLayout>
@@ -317,9 +329,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
-
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -331,8 +342,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
 
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
@@ -345,9 +356,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
-
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -359,9 +369,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
-
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -373,9 +382,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
-
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -387,8 +395,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -400,8 +408,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:singleLine="false"
-                    android:maxLines="5"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -438,7 +446,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-
+                    android:singleLine="false"
+                    android:maxLines="2"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -450,6 +459,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="2"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -461,6 +472,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="2"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -472,6 +485,8 @@ android:background="#ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:singleLine="false"
+                    android:maxLines="2"
                     android:layout_marginBottom="15dp"/>
                 </android.support.design.widget.TextInputLayout>
 
@@ -540,6 +555,8 @@ android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_marginBottom="15dp"/>
             </android.support.design.widget.TextInputLayout>
 

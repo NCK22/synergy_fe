@@ -53,10 +53,10 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     SPUserProfile spUserProfile;
     ProgressDialog progressDialog;
 
-    EditText etBeforeFloor,etNoOfFloors,etProposedNoOfFloors,etLandmark,etTotRooms,etLivingRooms,etKitchen,etBedRooms,
+    EditText etFloorNoName,etBeforeFloor,etNoOfFloors,etProposedNoOfFloors,etLandmark,etTotRooms,etLivingRooms,etKitchen,etBedRooms,
     etBathRooms,etWc,etCmnToilet,etAttachToilet,etAttachBalcony,etDryBalcony,etAttachTerrace,etParking,etGarden,etOther1Name,etOther1No,
     etOther2Name,etOther2No,etOther3Name,etOther3No,etEast,etWest,etNorth,etSouth,etAgeOfProperty;
-    String case_id="",client_name="";
+    String case_id="",client_name="",building_id="";
     MaterialSpinner spConstruction,spLandUseActual,spLandStatus;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
@@ -78,6 +78,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         progressDialog.setCanceledOnTouchOutside(false);
         spUserProfile=new SPUserProfile(getActivity());
 
+        etFloorNoName=(EditText)rootView.findViewById(R.id.et_floor_no_name);
         etBeforeFloor=(EditText)rootView.findViewById(R.id.et_before_floor);
         etNoOfFloors=(EditText)rootView.findViewById(R.id.et_noOfFloors);
         etProposedNoOfFloors=(EditText)rootView.findViewById(R.id.et_proposed_noOfFloors);
@@ -121,14 +122,19 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         Log.e("client_name",client_name);
 
         getConstruction();
-        getLandUse();
-        getLandStatus();
+      //  getLandUse();
+        //getLandStatus();
 
 
         return rootView;
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("OnResume","Called");
+    }
 
     public void getBuildingDetails(String case_id){
 
@@ -150,6 +156,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                         etBeforeFloor.setText(childPojoCase.get("BeforeFloorDetails"));
                         etNoOfFloors.setText(childPojoCase.get("PresentNoOfFloors"));
                         etProposedNoOfFloors.setText(childPojoCase.get("ProposedNoOfFloors"));
+                        building_id=childPojoCase.get("BuildingId");
 
                     }
                 }
@@ -190,8 +197,8 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                         etWest.setText(childPojoCase.get("WestActual"));
                         etSouth.setText(childPojoCase.get("SouthActual"));
                         etNorth.setText(childPojoCase.get("NorthActual"));
-                        spLandUseActual.setSelection(list_land_use.indexOf(childPojoCase.get("LandUseActual")));
-                        spLandStatus.setSelection(list_land_status.indexOf(childPojoCase.get("LandStatus")));
+                        spLandUseActual.setSelection(list_land_use.indexOf(childPojoCase.get("LandUseActual"))+1);
+                        spLandStatus.setSelection(list_land_status.indexOf(childPojoCase.get("LandStatus"))+1);
 
                     }
                 }
@@ -214,13 +221,14 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     public void getSurroundingDetails(){
 
       //  progressDialog.show();
+        Log.e("Inside","getSurrounding");
         PropertyTabGetInterface getResponse = APIClient.getClient().create(PropertyTabGetInterface.class);
-        Call<ArrayList<HashMap<String,String>>> call = getResponse.getBoundaries(case_id);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getSurroundings(case_id);
         call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
             @Override
             public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
 
-                Log.e("Inside", "onResponse");
+                Log.e("Inside", "onResponseSurrounding");
 
                 //  ArrayList<ChildPojoCase> childPojoCase = response.body();
                 if(response.body().size()>0) {
@@ -229,12 +237,69 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                     if (childPojoCase != null) {
 
                         etAgeOfProperty.setText(childPojoCase.get("AgeOfPropertyYears"));
-                        spConstruction.setSelection(list_constru.indexOf(childPojoCase.get("ConstructionAsPerPlan")));
+                        spConstruction.setSelection(list_constru.indexOf(childPojoCase.get("ConstructionAsPerPlan"))+1);
 
                     }
                 }
                 else
                     surroundingExist=false;
+
+                //    progressDialog.dismiss();
+              getFloorDetails();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getFloorDetails(){
+
+        //  progressDialog.show();
+        Log.e("Inside","getSurrounding");
+        PropertyTabGetInterface getResponse = APIClient.getClient().create(PropertyTabGetInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getFloor(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
+            @Override
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
+
+                Log.e("Inside", "onResponseSurrounding");
+
+                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
+                if(response.body().size()>0) {
+                    floorExist=true;
+                    HashMap<String, String> childPojoCase = response.body().get(0);
+                    if (childPojoCase != null) {
+
+                        etFloorNoName.setText(childPojoCase.get("FloorNoName"));
+                        etTotRooms.setText(childPojoCase.get("TotalNoOfRooms"));
+                        etLivingRooms.setText(childPojoCase.get("NoOfLivingRooms"));
+                        etKitchen.setText(childPojoCase.get("NoOfKitchens"));
+                        etBedRooms.setText(childPojoCase.get("NoOfBedrooms"));
+                        etBathRooms.setText(childPojoCase.get("NoOfBath"));
+                        etWc.setText(childPojoCase.get("NoOfWC"));
+                        etCmnToilet.setText(childPojoCase.get("NoOfCommonToilets"));
+                        etAttachToilet.setText(childPojoCase.get("NoOfAttachedToilets"));
+                        etAttachTerrace.setText(childPojoCase.get("NoOfAttachedTerraces"));
+                        etAttachBalcony.setText(childPojoCase.get("NoOfAttachedBalconies"));
+                        etDryBalcony.setText(childPojoCase.get("NoOfDryBalconyTerraces"));
+                        etParking.setText(childPojoCase.get("NoOfParkings"));
+                        etGarden.setText(childPojoCase.get("NoOfGardens"));
+                        etOther1Name.setText(childPojoCase.get("OtherUnit1Desc"));
+                        etOther1No.setText(childPojoCase.get("NoOfOtherUnit1"));
+                        etOther2Name.setText(childPojoCase.get("OtherUnit2Desc"));
+                        etOther2No.setText(childPojoCase.get("NoOfOtherUnit2"));
+                        etOther3Name.setText(childPojoCase.get("OtherUnit3Desc"));
+                        etOther3No.setText(childPojoCase.get("NoOfOtherUnit3"));
+
+                    }
+                }
+                else
+                    floorExist=false;
 
                 //    progressDialog.dismiss();
                 getGpsDetails();
@@ -253,7 +318,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
 
         //   progressDialog.show();
         PropertyTabGetInterface getResponse = APIClient.getClient().create(PropertyTabGetInterface.class);
-        Call<ArrayList<HashMap<String,String>>> call = getResponse.getBoundaries(case_id);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getGps(case_id);
         call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
             @Override
             public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
@@ -266,7 +331,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                 HashMap<String, String> childPojoCase=response.body().get(0);
                 if (childPojoCase != null) {
 
-                    etLandmark.setText(childPojoCase.get("Landmark"));
+                    etLandmark.setText(childPojoCase.get("LandMark"));
 
                 }
                 }
@@ -296,7 +361,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         progressDialog.show();
         JSONObject jsonObject=new JSONObject();
         PropertyTabAddInterface getResponse = APIClient.getClient().create(PropertyTabAddInterface.class);
-        Call<CommonPojo> call;
+        Call<HashMap<String,String>> call;
         if(buildingExist==true) {
             call = getResponse.updateBuilding(client_name, etBeforeFloor.getText().toString()
                     , etNoOfFloors.getText().toString(), etProposedNoOfFloors.getText().toString(), case_id);
@@ -306,9 +371,9 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                     , etNoOfFloors.getText().toString(), etProposedNoOfFloors.getText().toString(), case_id);
         }
 
-        call.enqueue(new Callback<CommonPojo>() {
+        call.enqueue(new Callback<HashMap<String,String>>() {
             @Override
-            public void onResponse(Call<CommonPojo> call, Response<CommonPojo> response) {
+            public void onResponse(Call<HashMap<String,String>> call, Response<HashMap<String,String>> response) {
 
                 Log.e("Inside", "onResponse");
                /* Log.e("response body",response.body().getStatus());
@@ -317,6 +382,8 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
 
                 if (response != null) {
 
+                    if(response.body().containsKey("BuildingId"))
+                        building_id=response.body().get("BuildingId");
                     //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
 
                 }
@@ -327,7 +394,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
             }
 
             @Override
-            public void onFailure(Call<CommonPojo> call, Throwable t) {
+            public void onFailure(Call<HashMap<String,String>> call, Throwable t) {
 
                 Log.e("Throwabe ", "" + t);
                 progressDialog.dismiss();
@@ -409,6 +476,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                 }
 
               //  progressDialog.dismiss();
+                addFloorDetails(case_id);
                 //addGpsDetails(case_id);
 
             }
@@ -429,7 +497,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         PropertyTabAddInterface getResponse = APIClient.getClient().create(PropertyTabAddInterface.class);
         Call<CommonPojo> call;
         if(floorExist==true) {
-            call = getResponse.updateFloor("","",etTotRooms.getText().toString(),etLivingRooms.getText().toString(),
+            call = getResponse.updateFloor(building_id,etFloorNoName.getText().toString(),etTotRooms.getText().toString(),etLivingRooms.getText().toString(),
                     etKitchen.getText().toString(),etBedRooms.getText().toString(),etBathRooms.getText().toString(),
                     etWc.getText().toString(),etCmnToilet.getText().toString(),etAttachToilet.getText().toString(),
                     etAttachTerrace.getText().toString(),etAttachBalcony.getText().toString(),etDryBalcony.getText().toString(),etParking.getText().toString(),
@@ -438,7 +506,13 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                     etOther3No.getText().toString(),case_id);
         }
         else{
-            call = getResponse.addSurrounding(spConstruction.getSelectedItem().toString(),etAgeOfProperty.getText().toString(), case_id);
+            call = getResponse.addFloor(building_id,etFloorNoName.getText().toString(),etTotRooms.getText().toString(),etLivingRooms.getText().toString(),
+                    etKitchen.getText().toString(),etBedRooms.getText().toString(),etBathRooms.getText().toString(),
+                    etWc.getText().toString(),etCmnToilet.getText().toString(),etAttachToilet.getText().toString(),
+                    etAttachTerrace.getText().toString(),etAttachBalcony.getText().toString(),etDryBalcony.getText().toString(),etParking.getText().toString(),
+                    etGarden.getText().toString(),etOther1Name.getText().toString(),etOther1No.getText().toString(),
+                    etOther2Name.getText().toString(),etOther2No.getText().toString(),etOther3Name.getText().toString(),
+                    etOther3No.getText().toString(),case_id);
         }
 
         call.enqueue(new Callback<CommonPojo>() {
@@ -456,7 +530,8 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
 
                 }
 
-                progressDialog.dismiss();
+                addGpsDetails(case_id);
+                //progressDialog.dismiss();
 
             }
 
@@ -493,10 +568,11 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                 if (response != null) {
 
                     //  Toast.makeText(getActivity(),response.body().getMessage() , Toast.LENGTH_SHORT).show();
-
-                }
+                    showToast("Record Updated Successfully!");
+                    }
 
                 progressDialog.dismiss();
+                getBuildingDetails(case_id);
 
             }
 
@@ -538,7 +614,8 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                 ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_constru);
                 aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spConstruction.setAdapter(aaOccu);
-                progressDialog.dismiss();
+               // progressDialog.dismiss();
+                getLandUse();
             }
 
             @Override
@@ -555,7 +632,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         if(list_land_use!=null)
             list_land_use.clear();
 
-        progressDialog.show();
+       // progressDialog.show();
         lookupLandUseInterface getResponse = APIClient.getClient().create(lookupLandUseInterface.class);
         Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.doGetListResources();
         call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
@@ -579,7 +656,8 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
                 ArrayAdapter aaOccu = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,list_land_use);
                 aaOccu.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spLandUseActual.setAdapter(aaOccu);
-                progressDialog.dismiss();
+              //  progressDialog.dismiss();
+                getLandStatus();
             }
 
             @Override
@@ -596,7 +674,7 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
         if(list_land_status!=null)
             list_land_status.clear();
 
-        progressDialog.show();
+     //   progressDialog.show();
         lookupLandStatusInterface getResponse = APIClient.getClient().create(lookupLandStatusInterface.class);
         Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.doGetListResources();
         call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {

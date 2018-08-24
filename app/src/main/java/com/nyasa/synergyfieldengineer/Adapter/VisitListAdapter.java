@@ -1,10 +1,14 @@
 package com.nyasa.synergyfieldengineer.Adapter;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -74,7 +78,7 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
 
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -82,6 +86,23 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
                 intent.putExtra("case_id",singleItem.getCaseId());
                 intent.putExtra("client_name",singleItem.getClientName());
                 mContext.startActivity(intent);
+            }
+        });
+
+        holder.contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+singleItem.getClientContactNo()));
+                //callIntent.setData(Uri.parse("tel:"+));
+
+                if (ActivityCompat.checkSelfPermission(mContext,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    showToast("Please grant Call permission");
+                    return;
+                }
+                mContext.startActivity(callIntent);
+
             }
         });
 

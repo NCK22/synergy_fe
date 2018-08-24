@@ -5,8 +5,7 @@
     xmlns:card_view="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:layout_margin="4dp"
-    android:layout_marginBottom="35dp"
+    android:layout_marginBottom="10dp"
     >
 
 <!--
@@ -24,8 +23,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="5dp"
-        app:cardBackgroundColor="#e1f5fe"
-        app:cardCornerRadius="2dp">
+        app:cardBackgroundColor="#ffffff"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
+        app:cardCornerRadius="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,10 +124,12 @@
                 android:id="@+id/btn_edit"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_gravity="center"
+                android:layout_gravity="start"
                 android:layout_weight="1"
                 android:background="#699cfc"
                 android:text="Edit"
+                android:layout_marginRight="7dp"
+                android:layout_marginEnd="7dp"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"

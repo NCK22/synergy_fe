@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:background="#e1f5fe">
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/row_toolbar"

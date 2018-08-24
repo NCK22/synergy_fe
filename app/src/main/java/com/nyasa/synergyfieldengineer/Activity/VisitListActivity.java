@@ -1,10 +1,13 @@
 package com.nyasa.synergyfieldengineer.Activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -120,6 +123,12 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
         getAssignecdCase();
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkForPhonePermission();
     }
 
     private void displayData() {
@@ -263,6 +272,36 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
         });
     }
 
+    private void checkForPhonePermission() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.CALL_PHONE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            // Permission not yet granted. Use requestPermissions().
+            //  Log.d(TAG, getString(R.string.permission_not_granted));
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CALL_PHONE},
+                    1);
+        } else {
+            // Permission already granted.
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (permissions[0].equalsIgnoreCase
+                        (Manifest.permission.CALL_PHONE)
+                        && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    // Permission was granted.
+                } else {
+                    // Permission denied. Stop the app.
+
+                }
+            }
+        }
+    }
 
     private void logout() {
 

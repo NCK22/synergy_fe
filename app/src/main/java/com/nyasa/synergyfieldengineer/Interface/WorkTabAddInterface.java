@@ -10,35 +10,45 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface PropertyTabAddInterface {
+public interface WorkTabAddInterface {
 
     @FormUrlEncoded
-    @POST("synergyapi/api/addPropertyBuildingDetails")
-    Call<HashMap<String,String>> addBuilding(@Field("clientName") String clientName,
-                                        @Field("beforeFloorDetails") String beforeFloorDetails,
-                                        @Field("presentNoOfFloors") String presentNoOfFloors,
-                                        @Field("proposedNoOfFloors") String proposedNoOfFloors,
-                                        @Field("case_id") String case_id);
+    @POST("synergyapi/api/addPropertyWordStatus")
+    Call<HashMap<String,String>> addWord(@Field("buildingId") String buildingId,
+                                             @Field("foundationWork") String foundationWork,
+                                             @Field("plinthWork") String plinthWork,
+                                             @Field("rCCWork") String rCCWork,
+                                             @Field("rCCWorkSlabs") String rCCWorkSlabs,
+                                             @Field("internalPlaster") String internalPlaster,
+                                             @Field("externalPlaster") String externalPlaster,
+                                             @Field("flooring") String flooring,
+                                             @Field("allOtherWork") String allOtherWork,
+                                             @Field("case_id") String case_id);
 
 
     @FormUrlEncoded
-    @POST("synergyapi/api/updatePropertyBuildingDetails/{case_id}")
-    Call<HashMap<String,String>> updateBuilding(@Field("clientName") String clientName,
-                                 @Field("beforeFloorDetails") String beforeFloorDetails,
-                                 @Field("presentNoOfFloors") String presentNoOfFloors,
-                                 @Field("proposedNoOfFloors") String proposedNoOfFloors,
-                                 @Path("case_id") String case_id);
+    @POST("synergyapi/api/updatePropertyWordStatus/{case_id}")
+    Call<HashMap<String,String>> updateWord(@Field("buildingId") String buildingId,
+                                         @Field("foundationWork") String foundationWork,
+                                         @Field("plinthWork") String plinthWork,
+                                         @Field("rCCWork") String rCCWork,
+                                         @Field("rCCWorkSlabs") String rCCWorkSlabs,
+                                         @Field("internalPlaster") String internalPlaster,
+                                         @Field("externalPlaster") String externalPlaster,
+                                         @Field("flooring") String flooring,
+                                         @Field("allOtherWork") String allOtherWork,
+                                                @Path("case_id") String case_id);
 
 
     @FormUrlEncoded
     @POST("synergyapi/api/addPropertyBoundaryLandusage")
     Call<CommonPojo> addBoundary(@Field("eastActual") String eastActual,
-                                             @Field("southActual") String southActual,
-                                             @Field("westActual") String westActual,
-                                             @Field("northActual") String northActual,
-                                             @Field("landUseActual") String landUseActual,
-                                             @Field("landStatus") String LandStatus,
-                                             @Field("case_id") String case_id);
+                                 @Field("southActual") String southActual,
+                                 @Field("westActual") String westActual,
+                                 @Field("northActual") String northActual,
+                                 @Field("landUseActual") String landUseActual,
+                                 @Field("landStatus") String LandStatus,
+                                 @Field("case_id") String case_id);
 
 
     @FormUrlEncoded
@@ -55,15 +65,15 @@ public interface PropertyTabAddInterface {
     @FormUrlEncoded
     @POST("synergyapi/api/addPropertySurroundings")
     Call<CommonPojo> addSurrounding(@Field("constructionAsPerPlan") String constructionAsPerPlan,
-                                 @Field("ageOfPropertyYears") String ageOfPropertyYears,
-                                 @Field("case_id") String case_id);
+                                    @Field("ageOfPropertyYears") String ageOfPropertyYears,
+                                    @Field("case_id") String case_id);
 
 
     @FormUrlEncoded
     @POST("synergyapi/api/updatePropertySurroundings/{case_id}")
     Call<CommonPojo> updateSurrounding(@Field("constructionAsPerPlan") String constructionAsPerPlan,
                                        @Field("ageOfPropertyYears") String ageOfPropertyYears,
-                                    @Path("case_id") String case_id);
+                                       @Path("case_id") String case_id);
 
 
 
@@ -124,7 +134,7 @@ public interface PropertyTabAddInterface {
     @FormUrlEncoded
     @POST("synergyapi/api/addPropertyGps")
     Call<CommonPojo> addGPS(@Field("landMark") String landMark,
-                                    @Field("case_id") String case_id);
+                            @Field("case_id") String case_id);
 
 
     @FormUrlEncoded
