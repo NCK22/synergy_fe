@@ -49,6 +49,30 @@ android:background="#ffffff"
                 android:layout_marginBottom="15dp"
                 />
 
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_plinth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Plinth Work"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,6 +85,143 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:layout_marginBottom="15dp"/>
             </android.support.design.widget.TextInputLayout>
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_brick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="RCC  FrameWork"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_rcc_framework"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="RCC  FrameWork"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_internal_plaster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="RCC  FrameWork"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_external_plaster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="RCC  FrameWork"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_flooring_work"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Flooring Work"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_other_work"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Other Work"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
 
 
             <View
@@ -150,6 +311,52 @@ android:background="#ffffff"
                     android:popupElevation="@dimen/floating_label_bottom_spacing"
                     android:layout_marginBottom="15dp"
                     />
+
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_windows"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Windows"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_roofing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Roofing"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
 
             <fr.ganfra.materialspinner.MaterialSpinner
                 android:id="@+id/sp_flooring"
@@ -312,6 +519,30 @@ android:background="#ffffff"
                 android:layout_marginBottom="15dp"
                 />
 
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/sp_side_margin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                app:ms_alignLabels="false"
+                app:ms_arrowColor="#000000"
+                app:ms_arrowSize="20dp"
+                app:ms_baseColor="#808080"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="false"
+                app:ms_errorColor="#FFFFFF"
+                app:ms_hintTextSize="16sp"
+                app:ms_hint="Parking"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="false"
+                app:ms_thickness="0.5dp"
+                android:popupBackground="#e6e6e6"
+                android:popupElevation="@dimen/floating_label_bottom_spacing"
+                android:layout_marginBottom="15dp"
+                />
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -331,7 +562,7 @@ android:background="#ffffff"
                 android:hint="No of Lifts">
 
                 <EditText
-                    android:id="@+id/et_liftss"
+                    android:id="@+id/et_lifts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -363,6 +594,45 @@ android:background="#ffffff"
                     android:textSize="16sp"
                     android:layout_marginBottom="15dp"/>
             </android.support.design.widget.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/tv_rate_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Current Market Rate Range (Rs) per SqFt :  :"
+                android:layout_marginBottom="10dp"
+                android:visibility="visible"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="From (Rs)">
+
+                <EditText
+                    android:id="@+id/et_rate_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint=" To (Rs)">
+
+                <EditText
+                    android:id="@+id/et_rate_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
