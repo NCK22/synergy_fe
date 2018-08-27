@@ -493,6 +493,8 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     public void addFloorDetails(final String case_id){
 
         //        progressDialog.show();
+
+        TabParentCaseDetailActivity.buildingId=building_id;
         JSONObject jsonObject=new JSONObject();
         PropertyTabAddInterface getResponse = APIClient.getClient().create(PropertyTabAddInterface.class);
         Call<CommonPojo> call;

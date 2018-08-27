@@ -57,7 +57,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
     Bundle bundle;
     String tabFlag="home";
     public static boolean bCompleted=false,pCompleted=false,wCompleted=false;
-    public static String client_name="";
+    public static String client_name="",buildingId="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -258,6 +258,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                     TabWorkStatus tabWorkStatus=new TabWorkStatus();
                     Bundle bundle2=new Bundle();
                     bundle2.putString("case_id",intent.getStringExtra("case_id"));
+                    bundle2.putString("building_id",buildingId);
                     tabWorkStatus.setArguments(bundle2);
                     return tabWorkStatus;
 

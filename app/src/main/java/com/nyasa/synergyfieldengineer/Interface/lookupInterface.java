@@ -30,6 +30,9 @@ public interface lookupInterface {
     @GET("synergyapi/api/staticlookup/walls")
     Call<ArrayList<ChildPojoStaticLookup>> getWalls();
 
+    @GET("synergyapi/api/staticlookup/roofing")
+    Call<ArrayList<ChildPojoStaticLookup>> getRoofing();
+
     @GET("synergyapi/api/staticlookup/plumbing")
     Call<ArrayList<ChildPojoStaticLookup>> getPlumbing();
 
@@ -44,5 +47,8 @@ public interface lookupInterface {
 
     @GET("synergyapi/api/staticlookup/electric")
     Call<ArrayList<ChildPojoStaticLookup>> getElectric();
+
+    @GET("synergyapi/api/staticlookup/sideMargin")
+    Call<ArrayList<ChildPojoStaticLookup>> getSideMargin();
 
 }

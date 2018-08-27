@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nyasa.synergyfieldengineer.APIClient;
+import com.nyasa.synergyfieldengineer.Interface.PropertyTabGetInterface;
 import com.nyasa.synergyfieldengineer.Interface.WorkTabAddInterface;
 import com.nyasa.synergyfieldengineer.Interface.WorkTabGetInterface;
 import com.nyasa.synergyfieldengineer.Interface.getBankInterface;
@@ -53,13 +54,13 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
 
 
-    Button  btnSave;
+    Button  btnSubmit;
     SPUserProfile spUserProfile;
     ProgressDialog progressDialog;
     TextView tvCaseNo,tvCaseDate,tvBank,tvReportNo,tvVillage,tvDistrict;
     EditText etSlabs,etLifts,etAminities,etLat,etLong,etRateFrom,etRateTo,etRemarks,etDeviation,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
-    String case_id="";
+    String case_id="",building_id="";
     Boolean wordExist=false,specExist=false,costExist=false,violExist=false,valExist=false,dtExist=false,gpsExist=false;
     MaterialSpinner spFoundationWork,spPlinth,spRcc,spBrick,spIntPlaster,spExtPlaster,spFlooringWork,spOtherWork,spRoofing,
             spFoundation,spWalls,spDoors,spWindows,spFlooring,spIntFinish,spExtFinish,spElectric,spPlumbing,spKitchen,spParking,spSideMargin;
@@ -68,14 +69,17 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
     ArrayList<String> list_found_work=new ArrayList<String>();
     ArrayList<String> list_found=new ArrayList<String>();
     ArrayList<String> list_walls=new ArrayList<String>();
+    ArrayList<String> list_roof=new ArrayList<String>();
     ArrayList<String> list_doors=new ArrayList<String>();
-    ArrayList<String> list_flooring=new ArrayList<String>();
+    ArrayList<String> list_windows=new ArrayList<String>();
+     ArrayList<String> list_flooring=new ArrayList<String>();
     ArrayList<String> list_int_finish=new ArrayList<String>();
     ArrayList<String> list_ext_finish=new ArrayList<String>();
     ArrayList<String> list_electric=new ArrayList<String>();
     ArrayList<String> list_plumbing=new ArrayList<String>();
     ArrayList<String> list_kitchen=new ArrayList<String>();
     ArrayList<String> list_parking=new ArrayList<String>();
+    ArrayList<String> list_side_margin=new ArrayList<String>();
     ArrayList<String> list_yesNo=new ArrayList<String>();
 
 
@@ -142,10 +146,13 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         spSideMargin=(MaterialSpinner) rootView.findViewById(R.id.sp_side_margin);
         spRoofing=(MaterialSpinner) rootView.findViewById(R.id.sp_roofing);
 
+        btnSubmit=(Button)rootView.findViewById(R.id.btn_submit);
+        btnSubmit.setOnClickListener(this);
 
         Bundle bundle=getArguments();
         case_id=bundle.getString("case_id");
         Log.e("case_id",case_id);
+       // Log.e("building_id",bundle.getString("building_id"));
         //getCaseDetails(case_id);
         getFoundationWork();
         return rootView;
@@ -267,6 +274,47 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                     spWalls.setAdapter(aa);
                 }
           //      progressDialog.dismiss();
+                getRoofing();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+    public void getRoofing(){
+
+        // progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getRoofing();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_roof.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_walls size",""+list_roof.size());
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_roof);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spRoofing.setAdapter(aa);
+                }
+                //      progressDialog.dismiss();
                 getDoors();
             }
 
@@ -308,6 +356,47 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                     spDoors.setAdapter(aa);
                 }
             //    progressDialog.dismiss();
+                getWindows();
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+    public void getWindows(){
+
+        //  progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getWindows();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_windows.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_windows size",""+list_windows.size());
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_windows);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spWindows.setAdapter(aa);
+                }
+                //    progressDialog.dismiss();
                 getFlooring();
             }
 
@@ -577,7 +666,6 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         });
     }
 
-
     public void getParking(){
 
       //  progressDialog.show();
@@ -617,9 +705,11 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                     spRcc.setAdapter(aa1);
                     spOtherWork.setAdapter(aa1);
                     spFlooringWork.setAdapter(aa1);
-
-                    progressDialog.dismiss();
+                    spBrick.setAdapter(aa1);
+                   // progressDialog.dismiss();
                 }
+
+                getSideMargin();
 
             }
 
@@ -632,7 +722,86 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         });
     }
 
-    public void getWordDetails(String case_id){
+    public void getSideMargin(){
+
+        //  progressDialog.show();
+        lookupInterface getResponse = APIClient.getClient().create(lookupInterface.class);
+        Call<ArrayList<ChildPojoStaticLookup>> call = getResponse.getSideMargin();
+        call.enqueue(new Callback<ArrayList<ChildPojoStaticLookup>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ChildPojoStaticLookup>> call, Response<ArrayList<ChildPojoStaticLookup>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                /*Log.e("response body",response.body().getStatus());
+                Log.e("response body",response.body().getMsg());
+*/
+                ArrayList<ChildPojoStaticLookup> childPojoStaticLookups = response.body();
+
+                if(childPojoStaticLookups!=null){
+                    for(int i=1;i<childPojoStaticLookups.size();i++){
+
+                        list_side_margin.add(childPojoStaticLookups.get(i).getLookupItemValue());
+                    }
+                }
+
+                Log.e("list_side_margin size",""+list_side_margin.size());
+                if(getActivity()!=null) {
+                    ArrayAdapter aa = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, list_side_margin);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spSideMargin.setAdapter(aa);
+
+                    progressDialog.dismiss();
+                }
+
+                getBuildingDetails(case_id);
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ChildPojoStaticLookup>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void getBuildingDetails(final String case_id){
+
+        progressDialog.show();
+        PropertyTabGetInterface getResponse = APIClient.getClient().create(PropertyTabGetInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getBuilding(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
+            @Override
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
+                if(response.body().size()>0) {
+
+                    HashMap<String, String> childPojoCase = response.body().get(0);
+                    if (childPojoCase != null) {
+
+                        building_id=childPojoCase.get("BuildingId");
+
+                    }
+                }
+                //progressDialog.dismiss();
+                getWordDetails(case_id);
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+    public void getWordDetails(final String case_id){
 
         progressDialog.show();
         WorkTabGetInterface getResponse = APIClient.getClient().create(WorkTabGetInterface.class);
@@ -649,10 +818,15 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                     HashMap<String, String> childPojoCase = response.body().get(0);
                     if (childPojoCase != null) {
 
-                       /* etBeforeFloor.setText(childPojoCase.get("BeforeFloorDetails"));
-                        etNoOfFloors.setText(childPojoCase.get("PresentNoOfFloors"));
-                        etProposedNoOfFloors.setText(childPojoCase.get("ProposedNoOfFloors"));
-                        building_id=childPojoCase.get("BuildingId");*/
+                        spFoundationWork.setSelection(list_found_work.indexOf(childPojoCase.get("FoundationWork"))+1);
+                        spPlinth.setSelection(list_yesNo.indexOf(childPojoCase.get("PlinthWork"))+1);
+                        spRcc.setSelection(list_yesNo.indexOf(childPojoCase.get("RCCWork"))+1);
+                         etSlabs.setText(childPojoCase.get("RCCWorkSlabs")+1);
+                        spBrick.setSelection(list_yesNo.indexOf(childPojoCase.get("BrickWork"))+1);
+                        spIntPlaster.setSelection(list_yesNo.indexOf(childPojoCase.get("InternalPlaster"))+1);
+                        spExtPlaster.setSelection(list_yesNo.indexOf(childPojoCase.get("ExternalPlaster"))+1);
+                        spFlooringWork.setSelection(list_yesNo.indexOf(childPojoCase.get("Flooring"))+1);
+                        spOtherWork.setSelection(list_yesNo.indexOf(childPojoCase.get("AllOtherWork"))+1);
 
                     }
                 }
@@ -660,7 +834,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                     wordExist=false;
 
                     progressDialog.dismiss();
-                //getBoundaryDetails();
+                getSpecifications(case_id);
             }
 
             @Override
@@ -684,19 +858,29 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
                 //  ArrayList<ChildPojoCase> childPojoCase = response.body();
                 if(response.body().size()>0) {
-                    wordExist=true;
+                    specExist=true;
                     HashMap<String, String> childPojoCase = response.body().get(0);
                     if (childPojoCase != null) {
 
-                       /* etBeforeFloor.setText(childPojoCase.get("BeforeFloorDetails"));
-                        etNoOfFloors.setText(childPojoCase.get("PresentNoOfFloors"));
-                        etProposedNoOfFloors.setText(childPojoCase.get("ProposedNoOfFloors"));
-                        building_id=childPojoCase.get("BuildingId");*/
+                      spFoundation.setSelection(list_found.indexOf(childPojoCase.get("Foundation")));
+                      spWalls.setSelection(list_walls.indexOf(childPojoCase.get("Walls")));
+                      spDoors.setSelection(list_doors.indexOf(childPojoCase.get("Doors")));
+                      spWindows.setSelection(list_windows.indexOf(childPojoCase.get("Windows")));
+                      spRoofing.setSelection(list_roof.indexOf(childPojoCase.get("Roofing")));
+                        spFlooring.setSelection(list_flooring.indexOf(childPojoCase.get("Flooring")));
+                        spIntPlaster.setSelection(list_yesNo.indexOf(childPojoCase.get("InternalPlasterPainting")));
+                        spExtPlaster.setSelection(list_yesNo.indexOf(childPojoCase.get("ExternalPlasterPainting")));
+                        spElectric.setSelection(list_electric.indexOf(childPojoCase.get("ElectricalInstallation")));
+                        spPlumbing.setSelection(list_plumbing.indexOf(childPojoCase.get("PlumbingInstallation")));
+                        spKitchen.setSelection(list_kitchen.indexOf(childPojoCase.get("KitchenPlatform")));
+                        spParking.setSelection(list_parking.indexOf(childPojoCase.get("ParkingFlooring")));
+                        //spSideMargin.setSelection(list.indexOf(childPojoCase.get("ExternalPlasterPainting")));
+                        etLifts.setText(childPojoCase.get("NoOfLifts"));
 
                     }
                 }
                 else
-                    wordExist=false;
+                    specExist=false;
 
                 progressDialog.dismiss();
                 //getBoundaryDetails();
@@ -749,7 +933,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
             }
         });
     }
-    public void getCost(String case_id){
+    public void getCost(final String case_id){
 
         progressDialog.show();
         WorkTabGetInterface getResponse = APIClient.getClient().create(WorkTabGetInterface.class);
@@ -762,22 +946,20 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
                 //  ArrayList<ChildPojoCase> childPojoCase = response.body();
                 if(response.body().size()>0) {
-                    wordExist=true;
+                    costExist=true;
                     HashMap<String, String> childPojoCase = response.body().get(0);
                     if (childPojoCase != null) {
 
-                       /* etBeforeFloor.setText(childPojoCase.get("BeforeFloorDetails"));
-                        etNoOfFloors.setText(childPojoCase.get("PresentNoOfFloors"));
-                        etProposedNoOfFloors.setText(childPojoCase.get("ProposedNoOfFloors"));
-                        building_id=childPojoCase.get("BuildingId");*/
+                  etRateFrom.setText(childPojoCase.get("MarketRateFrom_RsPerSqFt"));
+                  etRateTo.setText(childPojoCase.get("MarketRateTo_RsPerSqFt"));
 
                     }
                 }
                 else
-                    wordExist=false;
+                    costExist=false;
 
                 progressDialog.dismiss();
-                //getBoundaryDetails();
+             getGps(case_id);
             }
 
             @Override
@@ -788,7 +970,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
             }
         });
     }
-    public void getGps(String case_id){
+    public void getGps(final String case_id){
 
         progressDialog.show();
         WorkTabGetInterface getResponse = APIClient.getClient().create(WorkTabGetInterface.class);
@@ -801,7 +983,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
                 //  ArrayList<ChildPojoCase> childPojoCase = response.body();
                 if(response.body().size()>0) {
-                    wordExist=true;
+                    gpsExist=true;
                     HashMap<String, String> childPojoCase = response.body().get(0);
                     if (childPojoCase != null) {
 
@@ -813,10 +995,10 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                     }
                 }
                 else
-                    wordExist=false;
+                    gpsExist=false;
 
                 progressDialog.dismiss();
-                //getBoundaryDetails();
+               getViolation(case_id);
             }
 
             @Override
@@ -879,7 +1061,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
                 //  ArrayList<ChildPojoCase> childPojoCase = response.body();
                 if(response.body().size()>0) {
-                    wordExist=true;
+                    violExist=true;
                     HashMap<String, String> childPojoCase = response.body().get(0);
                     if (childPojoCase != null) {
 
@@ -891,7 +1073,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
                     }
                 }
                 else
-                    wordExist=false;
+                    violExist=false;
 
                 progressDialog.dismiss();
                 //getBoundaryDetails();
@@ -913,15 +1095,25 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         WorkTabAddInterface getResponse = APIClient.getClient().create(WorkTabAddInterface.class);
         Call<HashMap<String,String>> call;
         if(wordExist==true) {
-            call = getResponse.addWord("",spFoundationWork.getSelectedItem().toString(),spPlinth.getSelectedItem().toString(),
-                    spRcc.getSelectedItem().toString(),etSlabs.getText().toString(),spBrick.getSelectedItem().toString(),
-                    spFlooring.getSelectedItem().toString(),spOtherWork.getSelectedItem().toString(),spIntPlaster.getSelectedItem().toString(),
+            call = getResponse.updateWord(building_id,
+                    spFoundationWork.getSelectedItem().toString(),
+                    spPlinth.getSelectedItem().toString(),
+                    spRcc.getSelectedItem().toString(),
+                    etSlabs.getText().toString(),
+                    spBrick.getSelectedItem().toString(),
+                    spFlooringWork.getSelectedItem().toString(),
+                    spOtherWork.getSelectedItem().toString(),
+                    spIntPlaster.getSelectedItem().toString(),
                     spExtPlaster.getSelectedItem().toString(), case_id);
         }
         else{
-            call = getResponse.updateWord("",spFoundationWork.getSelectedItem().toString(),spPlinth.getSelectedItem().toString(),
+            call = getResponse.addWord(building_id,
+                    spFoundationWork.getSelectedItem().toString(),
+                    spPlinth.getSelectedItem().toString(),
                     spRcc.getSelectedItem().toString(),etSlabs.getText().toString(),spBrick.getSelectedItem().toString(),
-                    spFlooring.getSelectedItem().toString(),spOtherWork.getSelectedItem().toString(),spIntPlaster.getSelectedItem().toString(),
+                    spFlooringWork.getSelectedItem().toString(),
+                    spOtherWork.getSelectedItem().toString(),
+                    spIntPlaster.getSelectedItem().toString(),
                     spExtPlaster.getSelectedItem().toString(), case_id);
         }
 
@@ -931,9 +1123,9 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
 
 
-
                 //    progressDialog.dismiss();
                 addSpecificaions(case_id);
+
 
             }
 
@@ -948,23 +1140,23 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
     public void addSpecificaions(final String case_id){
 
-        progressDialog.show();
+       // progressDialog.show();
         JSONObject jsonObject=new JSONObject();
         WorkTabAddInterface getResponse = APIClient.getClient().create(WorkTabAddInterface.class);
         Call<HashMap<String,String>> call;
         if(specExist==true) {
-            call = getResponse.addSpecification(spFoundationWork.getSelectedItem().toString(),spWalls.getSelectedItem().toString(),spDoors.getSelectedItem().toString(),
+            call = getResponse.updateSpecification(spFoundation.getSelectedItem().toString(),spWalls.getSelectedItem().toString(),spDoors.getSelectedItem().toString(),
                     spWindows.getSelectedItem().toString(),spRoofing.getSelectedItem().toString(),spFlooring.getSelectedItem().toString(),
                     spIntPlaster.getSelectedItem().toString(),spExtPlaster.getSelectedItem().toString(),
                     spExtFinish.getSelectedItem().toString(),spPlumbing.getSelectedItem().toString(),spElectric.getSelectedItem().toString(),
-                    spParking.getSelectedItem().toString(),spSideMargin.getSelectedItem().toString(),etLifts.getText().toString(),etAminities.getText().toString(),case_id);
+                    spParking.getSelectedItem().toString(),"",etLifts.getText().toString(),etAminities.getText().toString(),case_id);
         }
         else{
-            call = getResponse.updateSpecification(spFoundationWork.getSelectedItem().toString(),spWalls.getSelectedItem().toString(),spDoors.getSelectedItem().toString(),
+            call = getResponse.addSpecification(spFoundation.getSelectedItem().toString(),spWalls.getSelectedItem().toString(),spDoors.getSelectedItem().toString(),
                     spWindows.getSelectedItem().toString(),spRoofing.getSelectedItem().toString(),spFlooring.getSelectedItem().toString(),
                     spIntPlaster.getSelectedItem().toString(),spExtPlaster.getSelectedItem().toString(),
                     spExtFinish.getSelectedItem().toString(),spPlumbing.getSelectedItem().toString(),spElectric.getSelectedItem().toString(),
-                    spParking.getSelectedItem().toString(),spSideMargin.getSelectedItem().toString(),etLifts.getText().toString(),etAminities.getText().toString(),case_id);
+                    spParking.getSelectedItem().toString(),"",etLifts.getText().toString(),etAminities.getText().toString(),case_id);
         }
 
         call.enqueue(new Callback<HashMap<String,String>>() {
@@ -976,7 +1168,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
 
                 //    progressDialog.dismiss();
-                addSrtEndDt(case_id);
+               addCostDetails(case_id);
 
             }
 
@@ -1038,7 +1230,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
 
                 //    progressDialog.dismiss();
-                addGpsDetails(case_id);
+               addViolation(case_id);
 
             }
 
@@ -1073,7 +1265,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
 
 
                 //    progressDialog.dismiss();
-                addCaseValDetails(case_id);
+              //  addCaseValDetails(case_id);
 
             }
 
@@ -1119,15 +1311,15 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
     }
     public void addViolation(final String case_id){
 
-        progressDialog.show();
+        //progressDialog.show();
         JSONObject jsonObject=new JSONObject();
         WorkTabAddInterface getResponse = APIClient.getClient().create(WorkTabAddInterface.class);
         Call<HashMap<String,String>> call;
         if(violExist==true) {
-            call = getResponse.addViolation("",case_id);
+            call = getResponse.updateViolation(etDeviation.getText().toString(),case_id);
         }
         else{
-            call = getResponse.updateViolation("",case_id);
+            call = getResponse.addViolation(etDeviation.getText().toString(),case_id);
         }
 
         call.enqueue(new Callback<HashMap<String,String>>() {
@@ -1154,12 +1346,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-       /* if(etEmail.getText().toString().length()==0)
-            showToast("Please enter email");
-        else if(!etEmail.getText().toString().contains("@")||!etEmail.getText().toString().contains("."))
-            showToast("Please enter valid Email");
-        else
-            //editEmail();*/
+     addWordDetails(case_id);
     }
 
 
