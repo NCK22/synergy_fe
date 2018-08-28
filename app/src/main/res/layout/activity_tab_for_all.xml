@@ -52,7 +52,7 @@
                 android:text="Property Details" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/ti_work_status"
+                android:id="@+id/ti_work_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Work Status"

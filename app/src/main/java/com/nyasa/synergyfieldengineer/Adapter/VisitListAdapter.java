@@ -72,8 +72,8 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
         holder.project_name.setText(singleItem.getProjectName());
        // if(singleItem.getVillageCity()!=null)
         //holder.address1.setText(singleItem.getVillageCity()+" ,"+singleItem.getPincode());
-        holder.address1.setText("City : N/A"+" ,"+singleItem.getPincode());
-        holder.address2.setText(singleItem.getState());
+        holder.address1.setText("Property No : "+singleItem.getPropertyNo()+", \nBuilding No. "+singleItem.getBuildingWing());
+        holder.address2.setText("Village/City:"+singleItem.getVillageCity()+", \nDistrict :"+singleItem.getDistrict());
         holder.contact.append(singleItem.getClientContactNo());
 
 
