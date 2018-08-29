@@ -113,15 +113,15 @@ public interface WorkTabAddInterface {
 
     @FormUrlEncoded
     @POST("synergyapi/api/addGpsDetails")
-    Call<HashMap<String, String>> addGPS(@Field("gPSLatitude") String gPSLatitude,
-                            @Field("gPSLongitude") String gPSLongitude,
+    Call<HashMap<String, String>> addGPS(@Field("gPSLatitude") Double gPSLatitude,
+                            @Field("gPSLongitude") Double gPSLongitude,
                             @Field("case_id") String case_id);
 
 
     @FormUrlEncoded
     @POST("synergyapi/api/updateGpsDetails/{case_id}")
-    Call<HashMap<String, String>> updateGPS(@Field("gPSLatitude") String landMark,
-                               @Field("gPSLongitude") String gPSLongitude,
+    Call<HashMap<String, String>> updateGPS(@Field("gPSLatitude") Double gPSLatitude,
+                               @Field("gPSLongitude") Double gPSLongitude,
                                @Path("case_id") String case_id);
 
     @FormUrlEncoded

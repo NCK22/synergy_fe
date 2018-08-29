@@ -982,45 +982,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
             }
         });
     }
-    public void getGps(final String case_id){
 
-        progressDialog.show();
-        WorkTabGetInterface getResponse = APIClient.getClient().create(WorkTabGetInterface.class);
-        Call<ArrayList<HashMap<String,String>>> call = getResponse.getGps(case_id);
-        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
-            @Override
-            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
-
-                Log.e("Inside", "onResponse");
-
-                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
-                if(response.body().size()>0) {
-                    gpsExist=true;
-                    HashMap<String, String> childPojoCase = response.body().get(0);
-                    if (childPojoCase != null) {
-
-                       /* etBeforeFloor.setText(childPojoCase.get("BeforeFloorDetails"));
-                        etNoOfFloors.setText(childPojoCase.get("PresentNoOfFloors"));
-                        etProposedNoOfFloors.setText(childPojoCase.get("ProposedNoOfFloors"));
-                        building_id=childPojoCase.get("BuildingId");*/
-
-                    }
-                }
-                else
-                    gpsExist=false;
-
-                progressDialog.dismiss();
-               getViolation(case_id);
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
-
-                Log.e("Throwabe ", "" + t);
-                progressDialog.dismiss();
-            }
-        });
-    }
     public void getSrtEndDt(final String case_id){
 
         progressDialog.show();
@@ -1249,41 +1211,7 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
             }
         });
     }
-    public void addGpsDetails(final String case_id){
 
-
-        JSONObject jsonObject=new JSONObject();
-        WorkTabAddInterface getResponse = APIClient.getClient().create(WorkTabAddInterface.class);
-        Call<HashMap<String,String>> call;
-        if(gpsExist==true) {
-            call = getResponse.updateGPS(etLat.getText().toString(),etLong.getText().toString(),case_id);
-        }
-        else{
-            call = getResponse.addGPS(etLat.getText().toString(),etLong.getText().toString(),case_id);
-
-        }
-
-        call.enqueue(new Callback<HashMap<String,String>>() {
-            @Override
-            public void onResponse(Call<HashMap<String,String>> call, Response<HashMap<String,String>> response) {
-
-
-
-
-
-                //    progressDialog.dismiss();
-              //  addCaseValDetails(case_id);
-
-            }
-
-            @Override
-            public void onFailure(Call<HashMap<String,String>> call, Throwable t) {
-
-                Log.e("Throwabe ", "" + t);
-                progressDialog.dismiss();
-            }
-        });
-    }
     public void addCaseValDetails(final String case_id){
 
         progressDialog.show();
@@ -1348,10 +1276,20 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         });
     }
 
+    public void checkValidity(){
+
+        if(etRemarks.getText().toString().equalsIgnoreCase(""))
+
+            showToast("Please fill all mandatory fields");
+        else
+            addWordDetails(case_id);
+
+    }
 
     @Override
     public void onClick(View v) {
-     addWordDetails(case_id);
+        checkValidity();
+     //addWordDetails(case_id);
     }
 
     //display toast

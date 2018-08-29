@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nyasa.synergyfieldengineer.Fragment.TabLocationDetails;
 import com.nyasa.synergyfieldengineer.Fragment.TabPropertyDetails;
 import com.nyasa.synergyfieldengineer.Fragment.TabWorkStatus;
 import com.nyasa.synergyfieldengineer.R;
@@ -262,6 +263,15 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                     tabWorkStatus.setArguments(bundle2);
                     return tabWorkStatus;
 
+                case 3:
+
+                    Log.e("Tab", "whoShortListed");
+                    TabLocationDetails tabLocationDetails=new TabLocationDetails();
+                    Bundle bundle3=new Bundle();
+                    bundle3.putString("case_id",intent.getStringExtra("case_id"));
+                    tabLocationDetails.setArguments(bundle3);
+                    return tabLocationDetails;
+
 
 
                 default:
@@ -282,7 +292,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
         public int getCount() {
             // Show 3 total pages.
 
-            return 3;
+            return 4;
 
         }
     }

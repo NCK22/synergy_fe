@@ -71,7 +71,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
     EditText etApplicantName,etPersonAtSite,etContactPersonAtSite,etPropertyNo,etFloorNo,etBuildingNo,etProjectName,
     etSurveyNo,etVillageCity,etDistrict,etPincode;
     String case_id="",insti_id="",pOccu="",pRel="";
-    Boolean occuIsExist=false;
+    Boolean occuIsExist=false,flagAllValid=false;
     MaterialSpinner spOccu,spRelationWithOccu;
 
     ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
@@ -179,8 +179,6 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
             }
         });
     }
-
-
 
     public void getPOccupancy(){
 
@@ -428,10 +426,21 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-     addBasicDetails(case_id);
+     checkValidity();
+       // addBasicDetails(case_id);
     }
 
 
+
+    public void checkValidity(){
+
+        if(
+                spOccu.getSelectedItemPosition()<=0 || spRelationWithOccu.getSelectedItemPosition()<=0)
+
+        showToast("Please fill all mandatory fields");
+        else
+            addBasicDetails(case_id);
+    }
     //display toast
     public void showToast(String msg){
         Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();

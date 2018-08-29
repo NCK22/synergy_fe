@@ -717,9 +717,30 @@ public class TabPropertyDetails extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-        addBuildingDetails(case_id);
+        checkValidity();
+        //addBuildingDetails(case_id);
     }
 
+    public void checkValidity(){
+
+        if(etFloorNoName.getText().toString().equalsIgnoreCase("") ||
+                etBeforeFloor.getText().toString().equalsIgnoreCase("") ||
+                etNoOfFloors.getText().toString().equalsIgnoreCase("") ||
+                etProposedNoOfFloors.getText().toString().equalsIgnoreCase("") ||
+                etTotRooms.getText().toString().equalsIgnoreCase("")||
+                etEast.getText().toString().equalsIgnoreCase("") ||
+                etWest.getText().toString().equalsIgnoreCase("") ||
+                etNorth.getText().toString().equalsIgnoreCase("") ||
+                etSouth.getText().toString().equalsIgnoreCase("")||
+                spConstruction.getSelectedItemPosition()<=0 ||
+                spLandStatus.getSelectedItemPosition()<=0 ||
+                spLandUseActual.getSelectedItemPosition()<=0)
+
+            showToast("Please fill all mandatory fields");
+        else
+            addBuildingDetails(case_id);
+
+        }
 
     //display toast
     public void showToast(String msg){

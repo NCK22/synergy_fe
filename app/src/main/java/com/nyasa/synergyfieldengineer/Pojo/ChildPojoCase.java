@@ -30,11 +30,11 @@ public class ChildPojoCase {
     @SerializedName("societyApartmentName") String societyApartmentName;
     @SerializedName("SurveyPlotNo") String surveyPlotNo;
     @SerializedName("remainingAddress") String remainingAddress;
-    @SerializedName("villageCity") String villageCity;
+    @SerializedName("VillageCity") String villageCity;
     @SerializedName("villageCityOld") String  villageCityOld;
     @SerializedName("taluka") String taluka;
     @SerializedName("talukaOld") String talukaOld;
-    @SerializedName("district") String district;
+    @SerializedName("District") String district;
     @SerializedName("districtOld") String districtOld;
     @SerializedName("Pincode") String pincode;
     @SerializedName("State") String state;
