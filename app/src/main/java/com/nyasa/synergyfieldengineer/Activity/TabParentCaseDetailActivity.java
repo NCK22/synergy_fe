@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.nyasa.synergyfieldengineer.Fragment.TabLocationDetails;
 import com.nyasa.synergyfieldengineer.Fragment.TabPropertyDetails;
+import com.nyasa.synergyfieldengineer.Fragment.TabUploadPhoto;
 import com.nyasa.synergyfieldengineer.Fragment.TabWorkStatus;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
@@ -37,7 +38,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TabParentCaseDetailActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class TabParentCaseDetailActivity extends AppCompatActivity
+        implements TabLayout.OnTabSelectedListener,
+        NavigationView.OnNavigationItemSelectedListener,
+        BottomNavigationView.OnNavigationItemSelectedListener {
 
     private TabParentCaseDetailActivity.SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -272,6 +276,15 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
                     tabLocationDetails.setArguments(bundle3);
                     return tabLocationDetails;
 
+                case 4:
+
+                    Log.e("Tab", "whoShortListed");
+                    TabUploadPhoto tabUploadPhoto=new TabUploadPhoto();
+                    Bundle bundle4=new Bundle();
+                    bundle4.putString("case_id",intent.getStringExtra("case_id"));
+                    tabUploadPhoto.setArguments(bundle4);
+                    return tabUploadPhoto;
+
 
 
                 default:
@@ -292,7 +305,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity implements Ta
         public int getCount() {
             // Show 3 total pages.
 
-            return 4;
+            return 5;
 
         }
     }

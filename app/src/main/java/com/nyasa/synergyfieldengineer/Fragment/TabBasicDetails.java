@@ -431,7 +431,6 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
     }
 
 
-
     public void checkValidity(){
 
         if(

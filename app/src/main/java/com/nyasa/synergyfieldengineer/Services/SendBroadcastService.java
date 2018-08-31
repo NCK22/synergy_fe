@@ -1,3 +1,4 @@
+/*
 package com.nyasa.synergyfieldengineer.Services;
 
 import android.Manifest;
@@ -48,9 +49,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * Created by Neha on 27-11-2017.
- */
+ *//*
+
 
 public class SendBroadcastService extends Service{
 
@@ -103,4 +106,4 @@ public class SendBroadcastService extends Service{
 
         return START_STICKY;
     }
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package com.nyasa.synergyfieldengineer.Services;
 
 import android.Manifest;
@@ -571,3 +572,4 @@ sPrefUserInfo.getUserInfo());
     }
 
    }
+*/

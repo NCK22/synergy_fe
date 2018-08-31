@@ -2,8 +2,11 @@ package com.nyasa.synergyfieldengineer.Fragment;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,7 +51,9 @@ import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.Executor;
 
@@ -57,102 +62,104 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 
 /**
  * Created by Dell on 15-01-2018.
  */
 
 
-public class TabLocationDetails extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class TabLocationDetails extends Fragment implements
+        View.OnClickListener,
+        LocationListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
 
-
-
-    Button  btnSubmit;
+    Button btnSubmit,btnGetLoc;
     SPUserProfile spUserProfile;
     ProgressDialog progressDialog;
-    TextView tvCaseNo,tvCaseDate,tvBank,tvReportNo,tvVillage,tvDistrict;
-    EditText etLat,etLong;
-    String case_id="",insti_id="",pOccu="",pRel="";
-    Boolean gpsExist=false,flagAllValid=false;
-    MaterialSpinner spOccu,spRelationWithOccu;
+    TextView tvCaseNo, tvCaseDate, tvBank, tvReportNo, tvVillage, tvDistrict;
+    EditText etLat, etLong;
+    String case_id = "", insti_id = "", pOccu = "", pRel = "";
+    Boolean gpsExist = false, flagAllValid = false;
+    MaterialSpinner spOccu, spRelationWithOccu;
 
-    ArrayList<ChildPojoCase> mListItem=new ArrayList<ChildPojoCase>();
-    ArrayList<String> list_occu=new ArrayList<String>();
-    ArrayList<String> list_relation_occu=new ArrayList<String>();
+    ArrayList<ChildPojoCase> mListItem = new ArrayList<ChildPojoCase>();
+    ArrayList<String> list_occu = new ArrayList<String>();
+    ArrayList<String> list_relation_occu = new ArrayList<String>();
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
-    public static  boolean permissionresult=false;
+    public static boolean permissionresult = false;
     private static final long INTERVAL = 1000 * 5;
     private static final long FASTEST_INTERVAL = 1000 * 2;
     private static final String TAG = "LocationActivity";
     private FusedLocationProviderClient mFusedLocationClient;
+    Location mCurrentLocation;
+    Context mContext;
+    float difference=0.0f;
+    String mLastUpdateTime;
+    private boolean gps_enabled = false;
+    Context context;
+    LocationManager lm;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView=inflater.inflate(R.layout.tab_location_details,container,false);
+        View rootView = inflater.inflate(R.layout.tab_location_details, container, false);
 
-        Log.e("TabBasicDetails","onCreateView");
-        progressDialog=new ProgressDialog(getActivity());
+        Log.e("TabBasicDetails", "onCreateView");
+        progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
-        spUserProfile=new SPUserProfile(getActivity());
+        spUserProfile = new SPUserProfile(getActivity());
 
+        mContext = getActivity().getBaseContext();
 
+        etLat = (EditText) rootView.findViewById(R.id.et_lat);
+        etLong = (EditText) rootView.findViewById(R.id.et_long);
 
-        etLat=(EditText)rootView.findViewById(R.id.et_lat);
-        etLong=(EditText)rootView.findViewById(R.id.et_long);
+        btnSubmit = (Button) rootView.findViewById(R.id.btn_submit);
+        btnGetLoc = (Button) rootView.findViewById(R.id.btn_loc);
 
-        btnSubmit=(Button)rootView.findViewById(R.id.btn_submit);
         btnSubmit.setOnClickListener(this);
+        btnGetLoc.setOnClickListener(this);
 
-        Bundle bundle=getArguments();
-        case_id=bundle.getString("case_id");
-        Log.e("case_id",case_id);
+        Bundle bundle = getArguments();
+        case_id = bundle.getString("case_id");
+        Log.e("case_id", case_id);
         getGps(case_id);
 
+
+        return rootView;
+    }
+
+    public void getLocation()
+    {
+        progressDialog.show();
         createLocationRequest();
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return null;
-        }
-        else
-            {
-                mFusedLocationClient.getLastLocation().addOnSuccessListener((Executor) mGoogleApiClient, new OnSuccessListener<Location>() {
+            //return null;
+        } else {
+            mFusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
 
                     if (location != null) {
 
-                        // Toast.makeText(FusedActivity.this, "Longitude:" + location.getLongitude(), Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(FusedActivity.this, "Lattitude:" + location.getLatitude(), Toast.LENGTH_SHORT).show();
-                        // Logic to handle location object
+                        Log.e("Location Accuracy",""+location.getAccuracy());
+                        Log.e("loc",""+location);
                     }
                 }
             });
 
         }
 
-        return rootView;
-
-    }
-
-    protected void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(INTERVAL);
-        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if(this.mGoogleApiClient!=null) {
+        if (this.mGoogleApiClient != null) {
             if (this.mGoogleApiClient.isConnected())
                 this.mGoogleApiClient.disconnect();
         }
@@ -165,7 +172,16 @@ public class TabLocationDetails extends Fragment implements View.OnClickListener
         Log.e("After googleapiclient", String.valueOf(mGoogleApiClient.isConnected()));
 
 
+
     }
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+
 
     public void getGps(final String case_id){
 
@@ -245,8 +261,16 @@ public class TabLocationDetails extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
 
-     checkValidity();
-       // addBasicDetails(case_id);
+        switch(v.getId())
+        {
+            case R.id.btn_submit :checkValidity();
+            break;
+
+            case R.id.btn_loc:getLocation();
+            break;
+        }
+
+
     }
 
     public void checkValidity(){
@@ -271,36 +295,84 @@ public class TabLocationDetails extends Fragment implements View.OnClickListener
 
         Log.e("onConnected-isConnected", String.valueOf(mGoogleApiClient.isConnected()));
 
-            startLocationUpdates();
+        progressDialog.dismiss();
+        startLocationUpdates();
        /* else
             Log.e("Location update stopped","logged out");*/
     }
 
     private void startLocationUpdates() {
+        progressDialog.show();
 
+        lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!gps_enabled) {
+
+            Log.e("gps","disabled");
+            Toast.makeText(mContext, "Please enable location", Toast.LENGTH_SHORT).show();
+
+
+
+        }
         Log.e("inside","startlocationupdate");
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.e("permission","not granted");
             permissionresult=false;
             return;
         }
         if(mGoogleApiClient.isConnected()) {
             PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
-                    mGoogleApiClient,mLocationRequest, getActivity());
+                    mGoogleApiClient,mLocationRequest,this);
             Log.d(TAG, "Location update started ..............: ");
         }
-
-
     }
 
 
     @Override
     public void onConnectionSuspended(int i) {
 
+        progressDialog.dismiss();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        Log.e(TAG, "Firing onLocationChanged..............................................");
+
+        if(location!=null && mCurrentLocation!=null)
+        {
+            difference=location.getAccuracy()-mCurrentLocation.getAccuracy();
+            Log.e("difference", String.valueOf(location.getAccuracy()-mCurrentLocation.getAccuracy()));}
+        mCurrentLocation = location;
+        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+
+        Log.e("Location ", String.valueOf(mCurrentLocation));
+        Log.e("Location Accuracy", String.valueOf(location.getAccuracy()));
+
+
+        etLat.setText(""+mCurrentLocation.getLatitude());
+        etLong.setText(""+mCurrentLocation.getLongitude());
+        if(mCurrentLocation.getAccuracy()<=20) {
+        /* etLat.setText(""+mCurrentLocation.getLatitude());
+         etLong.setText(""+mCurrentLocation.getLongitude());*/
+            stopLocationUpdates();
+        }
+        progressDialog.dismiss();
+
+        }
+
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient, this);
+        Log.d(TAG, "Location update stopped .......................");
+        etLat.setText(String.valueOf(mCurrentLocation.getLatitude()));
+        etLong.setText(String.valueOf(mCurrentLocation.getLongitude()));
     }
 }
+

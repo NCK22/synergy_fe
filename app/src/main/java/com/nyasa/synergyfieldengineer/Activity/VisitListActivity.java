@@ -75,28 +75,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
         recyclerView = (RecyclerView) findViewById(R.id.rv_visit);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        ChildPojoCase childPojoCase1=new ChildPojoCase();
-        childPojoCase1.setCaseId("44768");
-        childPojoCase1.setClientName("Mrs. Rashmi Shaunwk Pol");
-        childPojoCase1.setProjectName("SyntNygyr");
-        childPojoCase1.setVillageCity("Haveli,Pune");
-        childPojoCase1.setState("Maharashtra");
-        ChildPojoCase childPojoCase2=new ChildPojoCase();
-        childPojoCase2.setCaseId("44893");
-        childPojoCase2.setClientName("Mr. Ajit Shishir Joshi");
-        childPojoCase2.setProjectName("SyntNygyr");
-        childPojoCase2.setVillageCity("Shirwal,Pune");
-        childPojoCase2.setState("Maharashtra");
-        ChildPojoCase childPojoCase3=new ChildPojoCase();
-        childPojoCase3.setCaseId("45211");
-        childPojoCase3.setClientName("Mrs. Nilophar Sayyad");
-        childPojoCase3.setProjectName("SyntNygyr");
-        childPojoCase3.setVillageCity("Hadapsar,Pune");
-        childPojoCase3.setState("Maharashtra");
-       // mListItem.add(childPojoCase1);
-        //mListItem.add(childPojoCase2);
-        //mListItem.add(childPojoCase3);
-       // displayData();
+
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -279,7 +258,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
             // Permission not yet granted. Use requestPermissions().
             //  Log.d(TAG, getString(R.string.permission_not_granted));
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CALL_PHONE},
+                    new String[]{Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
                     1);
         } else {
             // Permission already granted.
