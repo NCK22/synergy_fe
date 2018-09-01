@@ -60,8 +60,8 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
     ProgressDialog progressDialog;
     TextView tvCaseNo,tvCaseDate,tvBank,tvReportNo,tvVillage,tvDistrict;
     EditText etSlabs,etLifts,etAminities,etLat,etLong,etRateFrom,etRateTo,etRemarks,etDeviation,
-    etSurveyNo,etVillageCity,etDistrict,etPincode;
-    DatePickerEditText dtFrom,dtTo;
+    etSurveyNo,etVillageCity,etDistrict,etPincode,dtFrom,dtTo;
+
     String case_id="",building_id="";
     Boolean wordExist=false,specExist=false,costExist=false,violExist=false,valExist=false,dtExist=false,gpsExist=false;
     MaterialSpinner spFoundationWork,spPlinth,spRcc,spBrick,spIntPlaster,spExtPlaster,spFlooringWork,spOtherWork,spRoofing,
@@ -116,10 +116,9 @@ public class TabWorkStatus extends Fragment implements View.OnClickListener {
         etPincode=(EditText)rootView.findViewById(R.id.et_pincode);
 */
 
-        dtFrom = (DatePickerEditText) rootView.findViewById(R.id.et_dt_commensement);
-        dtFrom.setManager(getActivity().getSupportFragmentManager());
-        dtTo = (DatePickerEditText) rootView.findViewById(R.id.et_dt_completion);
-        dtTo.setManager(getActivity().getSupportFragmentManager());
+        dtFrom = (EditText) rootView.findViewById(R.id.et_dt_commensement);
+        dtTo = (EditText) rootView.findViewById(R.id.et_dt_completion);
+
 
         etSlabs=(EditText)rootView.findViewById(R.id.et_slabs);
         etLifts=(EditText)rootView.findViewById(R.id.et_lifts);

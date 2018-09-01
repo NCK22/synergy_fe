@@ -575,21 +575,13 @@
                 android:layout_height="wrap_content"
                 android:hint="Date of Commensement">
 
-                <io.blackbox_vision.datetimepickeredittext.view.DatePickerEditText
+                <EditText
                     android:id="@+id/et_dt_commensement"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
 
-                    android:padding="10dp"
-                    android:hint="Birth Date"
-                    android:inputType="date"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:fontFamily="Roboto-Regular"
-                    android:textColorHint="#FFFFFF"
-                    android:textCursorDrawable="@drawable/cursor_black"
-                    card_view:dateFormat="yyyy-MM-dd" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -597,21 +589,14 @@
                 android:layout_height="wrap_content"
                 android:hint="Proposed Date of Completion">
 
-                <io.blackbox_vision.datetimepickeredittext.view.DatePickerEditText
+                <EditText
                     android:id="@+id/et_dt_completion"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="15dp"/>
 
-                    android:padding="10dp"
-                    android:hint="Birth Date"
-                    android:inputType="date"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:fontFamily="Roboto-Regular"
-                    android:textColorHint="#FFFFFF"
-                    android:textCursorDrawable="@drawable/cursor_black"
-                    card_view:dateFormat="yyyy-MM-dd" />
+
             </android.support.design.widget.TextInputLayout>
 
 

@@ -131,8 +131,6 @@ public class TabLocationDetails extends Fragment implements
         case_id = bundle.getString("case_id");
         Log.e("case_id", case_id);
         getGps(case_id);
-
-
         return rootView;
     }
 
@@ -224,7 +222,7 @@ public class TabLocationDetails extends Fragment implements
 
     public void addGpsDetails(final String case_id){
 
-
+        progressDialog.show();
         JSONObject jsonObject=new JSONObject();
         WorkTabAddInterface getResponse = APIClient.getClient().create(WorkTabAddInterface.class);
         Call<HashMap<String,String>> call;
@@ -240,11 +238,8 @@ public class TabLocationDetails extends Fragment implements
             @Override
             public void onResponse(Call<HashMap<String,String>> call, Response<HashMap<String,String>> response) {
 
-
-
-
-
-                //    progressDialog.dismiss();
+                    progressDialog.dismiss();
+               showToast("Updated Successfully");
                 //  addCaseValDetails(case_id);
 
             }
@@ -266,10 +261,12 @@ public class TabLocationDetails extends Fragment implements
             case R.id.btn_submit :checkValidity();
             break;
 
-            case R.id.btn_loc:getLocation();
+            case R.id.btn_loc:
+                etLat.setText("");
+                etLong.setText("");
+                getLocation();
             break;
         }
-
 
     }
 
@@ -356,11 +353,11 @@ public class TabLocationDetails extends Fragment implements
         Log.e("Location Accuracy", String.valueOf(location.getAccuracy()));
 
 
-        etLat.setText(""+mCurrentLocation.getLatitude());
-        etLong.setText(""+mCurrentLocation.getLongitude());
+/*        etLat.setText(""+mCurrentLocation.getLatitude());
+        etLong.setText(""+mCurrentLocation.getLongitude());*/
         if(mCurrentLocation.getAccuracy()<=20) {
-        /* etLat.setText(""+mCurrentLocation.getLatitude());
-         etLong.setText(""+mCurrentLocation.getLongitude());*/
+         etLat.setText(""+mCurrentLocation.getLatitude());
+         etLong.setText(""+mCurrentLocation.getLongitude());
             stopLocationUpdates();
         }
         progressDialog.dismiss();

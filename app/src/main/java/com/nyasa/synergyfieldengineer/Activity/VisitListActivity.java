@@ -203,6 +203,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
                     }
 
+                    if(progressDialog.isShowing())
                     progressDialog.dismiss();
 
                 }

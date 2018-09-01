@@ -114,18 +114,11 @@ public class TabUploadPhoto extends Fragment {
 
         EnableRuntimePermissionToAccessCamera();
 
-
-
-
-
-
-
-
         getActivity().findViewById(R.id.btn_submit_photo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               // uploadFile();
+                uploadFile();
             }
         });
 /*
@@ -327,6 +320,30 @@ public class TabUploadPhoto extends Fragment {
         return cursor.getString(column_index);
     }
     private void uploadFile() {
+
+        Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
+    /*    progressDialog.show();
+        Thread splash= new Thread(){
+            public void run(){
+                try{
+                    Log.e("Thread","started");
+                    sleep(3000);
+                    progressDialog.dismiss();
+
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                finally {
+
+                }
+
+            }
+
+        };
+        splash.start();*/
+
+
 
 /*
         progressDialog.show();
