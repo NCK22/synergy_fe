@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +45,9 @@ import com.nyasa.synergyfieldengineer.Interface.PhotoTabGetInterface;
 import com.nyasa.synergyfieldengineer.Interface.PropertyTabGetInterface;
 import com.nyasa.synergyfieldengineer.Interface.WorkTabAddInterface;
 import com.nyasa.synergyfieldengineer.Interface.lookupInterface;
+import com.nyasa.synergyfieldengineer.Interface.uploadPhotoInterface;
 import com.nyasa.synergyfieldengineer.Pojo.ChildPojoStaticLookup;
+import com.nyasa.synergyfieldengineer.Pojo.CommonPojo;
 import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
@@ -101,6 +104,7 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
     ProgressDialog progressDialog;
     String flagImg="0";
     Boolean photoExist=false;
+    Button btnSubmit;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,6 +130,7 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
         img1=(ImageView)getActivity().findViewById(R.id.img_1); img2=(ImageView)getActivity().findViewById(R.id.img_2);
         img3=(ImageView)getActivity().findViewById(R.id.img_3); img4=(ImageView)getActivity().findViewById(R.id.img_4);
         img5=(ImageView)getActivity().findViewById(R.id.img_5); img6=(ImageView)getActivity().findViewById(R.id.img_6);
+        btnSubmit=(Button)getActivity().findViewById(R.id.btn_submit_photo);
 
         img1.setOnClickListener(this);img2.setOnClickListener(this);
         img3.setOnClickListener(this);img4.setOnClickListener(this);
@@ -354,71 +359,42 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
     }
     private void uploadFile() {
 
-        Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
-    /*    progressDialog.show();
-        Thread splash= new Thread(){
-            public void run(){
-                try{
-                    Log.e("Thread","started");
-                    sleep(3000);
-                    progressDialog.dismiss();
-
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                finally {
-
-                }
-
-            }
-
-        };
-        splash.start();*/
-
-
-
-/*
         progressDialog.show();
      //   User user = User.getInstance();
-        *//*RequestBody requestBody = RequestBody.create(
-                MediaType.parse(getActivity().getContentResolver().getType(mCameraFileUri)),
-                file);*//*
-        RequestBody requestBody = RequestBody.create(
-                MediaType.parse("image/jpeg"),
-                file);
+   //    RequestBody requestBody = RequestBody.create(MediaType.parse(getActivity().getContentResolver().getType(mCameraFileUri)),file);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"),file);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", imageFile.getName(), requestBody);
         RequestBody filename = RequestBody.create(MediaType.parse("JPEG/PNG"), file.getName());
     //    RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), user.getUserID());
-        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), editTextDescription.getText().toString());
+     //   RequestBody description = RequestBody.create(MediaType.parse("text/plain"), editTextDescription.getText().toString());
         uploadPhotoInterface getResponse = APIClient.getClient().create(uploadPhotoInterface.class);
-        Call<CommonParentPojo> call = getResponse.uploadFile(fileToUpload, filename, user_id,description);
-        call.enqueue(new Callback<CommonParentPojo>() {
+        Call<CommonPojo> call = getResponse.uploadFile(fileToUpload, filename, null);
+        call.enqueue(new Callback<CommonPojo>() {
             @Override
-            public void onResponse(Call<CommonParentPojo> call, retrofit2.Response<CommonParentPojo> response) {
+            public void onResponse(Call<CommonPojo> call, retrofit2.Response<CommonPojo> response) {
 
-                CommonParentPojo commonParentPojo = response.body();
-                Log.e("ServerResponse", commonParentPojo.getMsg());
+                CommonPojo commonParentPojo = response.body();
+                Log.e("ServerResponse", commonParentPojo.getMessage());
                 if (commonParentPojo != null) {
-                    Log.e("response", commonParentPojo.getMsg());
-                    if (commonParentPojo.getStatus().equalsIgnoreCase("1")) {
+                    Log.e("response", commonParentPojo.getMessage());
+              /*      if (commonParentPojo.g().equalsIgnoreCase("1")) {
                         //  strResumePath=serverResponse.getMessage();
                         Log.e("Success Response", commonParentPojo.getMsg());
                         Toast.makeText(getActivity(),  commonParentPojo.getMsg(), Toast.LENGTH_SHORT).show();
                         editTextDescription.setText("");
                         imgPayProof.setImageResource(R.drawable.ic_pay_proof);
 
-                    }
+                    }*/
                 }
                 progressDialog.dismiss();
             }
             @Override
-            public void onFailure(Call<CommonParentPojo> call, Throwable t) {
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
 
                 Log.e("throwbale", "" + t);
                 progressDialog.dismiss();
             }
-        });*/
+        });
     }
 
     private String getRealPathFromURI(Uri contentURI) {
@@ -517,6 +493,7 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
 
             case R.id.img_6:flagImg="6";
                 break;
+
         }
         if (ContextCompat.checkSelfPermission
                 (getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
