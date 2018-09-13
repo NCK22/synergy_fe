@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_history_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_add_a_photo_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,7 +29,7 @@
                         <option name="values">
                           <map>
                             <entry key="opacityPercent" value="90" />
-                            <entry key="outputName" value="ic_history" />
+                            <entry key="outputName" value="ic_photo" />
                             <entry key="sourceFile" value="C:\Users\lenovo" />
                           </map>
                         </option>

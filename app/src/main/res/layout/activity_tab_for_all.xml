@@ -72,6 +72,13 @@
                 android:text="Upload Photo"
                 />
 
+            <android.support.design.widget.TabItem
+                android:id="@+id/ti_doc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Document"
+                />
+
 
 
         </android.support.design.widget.TabLayout>

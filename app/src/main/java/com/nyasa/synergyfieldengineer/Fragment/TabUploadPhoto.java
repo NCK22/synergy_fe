@@ -31,13 +31,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.nyasa.synergyfieldengineer.APIClient;
+import com.nyasa.synergyfieldengineer.Interface.PhotoTabAddInterface;
+import com.nyasa.synergyfieldengineer.Interface.PhotoTabGetInterface;
+import com.nyasa.synergyfieldengineer.Interface.PropertyTabGetInterface;
+import com.nyasa.synergyfieldengineer.Interface.WorkTabAddInterface;
+import com.nyasa.synergyfieldengineer.Interface.lookupInterface;
+import com.nyasa.synergyfieldengineer.Interface.uploadPhotoInterface;
+import com.nyasa.synergyfieldengineer.Pojo.ChildPojoStaticLookup;
+import com.nyasa.synergyfieldengineer.Pojo.CommonPojo;
 import com.nyasa.synergyfieldengineer.R;
+import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
 
 import org.json.JSONArray;
@@ -48,6 +60,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +72,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
@@ -67,7 +81,7 @@ import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
  * A simple {@link Fragment} subclass.
  */
 @SuppressWarnings("ALL")
-public class TabUploadPhoto extends Fragment {
+public class TabUploadPhoto extends Fragment implements View.OnClickListener {
 
     private TextView textViewRegister;
     private TextInputEditText editTextDescription;
@@ -79,7 +93,7 @@ public class TabUploadPhoto extends Fragment {
     Bitmap bitmap;
     File imageFile;
     ImageView imgPayProof;
-    ImageView imgCapture;
+    ImageView img1,img2,img3,img4,img5,img6;
     /**
      * FCM_ID
      */
@@ -88,6 +102,9 @@ public class TabUploadPhoto extends Fragment {
     public  static final int RequestPermissionCode  = 1 ;
    // private MainActivity mainActivity;
     ProgressDialog progressDialog;
+    String flagImg="0";
+    Boolean photoExist=false;
+    Button btnSubmit;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,7 +126,15 @@ public class TabUploadPhoto extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-        imgCapture=(ImageView)getActivity().findViewById(R.id.img_profile_pic);
+        //imgCapture=(ImageView)getActivity().findViewById(R.id.img_profile_pic);
+        img1=(ImageView)getActivity().findViewById(R.id.img_1); img2=(ImageView)getActivity().findViewById(R.id.img_2);
+        img3=(ImageView)getActivity().findViewById(R.id.img_3); img4=(ImageView)getActivity().findViewById(R.id.img_4);
+        img5=(ImageView)getActivity().findViewById(R.id.img_5); img6=(ImageView)getActivity().findViewById(R.id.img_6);
+        btnSubmit=(Button)getActivity().findViewById(R.id.btn_submit_photo);
+
+        img1.setOnClickListener(this);img2.setOnClickListener(this);
+        img3.setOnClickListener(this);img4.setOnClickListener(this);
+        img5.setOnClickListener(this);img6.setOnClickListener(this);
 
 
         EnableRuntimePermissionToAccessCamera();
@@ -155,7 +180,7 @@ public class TabUploadPhoto extends Fragment {
             }
         });*/
 
-        getActivity().findViewById(R.id.img_profile_pic).setOnClickListener(new View.OnClickListener() {
+   /*     getActivity().findViewById(R.id.img_1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -182,7 +207,7 @@ public class TabUploadPhoto extends Fragment {
                 }
 
             }
-        });
+        });*/
 
     }
 
@@ -197,6 +222,7 @@ public class TabUploadPhoto extends Fragment {
            /* file = FileStorage.getInstance().getTemporaryFile(System.currentTimeMillis());
             mCameraFileUri = Uri.fromFile(file);*/
             Log.e("mCameraFileUri inside capture", String.valueOf(mCameraFileUri));
+            Log.e("filename",file.getName());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, mCameraFileUri);
             // intent.putExtra(MediaStore.EXTRA_OUTPUT,mCameraFileUri);
             intent.putExtra("camera", mCameraFileUri);
@@ -241,7 +267,7 @@ public class TabUploadPhoto extends Fragment {
 
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + getFileName() + ".png");
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + getFileName() + ".jpg");
         } else {
             return null;
         }
@@ -264,8 +290,20 @@ public class TabUploadPhoto extends Fragment {
                     else {
                         bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCameraFileUri);
                         if (bitmap != null) {
-                            imgCapture.setImageBitmap(bitmap);
-                            imageFile=new File(mCameraFileUri.toString());
+                            if(flagImg.equalsIgnoreCase("1"))
+                                img1.setImageBitmap(bitmap);
+                            if(flagImg.equalsIgnoreCase("2"))
+                                img2.setImageBitmap(bitmap);
+                            if(flagImg.equalsIgnoreCase("3"))
+                                img3.setImageBitmap(bitmap);
+                            if(flagImg.equalsIgnoreCase("4"))
+                                img4.setImageBitmap(bitmap);
+                            if(flagImg.equalsIgnoreCase("5"))
+                                img5.setImageBitmap(bitmap);
+                            if(flagImg.equalsIgnoreCase("6"))
+                                img6.setImageBitmap(bitmap);
+                            imageFile = new File(mCameraFileUri.toString());
+
                         }
                     }
 
@@ -321,71 +359,42 @@ public class TabUploadPhoto extends Fragment {
     }
     private void uploadFile() {
 
-        Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
-    /*    progressDialog.show();
-        Thread splash= new Thread(){
-            public void run(){
-                try{
-                    Log.e("Thread","started");
-                    sleep(3000);
-                    progressDialog.dismiss();
-
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                finally {
-
-                }
-
-            }
-
-        };
-        splash.start();*/
-
-
-
-/*
         progressDialog.show();
      //   User user = User.getInstance();
-        *//*RequestBody requestBody = RequestBody.create(
-                MediaType.parse(getActivity().getContentResolver().getType(mCameraFileUri)),
-                file);*//*
-        RequestBody requestBody = RequestBody.create(
-                MediaType.parse("image/jpeg"),
-                file);
+   //    RequestBody requestBody = RequestBody.create(MediaType.parse(getActivity().getContentResolver().getType(mCameraFileUri)),file);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"),file);
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", imageFile.getName(), requestBody);
         RequestBody filename = RequestBody.create(MediaType.parse("JPEG/PNG"), file.getName());
     //    RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), user.getUserID());
-        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), editTextDescription.getText().toString());
+     //   RequestBody description = RequestBody.create(MediaType.parse("text/plain"), editTextDescription.getText().toString());
         uploadPhotoInterface getResponse = APIClient.getClient().create(uploadPhotoInterface.class);
-        Call<CommonParentPojo> call = getResponse.uploadFile(fileToUpload, filename, user_id,description);
-        call.enqueue(new Callback<CommonParentPojo>() {
+        Call<CommonPojo> call = getResponse.uploadFile(fileToUpload, filename, null);
+        call.enqueue(new Callback<CommonPojo>() {
             @Override
-            public void onResponse(Call<CommonParentPojo> call, retrofit2.Response<CommonParentPojo> response) {
+            public void onResponse(Call<CommonPojo> call, retrofit2.Response<CommonPojo> response) {
 
-                CommonParentPojo commonParentPojo = response.body();
-                Log.e("ServerResponse", commonParentPojo.getMsg());
+                CommonPojo commonParentPojo = response.body();
+                Log.e("ServerResponse", commonParentPojo.getMessage());
                 if (commonParentPojo != null) {
-                    Log.e("response", commonParentPojo.getMsg());
-                    if (commonParentPojo.getStatus().equalsIgnoreCase("1")) {
+                    Log.e("response", commonParentPojo.getMessage());
+              /*      if (commonParentPojo.g().equalsIgnoreCase("1")) {
                         //  strResumePath=serverResponse.getMessage();
                         Log.e("Success Response", commonParentPojo.getMsg());
                         Toast.makeText(getActivity(),  commonParentPojo.getMsg(), Toast.LENGTH_SHORT).show();
                         editTextDescription.setText("");
                         imgPayProof.setImageResource(R.drawable.ic_pay_proof);
 
-                    }
+                    }*/
                 }
                 progressDialog.dismiss();
             }
             @Override
-            public void onFailure(Call<CommonParentPojo> call, Throwable t) {
+            public void onFailure(Call<CommonPojo> call, Throwable t) {
 
                 Log.e("throwbale", "" + t);
                 progressDialog.dismiss();
             }
-        });*/
+        });
     }
 
     private String getRealPathFromURI(Uri contentURI) {
@@ -437,8 +446,6 @@ public class TabUploadPhoto extends Fragment {
 //        }
     }
 
-
-
     public void EnableRuntimePermissionToAccessCamera(){
 
         // progressDialog.show();
@@ -463,6 +470,142 @@ public class TabUploadPhoto extends Fragment {
 
         }
         // progressDialog.dismiss();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.img_1:flagImg="1";
+            break;
+
+            case R.id.img_2:flagImg="2";
+                break;
+
+            case R.id.img_3:flagImg="3";
+                break;
+
+            case R.id.img_4:flagImg="4";
+                break;
+
+            case R.id.img_5:flagImg="5";
+                break;
+
+            case R.id.img_6:flagImg="6";
+                break;
+
+        }
+        if (ContextCompat.checkSelfPermission
+                (getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
+                ContextCompat.checkSelfPermission
+                        (getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+
+        {
+            Log.e("permission","denied");
+
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            }, RequestPermissionCode);
+            captureImage();
+            // Printing toast message after enabling runtime permission.
+            //   Toast.makeText(this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
+
+        } else {
+
+            captureImage();
+            //chooseImage();
+
+        }
+
+    }
+
+    public void getBuildingDetails(final String case_id){
+
+        progressDialog.show();
+        PhotoTabGetInterface getResponse = APIClient.getClient().create(PhotoTabGetInterface.class);
+        Call<ArrayList<HashMap<String,String>>> call = getResponse.getPhotos(case_id);
+        call.enqueue(new Callback<ArrayList<HashMap<String,String>>>() {
+            @Override
+            public void onResponse(Call<ArrayList<HashMap<String,String>>> call, Response<ArrayList<HashMap<String,String>>> response) {
+
+                Log.e("Inside", "onResponse");
+
+                //  ArrayList<ChildPojoCase> childPojoCase = response.body();
+                if(response.body().size()>0) {
+                    photoExist=true;
+                    HashMap<String, String> childPojoCase = response.body().get(0);
+                    if (childPojoCase != null) {
+
+
+
+                    }
+                }
+                else
+                    photoExist=false;
+                progressDialog.dismiss();
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<HashMap<String,String>>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    public void addPhotoDetails(final String case_id){
+
+
+        progressDialog.show();
+        JSONObject jsonObject=new JSONObject();
+        PhotoTabAddInterface getResponse = APIClient.getClient().create(PhotoTabAddInterface.class);
+        Call<HashMap<String,String>> call=null;
+        if(photoExist==true) {
+            call = getResponse.updatePhoto(file.getName(),
+                    "",
+                    "jpg",
+                    String.valueOf(mCameraFileUri),
+                    "",
+                    SPUserProfile.getSpInstance().getUser_id(),
+                    "Y",
+                    "Image 1",
+                    String.valueOf(mCameraFileUri),
+                    "",
+                    "",case_id);
+        }
+        else{
+        /*    call = getResponse.addPhoto(building_id,
+                    spFoundationWork.getSelectedItem().toString(),
+                    spPlinth.getSelectedItem().toString(),
+                    spRcc.getSelectedItem().toString(),etSlabs.getText().toString(),spBrick.getSelectedItem().toString(),
+                    spFlooringWork.getSelectedItem().toString(),
+                    spOtherWork.getSelectedItem().toString(),
+                    spIntPlaster.getSelectedItem().toString(),
+                    spExtPlaster.getSelectedItem().toString(), case_id);*/
+        }
+
+        call.enqueue(new Callback<HashMap<String,String>>() {
+            @Override
+            public void onResponse(Call<HashMap<String,String>> call, Response<HashMap<String,String>> response) {
+
+
+
+                //    progressDialog.dismiss();
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<HashMap<String,String>> call, Throwable t) {
+
+                Log.e("Throwabe ", "" + t);
+                progressDialog.dismiss();
+            }
+        });
     }
 
 }
