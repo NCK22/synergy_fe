@@ -64,9 +64,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 1"
+                            android:text="Bedroom"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -91,9 +92,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 3"
+                            android:text="Kitchen"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -118,9 +120,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 5"
+                            android:text="Gallery"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -154,9 +157,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 2"
+                            android:text="Hall"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -181,9 +185,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 4"
+                            android:text="Parking"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -208,9 +213,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 6"
+                            android:text="Garden"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"

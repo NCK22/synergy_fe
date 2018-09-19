@@ -25,6 +25,7 @@
   import android.view.LayoutInflater;
   import android.view.View;
   import android.view.ViewGroup;
+  import android.widget.Button;
   import android.widget.ImageView;
   import android.widget.TextView;
   import android.widget.Toast;
@@ -32,6 +33,7 @@
   import com.nyasa.synergyfieldengineer.APIClient;
   import com.nyasa.synergyfieldengineer.Interface.PhotoTabAddInterface;
   import com.nyasa.synergyfieldengineer.Interface.PhotoTabGetInterface;
+  import com.nyasa.synergyfieldengineer.Interface.uploadPhotoInterface;
   import com.nyasa.synergyfieldengineer.R;
   import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
@@ -47,6 +49,9 @@
   import java.util.List;
   import java.util.Locale;
 
+  import okhttp3.MediaType;
+  import okhttp3.MultipartBody;
+  import okhttp3.RequestBody;
   import retrofit2.Call;
   import retrofit2.Callback;
   import retrofit2.Response;
@@ -81,6 +86,7 @@
       ProgressDialog progressDialog;
       String flagImg="0";
       Boolean photoExist=false;
+      String strUploadPath="",strFileName="",strSystemFileName="",strCaption="",strPhotoType="",case_id="";
 
       @Override
       public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,14 +108,17 @@
           super.onActivityCreated(savedInstanceState);
 
 
-          //imgCapture=(ImageView)getActivity().findViewById(R.id.img_profile_pic);
-          img1=(ImageView)getActivity().findViewById(R.id.img_1); img2=(ImageView)getActivity().findViewById(R.id.img_2);
-          img3=(ImageView)getActivity().findViewById(R.id.img_3); img4=(ImageView)getActivity().findViewById(R.id.img_4);
+       /*   //imgCapture=(ImageView)getActivity().findViewById(R.id.img_profile_pic);
+          img1=(ImageView)getActivity().findViewById(R.id.img_1);// img2=(ImageView)getActivity().findViewById(R.id.img_2);
+        *//*  img3=(ImageView)getActivity().findViewById(R.id.img_3); img4=(ImageView)getActivity().findViewById(R.id.img_4);
           img5=(ImageView)getActivity().findViewById(R.id.img_5); img6=(ImageView)getActivity().findViewById(R.id.img_6);
-
-          img1.setOnClickListener(this);img2.setOnClickListener(this);
-          img3.setOnClickListener(this);img4.setOnClickListener(this);
+*//*
+          img1.setOnClickListener(this);//img2.setOnClickListener(this);
+         *//* img3.setOnClickListener(this);img4.setOnClickListener(this);
           img5.setOnClickListener(this);img6.setOnClickListener(this);
+*//*
+          Bundle bundle=getArguments();
+          case_id=bundle.getString("case_id");
 
 
           EnableRuntimePermissionToAccessCamera();
@@ -122,7 +131,7 @@
               }
           });
 
-
+*/
       }
 
       private void captureImage() {
@@ -273,71 +282,48 @@
       }
       private void uploadFile() {
 
-          Toast.makeText(getActivity(), "Updated Successfully", Toast.LENGTH_SHORT).show();
-      /*    progressDialog.show();
-          Thread splash= new Thread(){
-              public void run(){
-                  try{
-                      Log.e("Thread","started");
-                      sleep(3000);
-                      progressDialog.dismiss();
-
-
-                  } catch (InterruptedException e) {
-                      e.printStackTrace();
-                  }
-                  finally {
-
-                  }
-
-              }
-
-          };
-          splash.start();*/
-
-
-
-  /*
           progressDialog.show();
-       //   User user = User.getInstance();
-          *//*RequestBody requestBody = RequestBody.create(
-                  MediaType.parse(getActivity().getContentResolver().getType(mCameraFileUri)),
-                  file);*//*
-          RequestBody requestBody = RequestBody.create(
-                  MediaType.parse("image/jpeg"),
-                  file);
-          MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", imageFile.getName(), requestBody);
+          //   User user = User.getInstance();
+          //    RequestBody requestBody = RequestBody.create(MediaType.parse(getActivity().getContentResolver().getType(mCameraFileUri)),file);
+          RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"),file);
+          MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("example", imageFile.getName(), requestBody);
           RequestBody filename = RequestBody.create(MediaType.parse("JPEG/PNG"), file.getName());
-      //    RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), user.getUserID());
-          RequestBody description = RequestBody.create(MediaType.parse("text/plain"), editTextDescription.getText().toString());
+          //    RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), user.getUserID());
+          //   RequestBody description = RequestBody.create(MediaType.parse("text/plain"), editTextDescription.getText().toString());
           uploadPhotoInterface getResponse = APIClient.getClient().create(uploadPhotoInterface.class);
-          Call<CommonParentPojo> call = getResponse.uploadFile(fileToUpload, filename, user_id,description);
-          call.enqueue(new Callback<CommonParentPojo>() {
+          Call<HashMap<String,String>> call = getResponse.uploadFile(fileToUpload, filename, null);
+          call.enqueue(new Callback<HashMap<String,String>>() {
               @Override
-              public void onResponse(Call<CommonParentPojo> call, retrofit2.Response<CommonParentPojo> response) {
+              public void onResponse(Call<HashMap<String,String>> call, retrofit2.Response<HashMap<String,String>> response) {
 
-                  CommonParentPojo commonParentPojo = response.body();
-                  Log.e("ServerResponse", commonParentPojo.getMsg());
+                  HashMap<String,String> commonParentPojo = response.body();
+                  //  Log.e("ServerResponse", commonParentPojo.getMessage());
                   if (commonParentPojo != null) {
-                      Log.e("response", commonParentPojo.getMsg());
-                      if (commonParentPojo.getStatus().equalsIgnoreCase("1")) {
-                          //  strResumePath=serverResponse.getMessage();
-                          Log.e("Success Response", commonParentPojo.getMsg());
-                          Toast.makeText(getActivity(),  commonParentPojo.getMsg(), Toast.LENGTH_SHORT).show();
-                          editTextDescription.setText("");
-                          imgPayProof.setImageResource(R.drawable.ic_pay_proof);
-
+                      if(commonParentPojo.get("message").contains("successfully")) {
+                          strUploadPath = commonParentPojo.get("url");
+                          strFileName = commonParentPojo.get("filename");
+                          Log.e("strFileName",strFileName);
+                          progressDialog.dismiss();
+                          addPhotoDetails(case_id);
                       }
+                      //    Log.e("response", commonParentPojo.getMessage());
+              /*      if (commonParentPojo.g().equalsIgnoreCase("1")) {
+                        //  strResumePath=serverResponse.getMessage();
+                        Log.e("Success Response", commonParentPojo.getMsg());
+                        Toast.makeText(getActivity(),  commonParentPojo.getMsg(), Toast.LENGTH_SHORT).show();
+                        editTextDescription.setText("");
+                        imgPayProof.setImageResource(R.drawable.ic_pay_proof);
+                    }*/
                   }
-                  progressDialog.dismiss();
+                  //   progressDialog.dismiss();
               }
               @Override
-              public void onFailure(Call<CommonParentPojo> call, Throwable t) {
+              public void onFailure(Call<HashMap<String,String>> call, Throwable t) {
 
                   Log.e("throwbale", "" + t);
                   progressDialog.dismiss();
               }
-          });*/
+          });
       }
 
       private String getRealPathFromURI(Uri contentURI) {
@@ -370,7 +356,36 @@
       public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                Bundle savedInstanceState) {
           // Inflate the layout for this fragment
-          return inflater.inflate(R.layout.tab_upload_photo, container, false);
+          View rootView=inflater.inflate(R.layout.tab_upload_doc, container, false);
+
+         /* tv1=(TextView)rootView.findViewById(R.id.tv_img1); tv2=(TextView) rootView.findViewById(R.id.tv_img2);
+          tv3=(TextView) rootView.findViewById(R.id.tv_img3); tv4=(TextView)rootView.findViewById(R.id.tv_img4);
+          tv5=(TextView) rootView.findViewById(R.id.tv_img5); tv6=(TextView) rootView.findViewById(R.id.tv_img6);
+*/
+          img1=(ImageView)rootView.findViewById(R.id.img_1);// img2=(ImageView)rootView.findViewById(R.id.img_2);
+          /*img3=(ImageView)rootView.findViewById(R.id.img_3); img4=(ImageView)rootView.findViewById(R.id.img_4);
+          img5=(ImageView)rootView.findViewById(R.id.img_5); img6=(ImageView)rootView.findViewById(R.id.img_6);*/
+        //  btnSubmit=(Button)rootView.findViewById(R.id.btn_submit_photo);
+
+          img1.setOnClickListener(this);/*img2.setOnClickListener(this);
+          img3.setOnClickListener(this);img4.setOnClickListener(this);
+          img5.setOnClickListener(this);img6.setOnClickListener(this);
+*/
+
+          Bundle bundle=getArguments();
+          case_id=bundle.getString("case_id");
+
+          EnableRuntimePermissionToAccessCamera();
+
+          rootView.findViewById(R.id.btn_submit_photo).setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+
+                  uploadFile();
+              }
+          });
+
+          return rootView;
       }
 
       @Override
@@ -422,20 +437,6 @@
               case R.id.img_1:flagImg="1";
               break;
 
-              case R.id.img_2:flagImg="2";
-                  break;
-
-              case R.id.img_3:flagImg="3";
-                  break;
-
-              case R.id.img_4:flagImg="4";
-                  break;
-
-              case R.id.img_5:flagImg="5";
-                  break;
-
-              case R.id.img_6:flagImg="6";
-                  break;
           }
           if (ContextCompat.checkSelfPermission
                   (getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
@@ -500,33 +501,41 @@
 
       public void addPhotoDetails(final String case_id){
 
+          String[] extension=strFileName.split("\\.");
+          Log.e("strFileName",strFileName);
+
+          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+          String date = sdf.format(new Date());
 
           progressDialog.show();
           JSONObject jsonObject=new JSONObject();
           PhotoTabAddInterface getResponse = APIClient.getClient().create(PhotoTabAddInterface.class);
           Call<HashMap<String,String>> call=null;
           if(photoExist==true) {
-              call = getResponse.updatePhoto(file.getName(),
-                      "",
-                      "jpg",
-                      String.valueOf(mCameraFileUri),
-                      "",
+              call = getResponse.updatePhoto(strFileName,
+                      strFileName,
+                      extension[1],
+                      strUploadPath,
+                      date,
                       SPUserProfile.getSpInstance().getUser_id(),
-                      "Y",
-                      "Image 1",
+                      "N",
+                      "document1",
                       String.valueOf(mCameraFileUri),
-                      "",
-                      "",case_id);
+                      "PhotoImage",
+                      strPhotoType,case_id);
           }
           else{
-          /*    call = getResponse.addPhoto(building_id,
-                      spFoundationWork.getSelectedItem().toString(),
-                      spPlinth.getSelectedItem().toString(),
-                      spRcc.getSelectedItem().toString(),etSlabs.getText().toString(),spBrick.getSelectedItem().toString(),
-                      spFlooringWork.getSelectedItem().toString(),
-                      spOtherWork.getSelectedItem().toString(),
-                      spIntPlaster.getSelectedItem().toString(),
-                      spExtPlaster.getSelectedItem().toString(), case_id);*/
+              call = getResponse.addPhoto(strFileName,
+                      strFileName,
+                      extension[1],
+                      strUploadPath,
+                      date,
+                      SPUserProfile.getSpInstance().getUser_id(),
+                      "N",
+                      strCaption,
+                      String.valueOf(mCameraFileUri),
+                      "PhotoImage",
+                      strPhotoType,case_id);
           }
 
           call.enqueue(new Callback<HashMap<String,String>>() {
@@ -535,7 +544,8 @@
 
 
 
-                  //    progressDialog.dismiss();
+                  progressDialog.dismiss();
+                  Toast.makeText(getActivity(), "Updated Successfully!", Toast.LENGTH_SHORT).show();
 
 
 

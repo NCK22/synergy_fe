@@ -64,9 +64,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 1"
+                            android:text="Document"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
