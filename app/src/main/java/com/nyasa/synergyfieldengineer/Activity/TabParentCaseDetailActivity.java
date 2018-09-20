@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.nyasa.synergyfieldengineer.Fragment.TabLocationDetails;
 import com.nyasa.synergyfieldengineer.Fragment.TabPropertyDetails;
+import com.nyasa.synergyfieldengineer.Fragment.TabUploadDoc;
 import com.nyasa.synergyfieldengineer.Fragment.TabUploadPhoto;
 import com.nyasa.synergyfieldengineer.Fragment.TabWorkStatus;
 import com.nyasa.synergyfieldengineer.R;
@@ -285,6 +286,15 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
                     tabUploadPhoto.setArguments(bundle4);
                     return tabUploadPhoto;
 
+                case 5:
+
+                    Log.e("Tab", "whoShortListed");
+                    TabUploadDoc tabUploadDoc=new TabUploadDoc();
+                    Bundle bundle5=new Bundle();
+                    bundle5.putString("case_id",intent.getStringExtra("case_id"));
+                    tabUploadDoc.setArguments(bundle5);
+                    return tabUploadDoc;
+
 
 
                 default:
@@ -305,7 +315,7 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
         public int getCount() {
             // Show 3 total pages.
 
-            return 5;
+            return 6;
 
         }
     }

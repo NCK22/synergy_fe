@@ -61,6 +61,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -93,18 +94,21 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
     Bitmap bitmap;
     File imageFile;
     ImageView imgPayProof;
-    ImageView img1,img2,img3,img4,img5,img6;
+    ImageView img1,img2,img3,img4,img5,img6,img7,img8;
+    TextView tv1,tv2,tv3,tv4,tv5,tv6,tv7,tv8;
     /**
      * FCM_ID
      */
     private String token = "0",FilePathStr;
     private static final int CAMERA_CAPTURE_CODE = 501;
-    public  static final int RequestPermissionCode  = 1 ;
+    public  static final int RequestPermissionCode  = 1;
    // private MainActivity mainActivity;
     ProgressDialog progressDialog;
     String flagImg="0";
     Boolean photoExist=false;
     Button btnSubmit;
+    String strUploadPath="",strFileName="",strSystemFileName="",strCaption="",strPhotoType="",case_id="";
+    ArrayList<ImageView> list_frames=new ArrayList<ImageView>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,25 +131,7 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
 
 
         //imgCapture=(ImageView)getActivity().findViewById(R.id.img_profile_pic);
-        img1=(ImageView)getActivity().findViewById(R.id.img_1); img2=(ImageView)getActivity().findViewById(R.id.img_2);
-        img3=(ImageView)getActivity().findViewById(R.id.img_3); img4=(ImageView)getActivity().findViewById(R.id.img_4);
-        img5=(ImageView)getActivity().findViewById(R.id.img_5); img6=(ImageView)getActivity().findViewById(R.id.img_6);
-        btnSubmit=(Button)getActivity().findViewById(R.id.btn_submit_photo);
 
-        img1.setOnClickListener(this);img2.setOnClickListener(this);
-        img3.setOnClickListener(this);img4.setOnClickListener(this);
-        img5.setOnClickListener(this);img6.setOnClickListener(this);
-
-
-        EnableRuntimePermissionToAccessCamera();
-
-        getActivity().findViewById(R.id.btn_submit_photo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                uploadFile();
-            }
-        });
 /*
         getActivity().findViewById(R.id.img_profile_pic).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,7 +191,6 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                     //chooseImage();
 
                 }
-
             }
         });*/
 
@@ -236,7 +221,6 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
             /*intent.addFlags(intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             intent.addFlags(intent.FLAG_GRANT_READ_URI_PERMISSION);*/
             startActivityForResult(intent, CAMERA_CAPTURE_CODE);
-
 
            /* cameraImageFile = FileStorage.getInstance().getTemporaryFile(System.currentTimeMillis());
             mImageCaptureUri = Uri.fromFile(cameraImageFile);
@@ -302,6 +286,10 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                                 img5.setImageBitmap(bitmap);
                             if(flagImg.equalsIgnoreCase("6"))
                                 img6.setImageBitmap(bitmap);
+                            if(flagImg.equalsIgnoreCase("7"))
+                                img7.setImageBitmap(bitmap);
+                            if(flagImg.equalsIgnoreCase("8"))
+                                img8.setImageBitmap(bitmap);
                             imageFile = new File(mCameraFileUri.toString());
 
                         }
@@ -368,28 +356,34 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
     //    RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), user.getUserID());
      //   RequestBody description = RequestBody.create(MediaType.parse("text/plain"), editTextDescription.getText().toString());
         uploadPhotoInterface getResponse = APIClient.getClient().create(uploadPhotoInterface.class);
-        Call<CommonPojo> call = getResponse.uploadFile(fileToUpload, filename, null);
-        call.enqueue(new Callback<CommonPojo>() {
+        Call<HashMap<String,String>> call = getResponse.uploadFile(fileToUpload, filename, null);
+        call.enqueue(new Callback<HashMap<String,String>>() {
             @Override
-            public void onResponse(Call<CommonPojo> call, retrofit2.Response<CommonPojo> response) {
+            public void onResponse(Call<HashMap<String,String>> call, retrofit2.Response<HashMap<String,String>> response) {
 
-                CommonPojo commonParentPojo = response.body();
-                Log.e("ServerResponse", commonParentPojo.getMessage());
+                HashMap<String,String> commonParentPojo = response.body();
+              //  Log.e("ServerResponse", commonParentPojo.getMessage());
                 if (commonParentPojo != null) {
-                    Log.e("response", commonParentPojo.getMessage());
+                    if(commonParentPojo.get("message").contains("successfully")) {
+                        strUploadPath = commonParentPojo.get("url");
+                        strFileName = commonParentPojo.get("filename");
+                        Log.e("strFileName",strFileName);
+                        progressDialog.dismiss();
+                        addPhotoDetails(case_id);
+                    }
+                //    Log.e("response", commonParentPojo.getMessage());
               /*      if (commonParentPojo.g().equalsIgnoreCase("1")) {
                         //  strResumePath=serverResponse.getMessage();
                         Log.e("Success Response", commonParentPojo.getMsg());
                         Toast.makeText(getActivity(),  commonParentPojo.getMsg(), Toast.LENGTH_SHORT).show();
                         editTextDescription.setText("");
                         imgPayProof.setImageResource(R.drawable.ic_pay_proof);
-
                     }*/
                 }
-                progressDialog.dismiss();
+             //   progressDialog.dismiss();
             }
             @Override
-            public void onFailure(Call<CommonPojo> call, Throwable t) {
+            public void onFailure(Call<HashMap<String,String>> call, Throwable t) {
 
                 Log.e("throwbale", "" + t);
                 progressDialog.dismiss();
@@ -427,7 +421,39 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.tab_upload_photo, container, false);
+        View rootView=inflater.inflate(R.layout.tab_upload_photo, container, false);
+
+        tv1=(TextView)rootView.findViewById(R.id.tv_img1); tv2=(TextView) rootView.findViewById(R.id.tv_img2);
+        tv3=(TextView) rootView.findViewById(R.id.tv_img3); tv4=(TextView)rootView.findViewById(R.id.tv_img4);
+        tv5=(TextView) rootView.findViewById(R.id.tv_img5); tv6=(TextView) rootView.findViewById(R.id.tv_img6);
+        tv7=(TextView) rootView.findViewById(R.id.tv_img7); tv8=(TextView) rootView.findViewById(R.id.tv_img8);
+
+        img1=(ImageView)rootView.findViewById(R.id.img_1); img2=(ImageView)rootView.findViewById(R.id.img_2);
+        img3=(ImageView)rootView.findViewById(R.id.img_3); img4=(ImageView)rootView.findViewById(R.id.img_4);
+        img5=(ImageView)rootView.findViewById(R.id.img_5); img6=(ImageView)rootView.findViewById(R.id.img_6);
+        img7=(ImageView)rootView.findViewById(R.id.img_7); img8=(ImageView)rootView.findViewById(R.id.img_8);
+        btnSubmit=(Button)rootView.findViewById(R.id.btn_submit_photo);
+
+        img1.setOnClickListener(this);img2.setOnClickListener(this);
+        img3.setOnClickListener(this);img4.setOnClickListener(this);
+        img5.setOnClickListener(this);img6.setOnClickListener(this);
+        img7.setOnClickListener(this);img8.setOnClickListener(this);
+
+
+        Bundle bundle=getArguments();
+        case_id=bundle.getString("case_id");
+
+        EnableRuntimePermissionToAccessCamera();
+
+        rootView.findViewById(R.id.btn_submit_photo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                uploadFile();
+            }
+        });
+
+        return rootView;
     }
 
     @Override
@@ -477,21 +503,43 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
 
         switch (v.getId()){
             case R.id.img_1:flagImg="1";
+            strCaption=tv1.getText().toString();
+            strPhotoType="internal";
             break;
 
             case R.id.img_2:flagImg="2";
+            strCaption=tv2.getText().toString();
+            strPhotoType="internal";
                 break;
 
             case R.id.img_3:flagImg="3";
+            strCaption=tv3.getText().toString();
+            strPhotoType="internal";
                 break;
 
             case R.id.img_4:flagImg="4";
+            strCaption=tv4.getText().toString();
+            strPhotoType="external";
                 break;
 
             case R.id.img_5:flagImg="5";
+            strCaption=tv5.getText().toString();
+            strPhotoType="internal";
                 break;
 
             case R.id.img_6:flagImg="6";
+            strCaption=tv6.getText().toString();
+            strPhotoType="external";
+                break;
+
+            case R.id.img_7:flagImg="7";
+                strCaption=tv7.getText().toString();
+                strPhotoType="internal";
+                break;
+
+            case R.id.img_8:flagImg="8";
+                strCaption=tv8.getText().toString();
+                strPhotoType="external";
                 break;
 
         }
@@ -536,8 +584,6 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                     HashMap<String, String> childPojoCase = response.body().get(0);
                     if (childPojoCase != null) {
 
-
-
                     }
                 }
                 else
@@ -558,33 +604,41 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
 
     public void addPhotoDetails(final String case_id){
 
+        String[] extension=strFileName.split("\\.");
+        Log.e("strFileName",strFileName);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String date = sdf.format(new Date());
 
         progressDialog.show();
         JSONObject jsonObject=new JSONObject();
         PhotoTabAddInterface getResponse = APIClient.getClient().create(PhotoTabAddInterface.class);
         Call<HashMap<String,String>> call=null;
         if(photoExist==true) {
-            call = getResponse.updatePhoto(file.getName(),
-                    "",
-                    "jpg",
-                    String.valueOf(mCameraFileUri),
-                    "",
+            call = getResponse.updatePhoto(strFileName,
+                    strFileName,
+                    extension[1],
+                    strUploadPath,
+                    date,
                     SPUserProfile.getSpInstance().getUser_id(),
-                    "Y",
-                    "Image 1",
+                    "N",
+                    strCaption,
                     String.valueOf(mCameraFileUri),
-                    "",
-                    "",case_id);
+                    "PhotoImage",
+                    strPhotoType,case_id);
         }
         else{
-        /*    call = getResponse.addPhoto(building_id,
-                    spFoundationWork.getSelectedItem().toString(),
-                    spPlinth.getSelectedItem().toString(),
-                    spRcc.getSelectedItem().toString(),etSlabs.getText().toString(),spBrick.getSelectedItem().toString(),
-                    spFlooringWork.getSelectedItem().toString(),
-                    spOtherWork.getSelectedItem().toString(),
-                    spIntPlaster.getSelectedItem().toString(),
-                    spExtPlaster.getSelectedItem().toString(), case_id);*/
+            call = getResponse.addPhoto(strFileName,
+                    strFileName,
+                    extension[1],
+                    strUploadPath,
+                    date,
+                    SPUserProfile.getSpInstance().getUser_id(),
+                    "N",
+                    strCaption,
+                    String.valueOf(mCameraFileUri),
+                    "PhotoImage",
+                    strPhotoType,case_id);
         }
 
         call.enqueue(new Callback<HashMap<String,String>>() {
@@ -593,7 +647,8 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
 
 
 
-                //    progressDialog.dismiss();
+                    progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Updated Successfully!", Toast.LENGTH_SHORT).show();
 
 
 
@@ -608,4 +663,12 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
         });
     }
 
+    public void disableAll(int id)
+    {
+        for(int i=0;i<list_frames.size();i++)
+        {
+            if(list_frames.get(i).getId()!=id)
+            list_frames.get(i).setEnabled(false);
+        }
+    }
 }

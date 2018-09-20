@@ -64,9 +64,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 1"
+                            android:text="External 1"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -91,9 +92,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 3"
+                            android:text="Hall / Living"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -118,9 +120,38 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 5"
+                            android:text="Bedroom"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="Roboto-Medium"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#6bcdfd"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                            android:id="@+id/img_7"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_marginTop="31dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_photo"
+                            />
+                        <TextView
+                            android:id="@+id/tv_img7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Selfie"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -154,9 +185,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 2"
+                            android:text="External 2"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -181,9 +213,10 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 4"
+                            android:text="Kitchen"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -208,9 +241,39 @@
                             android:src="@drawable/ic_photo"
                             />
                         <TextView
+                            android:id="@+id/tv_img6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Image 6"
+                            android:text="Society Name Board"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="Roboto-Medium"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#6bcdfd"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                            android:id="@+id/img_8"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_marginTop="31dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_photo"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_img8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Approach road"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="Roboto-Medium"
                             android:textSize="16sp"
@@ -242,11 +305,8 @@
                     android:textColor="#FFFFFF"
                     android:textAlignment="center"/>
 
-
             </LinearLayout>
-
         </ScrollView>
-
 
 
     </LinearLayout>

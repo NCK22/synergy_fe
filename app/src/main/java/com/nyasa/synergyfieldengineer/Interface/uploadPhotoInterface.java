@@ -3,6 +3,8 @@ package com.nyasa.synergyfieldengineer.Interface;
 
 import com.nyasa.synergyfieldengineer.Pojo.CommonPojo;
 
+import java.util.HashMap;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -17,7 +19,9 @@ public interface uploadPhotoInterface {
 
     @Multipart
     @POST("synergyapi/api/uploadFile")
-    Call<CommonPojo> uploadFile(@Part MultipartBody.Part file, @Part("example") RequestBody name, @Part("profile_id") RequestBody profile_id);
+
+    Call<HashMap<String,String>> uploadFile(@Part MultipartBody.Part file, @Part("example") RequestBody name, @Part("profile_id") RequestBody profile_id);
+
    /* Call<CommonParentPojo> doGetListResources(
             @Field("email_id") String email_id,
             @Field("matrimony_id") String matrimony_id,
