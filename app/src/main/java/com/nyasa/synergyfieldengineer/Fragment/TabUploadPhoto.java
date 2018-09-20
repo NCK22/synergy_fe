@@ -363,7 +363,7 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
      //   User user = User.getInstance();
    //    RequestBody requestBody = RequestBody.create(MediaType.parse(getActivity().getContentResolver().getType(mCameraFileUri)),file);
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpeg"),file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", imageFile.getName(), requestBody);
+        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("example", imageFile.getName(), requestBody);
         RequestBody filename = RequestBody.create(MediaType.parse("JPEG/PNG"), file.getName());
     //    RequestBody user_id = RequestBody.create(MediaType.parse("text/plain"), user.getUserID());
      //   RequestBody description = RequestBody.create(MediaType.parse("text/plain"), editTextDescription.getText().toString());

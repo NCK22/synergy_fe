@@ -17,7 +17,7 @@ public interface uploadPhotoInterface {
 
     @Multipart
     @POST("synergyapi/api/uploadFile")
-    Call<CommonPojo> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name, @Part("profile_id") RequestBody profile_id);
+    Call<CommonPojo> uploadFile(@Part MultipartBody.Part file, @Part("example") RequestBody name, @Part("profile_id") RequestBody profile_id);
    /* Call<CommonParentPojo> doGetListResources(
             @Field("email_id") String email_id,
             @Field("matrimony_id") String matrimony_id,
