@@ -106,7 +106,7 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
     ProgressDialog progressDialog;
     String flagImg="0";
     Boolean photoExist=false;
-    Button btnSubmit;
+    Button btnSubmit,btnReset;
     String strUploadPath="",strFileName="",strSystemFileName="",strCaption="",strPhotoType="",case_id="";
     ArrayList<ImageView> list_frames=new ArrayList<ImageView>();
 
@@ -196,9 +196,9 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
 
     }
 
-    private void captureImage() {
-
+    private void captureImage(int id) {
         try {
+            disableAll(id);
             file = getOutputMediaFile(MEDIA_TYPE_IMAGE);
             Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
            mCameraFileUri = FileProvider.getUriForFile(getActivity(),
@@ -212,6 +212,12 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
             // intent.putExtra(MediaStore.EXTRA_OUTPUT,mCameraFileUri);
             intent.putExtra("camera", mCameraFileUri);
             intent.putExtra("return-data", false);
+            if(flagImg.equalsIgnoreCase("7"))
+            {
+                intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+                intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
+            }
             List<ResolveInfo> resolvedIntentActivities = getActivity().getApplicationContext().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
             for (ResolveInfo resolvedIntentInfo : resolvedIntentActivities) {
                 String packageName = resolvedIntentInfo.activityInfo.packageName;
@@ -433,6 +439,7 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
         img5=(ImageView)rootView.findViewById(R.id.img_5); img6=(ImageView)rootView.findViewById(R.id.img_6);
         img7=(ImageView)rootView.findViewById(R.id.img_7); img8=(ImageView)rootView.findViewById(R.id.img_8);
         btnSubmit=(Button)rootView.findViewById(R.id.btn_submit_photo);
+        btnReset=(Button)rootView.findViewById(R.id.btn_reset_photo);
 
         img1.setOnClickListener(this);img2.setOnClickListener(this);
         img3.setOnClickListener(this);img4.setOnClickListener(this);
@@ -452,7 +459,18 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                 uploadFile();
             }
         });
+        rootView.findViewById(R.id.btn_reset_photo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                enableAll();
+            }
+        });
+
+        list_frames.add(img1);list_frames.add(img2);list_frames.add(img3);list_frames.add(img4);
+        list_frames.add(img5); list_frames.add(img6);list_frames.add(img7);list_frames.add(img8);
+
+        getBuildingDetails(case_id);
         return rootView;
     }
 
@@ -554,13 +572,13 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
             }, RequestPermissionCode);
-            captureImage();
+            captureImage(v.getId());
             // Printing toast message after enabling runtime permission.
             //   Toast.makeText(this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
 
         } else {
 
-            captureImage();
+            captureImage(v.getId());
             //chooseImage();
 
         }
@@ -644,14 +662,9 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
         call.enqueue(new Callback<HashMap<String,String>>() {
             @Override
             public void onResponse(Call<HashMap<String,String>> call, Response<HashMap<String,String>> response) {
-
-
-
-                    progressDialog.dismiss();
+                enableAll();
+                progressDialog.dismiss();
                 Toast.makeText(getActivity(), "Updated Successfully!", Toast.LENGTH_SHORT).show();
-
-
-
             }
 
             @Override
@@ -667,8 +680,19 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
     {
         for(int i=0;i<list_frames.size();i++)
         {
-            if(list_frames.get(i).getId()!=id)
-            list_frames.get(i).setEnabled(false);
+            if(list_frames.get(i).getId()!=id) {
+                list_frames.get(i).setEnabled(false);
+                list_frames.get(i).setImageResource(R.drawable.ic_photo_disabled);
+            }
+        }
+    }
+    public void enableAll()
+    {
+        for(int i=0;i<list_frames.size();i++)
+        {
+                list_frames.get(i).setEnabled(true);
+                list_frames.get(i).setImageResource(R.drawable.ic_photo);
+
         }
     }
 }

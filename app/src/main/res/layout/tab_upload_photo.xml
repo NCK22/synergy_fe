@@ -18,298 +18,316 @@
      >
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_overlay"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="0dp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                >
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="3"
-                    >
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-                            android:id="@+id/img_1"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="31dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_photo"
-                            />
-                        <TextView
-                            android:id="@+id/tv_img1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="External 1"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="Roboto-Medium"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#6bcdfd"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-                            android:id="@+id/img_3"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="31dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_photo"
-                            />
-                        <TextView
-                            android:id="@+id/tv_img3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Hall / Living"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="Roboto-Medium"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#6bcdfd"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-                            android:id="@+id/img_5"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="31dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_photo"
-                            />
-                        <TextView
-                            android:id="@+id/tv_img5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Bedroom"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="Roboto-Medium"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#6bcdfd"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-                            android:id="@+id/img_7"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="31dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_photo"
-                            />
-                        <TextView
-                            android:id="@+id/tv_img7"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Selfie"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="Roboto-Medium"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#6bcdfd"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="3"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-                            android:id="@+id/img_2"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="31dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_photo"
-                            />
-                        <TextView
-                            android:id="@+id/tv_img2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="External 2"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="Roboto-Medium"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#6bcdfd"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-                            android:id="@+id/img_4"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="31dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_photo"
-                            />
-                        <TextView
-                            android:id="@+id/tv_img4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Kitchen"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="Roboto-Medium"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#6bcdfd"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-                            android:id="@+id/img_6"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="31dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_photo"
-                            />
-                        <TextView
-                            android:id="@+id/tv_img6"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Society Name Board"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="Roboto-Medium"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#6bcdfd"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
-                            android:id="@+id/img_8"
-                            android:layout_width="75dp"
-                            android:layout_height="75dp"
-                            android:layout_marginTop="31dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_photo"
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_img8"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Approach road"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="Roboto-Medium"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#6bcdfd"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_submit_photo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_border"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginEnd="70dp"
-                    android:layout_marginRight="70dp"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginLeft="70dp"
-                    android:text="Upload"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"
-                    android:fontFamily="Roboto-Medium"
-                    android:textSize="18dp"
-                    android:textColor="#FFFFFF"
-                    android:textAlignment="center"/>
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_1"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+
+                            <TextView
+                                android:id="@+id/tv_img1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="External 1"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_3"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+
+                            <TextView
+                                android:id="@+id/tv_img3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="Hall / Living"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_5"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+
+                            <TextView
+                                android:id="@+id/tv_img5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="Bedroom"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_7"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+
+                            <TextView
+                                android:id="@+id/tv_img7"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="Selfie"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_2"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+
+                            <TextView
+                                android:id="@+id/tv_img2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="External 2"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_4"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+
+                            <TextView
+                                android:id="@+id/tv_img4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="Kitchen"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_6"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+
+                            <TextView
+                                android:id="@+id/tv_img6"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="Society Name Board"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_8"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+
+                            <TextView
+                                android:id="@+id/tv_img8"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="Approach road"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
 
             </LinearLayout>
         </ScrollView>
 
-
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+        <Button
+            android:id="@+id/btn_reset_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_border"
+            android:fontFamily="Roboto-Medium"
+            android:text="Reset"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_submit_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_border"
+                android:fontFamily="Roboto-Medium"
+                android:text="Upload"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </FrameLayout>
