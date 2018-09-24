@@ -28,7 +28,8 @@
         android:layout_marginEnd="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="2dp"
         app:cardCornerRadius="5dp">
 
         <LinearLayout
@@ -44,8 +45,11 @@
             android:layout_marginBottom="2dp"
 
             android:weightSum="1"
-            android:paddingLeft="2dp"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
             android:paddingRight="2dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:orientation="horizontal"
             android:background="@drawable/border_visit_list_vertical">
 
@@ -56,18 +60,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="125"
+
                 android:textColor="#808080"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-            <Button
+            <ImageView
                 android:id="@+id/btn_edit"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="0.15"
-                android:layout_margin="5dp"
-                android:background="@drawable/ic_edit2"
-                android:text="Edit"
+                android:layout_margin="0dp"
+                android:src="@drawable/pencil2"
                 android:layout_marginRight="7dp"
                 android:layout_marginEnd="7dp"
                 android:textAllCaps="false"

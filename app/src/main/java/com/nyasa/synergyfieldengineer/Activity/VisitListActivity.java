@@ -101,7 +101,6 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
         getAssignecdCase();
 
-
     }
 
     @Override

@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,9 +94,10 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
     private Uri mCameraFileUri;
     Bitmap bitmap;
     File imageFile;
+    EditText etAdditional;
     ImageView imgPayProof;
-    ImageView img1,img2,img3,img4,img5,img6,img7,img8;
-    TextView tv1,tv2,tv3,tv4,tv5,tv6,tv7,tv8;
+    ImageView img1,img2,img3,img4,img5,img6,img7,img8,img9;
+    TextView tv1,tv2,tv3,tv4,tv5,tv6,tv7,tv8,tv9;
     /**
      * FCM_ID
      */
@@ -296,6 +298,8 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                                 img7.setImageBitmap(bitmap);
                             if(flagImg.equalsIgnoreCase("8"))
                                 img8.setImageBitmap(bitmap);
+                            if(flagImg.equalsIgnoreCase("9"))
+                                img9.setImageBitmap(bitmap);
                             imageFile = new File(mCameraFileUri.toString());
 
                         }
@@ -374,6 +378,8 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                         strUploadPath = commonParentPojo.get("url");
                         strFileName = commonParentPojo.get("filename");
                         Log.e("strFileName",strFileName);
+                        if(flagImg.equalsIgnoreCase("9"))
+                        strCaption=etAdditional.getText().toString();
                         progressDialog.dismiss();
                         addPhotoDetails(case_id);
                     }
@@ -429,6 +435,8 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View rootView=inflater.inflate(R.layout.tab_upload_photo, container, false);
 
+        etAdditional=(EditText)rootView.findViewById(R.id.et_img9);
+
         tv1=(TextView)rootView.findViewById(R.id.tv_img1); tv2=(TextView) rootView.findViewById(R.id.tv_img2);
         tv3=(TextView) rootView.findViewById(R.id.tv_img3); tv4=(TextView)rootView.findViewById(R.id.tv_img4);
         tv5=(TextView) rootView.findViewById(R.id.tv_img5); tv6=(TextView) rootView.findViewById(R.id.tv_img6);
@@ -438,13 +446,14 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
         img3=(ImageView)rootView.findViewById(R.id.img_3); img4=(ImageView)rootView.findViewById(R.id.img_4);
         img5=(ImageView)rootView.findViewById(R.id.img_5); img6=(ImageView)rootView.findViewById(R.id.img_6);
         img7=(ImageView)rootView.findViewById(R.id.img_7); img8=(ImageView)rootView.findViewById(R.id.img_8);
+        img9=(ImageView)rootView.findViewById(R.id.img_9);
         btnSubmit=(Button)rootView.findViewById(R.id.btn_submit_photo);
         btnReset=(Button)rootView.findViewById(R.id.btn_reset_photo);
 
         img1.setOnClickListener(this);img2.setOnClickListener(this);
         img3.setOnClickListener(this);img4.setOnClickListener(this);
         img5.setOnClickListener(this);img6.setOnClickListener(this);
-        img7.setOnClickListener(this);img8.setOnClickListener(this);
+        img7.setOnClickListener(this);img8.setOnClickListener(this);img9.setOnClickListener(this);
 
 
         Bundle bundle=getArguments();
@@ -456,7 +465,14 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
 
-                uploadFile();
+if(flagImg.equalsIgnoreCase("9")){
+    if(etAdditional.getText().toString().equalsIgnoreCase(""))
+    Toast.makeText(getActivity(), "Please add caption", Toast.LENGTH_SHORT).show();
+    else
+        uploadFile();
+}
+else
+    uploadFile();
             }
         });
         rootView.findViewById(R.id.btn_reset_photo).setOnClickListener(new View.OnClickListener() {
@@ -468,7 +484,7 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
         });
 
         list_frames.add(img1);list_frames.add(img2);list_frames.add(img3);list_frames.add(img4);
-        list_frames.add(img5); list_frames.add(img6);list_frames.add(img7);list_frames.add(img8);
+        list_frames.add(img5); list_frames.add(img6);list_frames.add(img7);list_frames.add(img8);list_frames.add(img9);
 
         getBuildingDetails(case_id);
         return rootView;
@@ -560,6 +576,11 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                 strPhotoType="external";
                 break;
 
+            case R.id.img_9:flagImg="9";
+                strCaption=etAdditional.getText().toString();
+                strPhotoType="external";
+                break;
+
         }
         if (ContextCompat.checkSelfPermission
                 (getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
@@ -572,11 +593,13 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
             }, RequestPermissionCode);
+
             captureImage(v.getId());
             // Printing toast message after enabling runtime permission.
             //   Toast.makeText(this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
 
         } else {
+
 
             captureImage(v.getId());
             //chooseImage();

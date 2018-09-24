@@ -50,6 +50,7 @@ import com.nyasa.synergyfieldengineer.R;
 import com.nyasa.synergyfieldengineer.storage.SPUserProfile;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -69,19 +70,17 @@ import static android.content.Context.LOCATION_SERVICE;
  * Created by Dell on 15-01-2018.
  */
 
-
 public class TabLocationDetails extends Fragment implements
         View.OnClickListener,
         LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-
     Button btnSubmit,btnGetLoc;
     SPUserProfile spUserProfile;
     ProgressDialog progressDialog;
-    TextView tvCaseNo, tvCaseDate, tvBank, tvReportNo, tvVillage, tvDistrict;
-    EditText etLat, etLong;
+    TextView tvTitle, tvCaseDate, tvBank, tvReportNo, tvVillage, tvDistrict;
+    EditText etLat, etLong,etAccuracy;
     String case_id = "", insti_id = "", pOccu = "", pRel = "";
     Boolean gpsExist = false, flagAllValid = false;
     MaterialSpinner spOccu, spRelationWithOccu;
@@ -92,8 +91,8 @@ public class TabLocationDetails extends Fragment implements
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     public static boolean permissionresult = false;
-    private static final long INTERVAL = 1000 * 5;
-    private static final long FASTEST_INTERVAL = 1000 * 2;
+    private static final long INTERVAL = 1000 * 2;
+    private static final long FASTEST_INTERVAL = 1000 * 1;
     private static final String TAG = "LocationActivity";
     private FusedLocationProviderClient mFusedLocationClient;
     Location mCurrentLocation;
@@ -118,8 +117,10 @@ public class TabLocationDetails extends Fragment implements
 
         mContext = getActivity().getBaseContext();
 
+        tvTitle=(TextView)rootView.findViewById(R.id.tv_title);
         etLat = (EditText) rootView.findViewById(R.id.et_lat);
         etLong = (EditText) rootView.findViewById(R.id.et_long);
+        etAccuracy=(EditText)rootView.findViewById(R.id.et_accuracy);
 
         btnSubmit = (Button) rootView.findViewById(R.id.btn_submit);
         btnGetLoc = (Button) rootView.findViewById(R.id.btn_loc);
@@ -300,7 +301,9 @@ public class TabLocationDetails extends Fragment implements
 
     private void startLocationUpdates() {
         progressDialog.show();
-
+        tvTitle.setVisibility(View.VISIBLE);
+        btnGetLoc.setEnabled(false);
+        btnGetLoc.setBackgroundColor(getResources().getColor(R.color.disabled_color));
         lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!gps_enabled) {
@@ -355,9 +358,11 @@ public class TabLocationDetails extends Fragment implements
 
 /*        etLat.setText(""+mCurrentLocation.getLatitude());
         etLong.setText(""+mCurrentLocation.getLongitude());*/
+        etAccuracy.setText(""+mCurrentLocation.getAccuracy());
         if(mCurrentLocation.getAccuracy()<=20) {
          etLat.setText(""+mCurrentLocation.getLatitude());
          etLong.setText(""+mCurrentLocation.getLongitude());
+            Toast.makeText(mContext, "Please submit the location", Toast.LENGTH_SHORT).show();
             stopLocationUpdates();
         }
         progressDialog.dismiss();
@@ -365,11 +370,15 @@ public class TabLocationDetails extends Fragment implements
         }
 
     protected void stopLocationUpdates() {
+
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, this);
         Log.d(TAG, "Location update stopped .......................");
         etLat.setText(String.valueOf(mCurrentLocation.getLatitude()));
         etLong.setText(String.valueOf(mCurrentLocation.getLongitude()));
+        tvTitle.setVisibility(View.GONE);
+        btnGetLoc.setEnabled(true);
+        btnGetLoc.setBackgroundColor(getResources().getColor(R.color.navigation_default));
     }
 }
 

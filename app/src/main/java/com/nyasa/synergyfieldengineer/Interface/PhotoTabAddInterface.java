@@ -27,7 +27,7 @@ public interface PhotoTabAddInterface {
 
 
     @FormUrlEncoded
-    @POST("synergyapi/api/updatePropertyWordStatus/{case_id}")
+    @POST("synergyapi/api/updateDcoImgDetails/{case_id}")
     Call<HashMap<String, String>> updatePhoto(@Field("userFileName") String userFileName,
                                               @Field("systemFileName") String systemFileName,
                                               @Field("fileExtension") String fileExtension,

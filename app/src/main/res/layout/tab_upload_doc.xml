@@ -5,8 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
     android:orientation="vertical"
     android:id="@+id/ll_register_parent">
 
@@ -15,8 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-     >
-    </LinearLayout>
+     />
 
     <LinearLayout
         android:id="@+id/ll_overlay"
@@ -24,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF">
-
 
         <ScrollView
             android:layout_width="match_parent"
@@ -79,38 +75,101 @@
 
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="3"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                            android:id="@+id/img_2"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_marginTop="31dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_photo"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_img2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Additional Document"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="Roboto-Medium"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#6bcdfd"
+                            android:textAlignment="center" />
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Additional Document Caption">
+
+                        <EditText
+                            android:id="@+id/et_img2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="Roboto-Medium"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textAlignment="center" />
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_submit_photo"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_border"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginEnd="70dp"
-                    android:layout_marginRight="70dp"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginLeft="70dp"
-                    android:text="Upload"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"
-                    android:fontFamily="Roboto-Medium"
-                    android:textSize="18dp"
-                    android:textColor="#FFFFFF"
-                    android:textAlignment="center"/>
-
-
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true">
+                    <Button
+                        android:id="@+id/btn_reset_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="Roboto-Medium"
+                        android:text="Reset"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/btn_submit_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_border"
+                        android:fontFamily="Roboto-Medium"
+                        android:text="Upload"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
-
         </ScrollView>
-
-
-
     </LinearLayout>
-
-
 </FrameLayout>

@@ -26,6 +26,7 @@
   import android.view.View;
   import android.view.ViewGroup;
   import android.widget.Button;
+  import android.widget.EditText;
   import android.widget.ImageView;
   import android.widget.TextView;
   import android.widget.Toast;
@@ -74,6 +75,8 @@
       private Uri mCameraFileUri;
       Bitmap bitmap;
       File imageFile;
+      EditText etAdditional;
+      TextView tv1;
       ImageView imgPayProof;
       ImageView img1,img2,img3,img4,img5,img6;
       /**
@@ -87,6 +90,7 @@
       String flagImg="0";
       Boolean photoExist=false;
       String strUploadPath="",strFileName="",strSystemFileName="",strCaption="",strPhotoType="",case_id="";
+      ArrayList<ImageView> list_frames=new ArrayList<ImageView>();
 
       @Override
       public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,9 +138,10 @@
 */
       }
 
-      private void captureImage() {
+      private void captureImage(int id) {
 
           try {
+              disableAll(id);
               file = getOutputMediaFile(MEDIA_TYPE_IMAGE);
               Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
              mCameraFileUri = FileProvider.getUriForFile(getActivity(),
@@ -303,6 +308,8 @@
                           strUploadPath = commonParentPojo.get("url");
                           strFileName = commonParentPojo.get("filename");
                           Log.e("strFileName",strFileName);
+                          if(flagImg.equalsIgnoreCase("2"))
+                              strCaption=etAdditional.getText().toString();
                           progressDialog.dismiss();
                           addPhotoDetails(case_id);
                       }
@@ -358,17 +365,19 @@
           // Inflate the layout for this fragment
           View rootView=inflater.inflate(R.layout.tab_upload_doc, container, false);
 
-         /* tv1=(TextView)rootView.findViewById(R.id.tv_img1); tv2=(TextView) rootView.findViewById(R.id.tv_img2);
+          etAdditional=(EditText)rootView.findViewById(R.id.et_img2);
+          tv1=(TextView)rootView.findViewById(R.id.tv_img1);
+         /*  tv2=(TextView) rootView.findViewById(R.id.tv_img2);
           tv3=(TextView) rootView.findViewById(R.id.tv_img3); tv4=(TextView)rootView.findViewById(R.id.tv_img4);
           tv5=(TextView) rootView.findViewById(R.id.tv_img5); tv6=(TextView) rootView.findViewById(R.id.tv_img6);
 */
-          img1=(ImageView)rootView.findViewById(R.id.img_1);// img2=(ImageView)rootView.findViewById(R.id.img_2);
+          img1=(ImageView)rootView.findViewById(R.id.img_1); img2=(ImageView)rootView.findViewById(R.id.img_2);
           /*img3=(ImageView)rootView.findViewById(R.id.img_3); img4=(ImageView)rootView.findViewById(R.id.img_4);
           img5=(ImageView)rootView.findViewById(R.id.img_5); img6=(ImageView)rootView.findViewById(R.id.img_6);*/
         //  btnSubmit=(Button)rootView.findViewById(R.id.btn_submit_photo);
 
-          img1.setOnClickListener(this);/*img2.setOnClickListener(this);
-          img3.setOnClickListener(this);img4.setOnClickListener(this);
+          img1.setOnClickListener(this);img2.setOnClickListener(this);
+          /*img3.setOnClickListener(this);img4.setOnClickListener(this);
           img5.setOnClickListener(this);img6.setOnClickListener(this);
 */
 
@@ -381,10 +390,21 @@
               @Override
               public void onClick(View view) {
 
+                  if(flagImg.equalsIgnoreCase("2")&&etAdditional.getText().toString().equalsIgnoreCase(""))
+                      Toast.makeText(getActivity(), "Please add caption", Toast.LENGTH_SHORT).show();
+                  else
                   uploadFile();
               }
           });
+          rootView.findViewById(R.id.btn_reset_photo).setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
 
+                  enableAll();
+              }
+          });
+          list_frames.add(img1);list_frames.add(img2);
+          getBuildingDetails(case_id);
           return rootView;
       }
 
@@ -435,8 +455,12 @@
 
           switch (v.getId()){
               case R.id.img_1:flagImg="1";
+              strCaption=tv1.getText().toString();
               break;
 
+              case R.id.img_2:flagImg="2";
+                  strCaption=etAdditional.getText().toString();
+                  break;
           }
           if (ContextCompat.checkSelfPermission
                   (getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
@@ -445,21 +469,18 @@
 
           {
               Log.e("permission","denied");
-
               ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA,
                       Manifest.permission.WRITE_EXTERNAL_STORAGE,
               }, RequestPermissionCode);
-              captureImage();
+
               // Printing toast message after enabling runtime permission.
               //   Toast.makeText(this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
 
           } else {
 
-              captureImage();
-              //chooseImage();
+              captureImage(v.getId());
 
           }
-
       }
 
       public void getBuildingDetails(final String case_id){
@@ -519,9 +540,9 @@
                       date,
                       SPUserProfile.getSpInstance().getUser_id(),
                       "N",
-                      "document1",
+                      strCaption,
                       String.valueOf(mCameraFileUri),
-                      "PhotoImage",
+                      "DocImage",
                       strPhotoType,case_id);
           }
           else{
@@ -534,7 +555,7 @@
                       "N",
                       strCaption,
                       String.valueOf(mCameraFileUri),
-                      "PhotoImage",
+                      "DocImage",
                       strPhotoType,case_id);
           }
 
@@ -558,6 +579,26 @@
                   progressDialog.dismiss();
               }
           });
+      }
+
+      public void disableAll(int id)
+      {
+          for(int i=0;i<list_frames.size();i++)
+          {
+              if(list_frames.get(i).getId()!=id) {
+                  list_frames.get(i).setEnabled(false);
+                  list_frames.get(i).setImageResource(R.drawable.ic_photo_disabled);
+              }
+          }
+      }
+      public void enableAll()
+      {
+          for(int i=0;i<list_frames.size();i++)
+          {
+              list_frames.get(i).setEnabled(true);
+              list_frames.get(i).setImageResource(R.drawable.ic_photo);
+
+          }
       }
 
   }

@@ -61,8 +61,6 @@ import retrofit2.Response;
 public class TabBasicDetails extends Fragment implements View.OnClickListener {
 
 
-
-
     EditText etEmail;
     Button  btnSubmit;
     SPUserProfile spUserProfile;

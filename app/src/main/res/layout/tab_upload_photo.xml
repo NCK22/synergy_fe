@@ -5,8 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
     android:orientation="vertical"
     android:id="@+id/ll_register_parent">
 
@@ -25,7 +23,6 @@
         android:background="#FFFFFF"
         android:orientation="vertical">
 
-
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -36,7 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,8 +158,48 @@
                                 android:textStyle="bold" />
                         </LinearLayout>
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
+                            <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
+                                android:id="@+id/img_9"
+                                android:layout_width="75dp"
+                                android:layout_height="75dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="31dp"
+                                android:src="@drawable/ic_photo" />
+                            <TextView
+                                android:id="@+id/tv_img9"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:text="Additional Photo"
+                                android:textAlignment="center"
+                                android:textColor="#6bcdfd"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Additional Photo Caption">
+                            <EditText
+                                android:id="@+id/et_img9"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="Roboto-Medium"
+                                android:textAlignment="center"
+                                android:textColor="#000000"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -283,6 +319,7 @@
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
 
 
