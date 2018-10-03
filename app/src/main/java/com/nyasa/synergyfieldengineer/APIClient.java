@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
 
     public static Retrofit retrofit=null;
-    private static String BASE_URL="http://dhapare.solutions/";
+    private static String BASE_URL="http://116.74.209.178:9090/";
 
     public static Retrofit getClient()
     {

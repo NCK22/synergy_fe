@@ -172,7 +172,7 @@ public class VisitListActivity extends AppCompatActivity implements NavigationVi
 
             progressDialog.show();
             assignedCaseInterface getResponse = APIClient.getClient().create(assignedCaseInterface.class);
-            Call<ArrayList<ChildPojoAssignedCase>> call = getResponse.doGetListResources("2018-08-08",spUserProfile.getUser_id());
+            Call<ArrayList<ChildPojoAssignedCase>> call = getResponse.doGetListResources(strDate,spUserProfile.getUser_id());
             call.enqueue(new Callback<ArrayList<ChildPojoAssignedCase>>() {
                 @Override
                 public void onResponse(Call<ArrayList<ChildPojoAssignedCase>> call, Response<ArrayList<ChildPojoAssignedCase>> response) {

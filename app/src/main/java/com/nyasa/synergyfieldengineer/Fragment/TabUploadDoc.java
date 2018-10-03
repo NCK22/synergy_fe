@@ -500,8 +500,6 @@
                       HashMap<String, String> childPojoCase = response.body().get(0);
                       if (childPojoCase != null) {
 
-
-
                       }
                   }
                   else
