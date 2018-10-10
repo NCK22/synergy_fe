@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -328,11 +330,11 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                         Log.e("imagefile", String.valueOf(imageFile));
                     Log.e("image before", String.valueOf(imageFile.length()));
 
-
                     bitmap = null;
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-                        imgPayProof.setImageBitmap(bitmap);
+                        Bitmap res=addWaterMark(bitmap);
+                        imgPayProof.setImageBitmap(res);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -345,6 +347,19 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                 }
             }
         }
+    }
+
+    private Bitmap addWaterMark(Bitmap src) {
+        int w = src.getWidth();
+        int h = src.getHeight();
+        Bitmap result = Bitmap.createBitmap(w, h, src.getConfig());
+        Canvas canvas = new Canvas(result);
+        canvas.drawBitmap(src, 0, 0, null);
+
+        Bitmap waterMark = BitmapFactory.decodeResource(getActivity().getResources(), R.mipmap.ic_launcher);
+        canvas.drawBitmap(waterMark, 0, 0, null);
+
+        return result;
     }
 
     private String getPath(Uri uri) {

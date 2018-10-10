@@ -102,8 +102,6 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tl_parent);
 
-
-
         mViewPager.setOffscreenPageLimit(0);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -131,7 +129,6 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
         actionBarDrawerToggle.syncState();
 
         setHeader();
-
 
     }
 
@@ -213,10 +210,6 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
         }
         return false;
     }
-
-
-
-
 
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 

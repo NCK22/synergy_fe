@@ -169,10 +169,8 @@ public class TabLocationDetails extends Fragment implements
                 .build();
         this.mGoogleApiClient.connect();
         Log.e("After googleapiclient", String.valueOf(mGoogleApiClient.isConnected()));
-
-
-
     }
+
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(INTERVAL);
@@ -181,9 +179,7 @@ public class TabLocationDetails extends Fragment implements
     }
 
 
-
     public void getGps(final String case_id){
-
         progressDialog.show();
         WorkTabGetInterface getResponse = APIClient.getClient().create(WorkTabGetInterface.class);
         Call<ArrayList<HashMap<String,String>>> call = getResponse.getGps(case_id);
@@ -198,18 +194,13 @@ public class TabLocationDetails extends Fragment implements
                     gpsExist=true;
                     HashMap<String, String> childPojoCase = response.body().get(0);
                     if (childPojoCase != null) {
-
                         etLat.setText(childPojoCase.get("GPSLatitude"));
                         etLong.setText(childPojoCase.get("GPSLongitude"));
-
-
                     }
                 }
                 else
                     gpsExist=false;
-
                 progressDialog.dismiss();
-
             }
 
             @Override
@@ -256,19 +247,26 @@ public class TabLocationDetails extends Fragment implements
 
     @Override
     public void onClick(View v) {
-
         switch(v.getId())
         {
             case R.id.btn_submit :checkValidity();
             break;
 
             case R.id.btn_loc:
-                etLat.setText("");
-                etLong.setText("");
-                getLocation();
+                if(btnGetLoc.getText().toString().equalsIgnoreCase("Get Location")) {
+                    etLat.setText("");
+                    etLong.setText("");
+                    getLocation();
+                    btnGetLoc.setText("Confirm Location");
+                }
+                else
+                {
+                    Toast.makeText(mContext, "Please submit the location", Toast.LENGTH_SHORT).show();
+                    stopLocationUpdates();
+                    btnGetLoc.setText("Get Location");
+                }
             break;
         }
-
     }
 
     public void checkValidity(){
@@ -356,15 +354,15 @@ public class TabLocationDetails extends Fragment implements
         Log.e("Location Accuracy", String.valueOf(location.getAccuracy()));
 
 
-/*        etLat.setText(""+mCurrentLocation.getLatitude());
-        etLong.setText(""+mCurrentLocation.getLongitude());*/
+        etLat.setText(""+mCurrentLocation.getLatitude());
+        etLong.setText(""+mCurrentLocation.getLongitude());
         etAccuracy.setText(""+mCurrentLocation.getAccuracy());
-        if(mCurrentLocation.getAccuracy()<=20) {
+      /*  if(mCurrentLocation.getAccuracy()<=20) {
          etLat.setText(""+mCurrentLocation.getLatitude());
          etLong.setText(""+mCurrentLocation.getLongitude());
             Toast.makeText(mContext, "Please submit the location", Toast.LENGTH_SHORT).show();
             stopLocationUpdates();
-        }
+        }*/
         progressDialog.dismiss();
 
         }

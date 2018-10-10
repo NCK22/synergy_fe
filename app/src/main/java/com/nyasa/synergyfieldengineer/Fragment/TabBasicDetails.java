@@ -420,7 +420,6 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
         });
     }
 
-
     @Override
     public void onClick(View v) {
 
@@ -428,9 +427,7 @@ public class TabBasicDetails extends Fragment implements View.OnClickListener {
        // addBasicDetails(case_id);
     }
 
-
     public void checkValidity(){
-
         if(
                 spOccu.getSelectedItemPosition()<=0 || spRelationWithOccu.getSelectedItemPosition()<=0)
 
