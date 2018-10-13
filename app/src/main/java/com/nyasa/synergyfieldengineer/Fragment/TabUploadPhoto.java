@@ -9,10 +9,15 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -333,7 +338,8 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
                     bitmap = null;
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
-                        Bitmap res=addWaterMark(bitmap);
+                     Bitmap res=addWaterMark(bitmap);
+                   //     Bitmap res=addWatermark(getResources().getDrawable(R.drawable.pencil1),bitmap);
                         imgPayProof.setImageBitmap(res);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -354,12 +360,48 @@ public class TabUploadPhoto extends Fragment implements View.OnClickListener {
         int h = src.getHeight();
         Bitmap result = Bitmap.createBitmap(w, h, src.getConfig());
         Canvas canvas = new Canvas(result);
-        canvas.drawBitmap(src, 0, 0, null);
-
-        Bitmap waterMark = BitmapFactory.decodeResource(getActivity().getResources(), R.mipmap.ic_launcher);
-        canvas.drawBitmap(waterMark, 0, 0, null);
-
+        int color = Color.parseColor("#ff0000");
+        Paint paint=new Paint();
+        paint.setColor(color);
+        canvas.drawBitmap(src, 0, 0, paint);
+        Bitmap waterMark = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.pencil1);
+        canvas.drawBitmap(waterMark, 0, 0,paint);
         return result;
+    }
+
+    public static Bitmap addWatermark(Resources res, Bitmap source) {
+        int w, h;
+        Canvas c;
+        Paint paint;
+        Bitmap bmp, watermark;
+        Matrix matrix;
+        float scale;
+        RectF r;
+        w = source.getWidth();
+        h = source.getHeight();
+        // Create the new bitmap
+        bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.FILTER_BITMAP_FLAG);
+        // Copy the original bitmap into the new one
+        c = new Canvas(bmp);
+        c.drawBitmap(source, 0, 0, paint);
+        // Load the watermark
+        watermark = BitmapFactory.decodeResource(res, R.drawable.pencil1);
+        // Scale the watermark to be approximately 40% of the source image height
+        scale = (float) (((float) h * 0.40) / (float) watermark.getHeight());
+        // Create the matrix
+        matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        // Determine the post-scaled size of the watermark
+        r = new RectF(0, 0, watermark.getWidth(), watermark.getHeight());
+        matrix.mapRect(r);
+        // Move the watermark to the bottom right corner
+        matrix.postTranslate(w - r.width(), h - r.height());
+        // Draw the watermark
+        c.drawBitmap(watermark, matrix, paint);
+        // Free up the bitmap memory
+        watermark.recycle();
+        return bmp;
     }
 
     private String getPath(Uri uri) {

@@ -58,7 +58,6 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
     TabLayout tabLayout;
     SPUserProfile spUserProfile;
     ProgressDialog progressDialog;
-
     Intent intent;
     Bundle bundle;
     String tabFlag="home";
@@ -78,9 +77,9 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         tabLayout=(TabLayout)findViewById(R.id.tl_parent);
         tabLayout.addOnTabSelectedListener(this);
+
        // tabLayout.setTabTextColors(Color.BLACK,Color.WHITE);
 /*
         tabLayout.getChildAt(1).setEnabled(false);
@@ -91,7 +90,6 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
 
         bundle = new Bundle();
         tabFlag=intent.getStringExtra("tabFlag");
-
 
         //   Tabs Activity
 
@@ -199,8 +197,20 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
             case R.id.menu_go_location:
                 Log.e("menu","settings");
 //                toolbar.setTitle(getString(R.string.menu_matches));
-                startActivity(new Intent(getApplicationContext(), AddLocationActivity.class).putExtra("tabFlag", "profile"));
-                finish();
+                Bundle bundle=new Bundle();
+                bundle.putString("case_id","95");
+                //bundle.putParcelable("parentPojoProfile", "office");
+                TabLocationDetails tabSearchResult=new TabLocationDetails();
+                tabSearchResult.setArguments(bundle);
+
+                // Toast.makeText(mContext,"Clicked",Toast.LENGTH_SHORT).show();
+                //((FragmentActivity)getContext())
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.Container, tabSearchResult)
+                        .addToBackStack("officeloc")
+                        .commit();
+               // startActivity(new Intent(getApplicationContext(), AddLocationActivity.class).putExtra("tabFlag", "profile"));
+                //finish();
                 return true;
 
             case R.id.menu_go_logout:
@@ -247,8 +257,6 @@ public class TabParentCaseDetailActivity extends AppCompatActivity
                             tabPropertyDetails.setArguments(bundle1);
                             Log.e("bCompleted", "" + bCompleted);
                             return tabPropertyDetails;
-
-
 
 
                 case 2:

@@ -91,8 +91,8 @@ public class TabLocationDetails extends Fragment implements
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     public static boolean permissionresult = false;
-    private static final long INTERVAL = 1000 * 2;
-    private static final long FASTEST_INTERVAL = 1000 * 1;
+    private static final long INTERVAL = 1000 * 1;
+    private static final long FASTEST_INTERVAL = 500 * 1;
     private static final String TAG = "LocationActivity";
     private FusedLocationProviderClient mFusedLocationClient;
     Location mCurrentLocation;
@@ -233,7 +233,13 @@ public class TabLocationDetails extends Fragment implements
                     progressDialog.dismiss();
                showToast("Updated Successfully");
                 //  addCaseValDetails(case_id);
+               Location destination = new Location("");
+                destination.setLatitude(18.401370);
+                destination.setLongitude(73.709865);
 
+
+                float distance=mCurrentLocation.distanceTo(destination);
+                showToast(String.valueOf(distance));
             }
 
             @Override
@@ -300,8 +306,8 @@ public class TabLocationDetails extends Fragment implements
     private void startLocationUpdates() {
         progressDialog.show();
         tvTitle.setVisibility(View.VISIBLE);
-        btnGetLoc.setEnabled(false);
-        btnGetLoc.setBackgroundColor(getResources().getColor(R.color.disabled_color));
+     //   btnGetLoc.setEnabled(false);
+      //  btnGetLoc.setBackgroundColor(getResources().getColor(R.color.disabled_color));
         lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!gps_enabled) {
@@ -324,7 +330,6 @@ public class TabLocationDetails extends Fragment implements
             Log.d(TAG, "Location update started ..............: ");
         }
     }
-
 
     @Override
     public void onConnectionSuspended(int i) {

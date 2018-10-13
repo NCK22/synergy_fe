@@ -69,14 +69,12 @@ public class VisitListAdapter extends RecyclerView.Adapter<VisitListAdapter.Item
         final ChildPojoCase singleItem = dataList.get(position);
         holder.case_id.setText(singleItem.getCaseNo());
         holder.applicant_name.setText(singleItem.getClientName());
-        holder.project_name.setText(singleItem.getProjectName());
+        holder.project_name.setText("Financial Institute : "+singleItem.getProjectName());
        // if(singleItem.getVillageCity()!=null)
         //holder.address1.setText(singleItem.getVillageCity()+" ,"+singleItem.getPincode());
         holder.address1.setText("Property No : "+singleItem.getPropertyNo()+", Building No : "+singleItem.getBuildingWing()+", Floor No : "+singleItem.getFloorNo());
         holder.address2.setText("Village/City : "+singleItem.getVillageCity()+", District : "+singleItem.getDistrict());
         holder.contact.append(singleItem.getClientContactNo());
-
-
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
